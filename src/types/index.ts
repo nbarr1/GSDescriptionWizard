@@ -168,6 +168,12 @@ export interface ValidationConfig {
   vagueDensityThreshold: number;
   /** Named word lists referenced by SignalRequirement. */
   lexicons: Record<string, string[]>;
+  /**
+   * Phrases removed before a lexicon is matched, keyed by lexicon name.
+   * Use this when a word is a verb in one context and a noun in another -
+   * "the load was lowered" versus "the lower back".
+   */
+  lexiconExclusions?: Record<string, string[]>;
   /** Named unit lists referenced by SignalRequirement of type 'unit'. */
   unitSets: Record<string, string[]>;
   /** Token-overlap fraction above which an answer counts as restating (0-1). */

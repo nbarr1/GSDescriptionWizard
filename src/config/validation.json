@@ -148,6 +148,29 @@
     ]
   },
 
+  "_comment_exclusions": "Phrases stripped out before a lexicon is matched. These exist because a word can be a verb in one place and part of a noun in another. 'Lower back' is the important one: back injuries are the most common case in the data, and without this the phrase would satisfy the motion-verb check on its own and let a description like 'lower back injury' through unchallenged.",
+
+  "lexiconExclusions": {
+    "motionVerbs": [
+      "lower back",
+      "upper back",
+      "lower leg",
+      "upper leg",
+      "lower arm",
+      "upper arm",
+      "lower body",
+      "upper body",
+      "lower limb",
+      "upper limb",
+      "lower extremity",
+      "upper extremity",
+      "lost time",
+      "step ladder",
+      "stepladder"
+    ],
+    "taskVerbs": ["lower back", "upper back", "test results", "set point"]
+  },
+
   "unitSets": {
     "weightUnits": ["lb", "lbs", "pound", "pounds", "kg", "kilo", "kilos", "kilogram", "kilograms", "oz", "ounce", "ounces", "ton", "tons", "tonne", "tonnes", "g", "gram", "grams"],
     "lengthUnits": ["in", "inch", "inches", "ft", "foot", "feet", "cm", "centimeter", "centimeters", "centimetre", "centimetres", "m", "meter", "meters", "metre", "metres", "mm", "yard", "yards"],
