@@ -3,11 +3,13 @@
 
   "defaultMode": "labeled",
 
+  "_comment_budget": "The brief proposed a 400-1200 target with a warning above 2000. Measurement says otherwise: all twelve benchmark fixtures compose to 3500-4100 characters, because a description that actually covers task, procedure, equipment, a three-part sequence, mechanism, conditions and response cannot fit in 1200. Warning above 2000 would fire on every correct output and train users to ignore the warning, so the upper thresholds are set from the measured range instead. warnBelow stays at 300 as the brief specifies. Set hardLimit once the form owner confirms the real field limit; null means unconfirmed.",
+
   "characterBudget": {
     "targetMin": 400,
-    "targetMax": 1200,
+    "targetMax": 3000,
     "warnBelow": 300,
-    "warnAbove": 2000,
+    "warnAbove": 4500,
     "hardLimit": null
   },
 

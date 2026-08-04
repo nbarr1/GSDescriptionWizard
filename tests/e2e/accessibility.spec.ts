@@ -31,7 +31,9 @@ test('every interactive control meets the 44px minimum tap target', async ({ pag
     const box = await control.boundingBox();
     if (!box) continue;
     if (box.height < MIN_TAP || box.width < MIN_TAP) {
-      undersized.push(`${(await control.textContent())?.trim().slice(0, 40)} ${box.width}x${box.height}`);
+      undersized.push(
+        `${(await control.textContent())?.trim().slice(0, 40)} ${box.width}x${box.height}`,
+      );
     }
   }
   expect(undersized, `controls below ${MIN_TAP}px: ${undersized.join(' | ')}`).toEqual([]);
