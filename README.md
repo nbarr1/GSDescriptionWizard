@@ -131,19 +131,22 @@ That is the escape hatch working, not a defect.
 
 These are automated tests, not conventions. They fail the build.
 
-| Constraint                                   | Where it is enforced                                                              |
-| -------------------------------------------- | --------------------------------------------------------------------------------- |
-| Zero network requests during a full session  | `tests/e2e/wizard.spec.ts`                                                        |
-| No external references in the built file     | `scripts/inline.mjs`, at build time                                               |
-| No `'` or `"` in any composed output         | `tests/unit/composer.test.ts`, all fixtures                                       |
-| No non-ASCII in any composed output          | `tests/unit/composer.test.ts`, all fixtures                                       |
-| Every fixture clears the 300 character floor | `tests/unit/composer.test.ts`                                                     |
-| PII guard fires on every seeded identifier   | `tests/unit/composer.test.ts`                                                     |
-| No gendered pronoun reaches the output       | `tests/unit/composer.test.ts`                                                     |
-| User input never reaches an HTML sink        | `eslint.config.js` bans `innerHTML`; `tests/e2e/wizard.spec.ts` asserts inertness |
-| 44px minimum tap targets                     | `tests/e2e/accessibility.spec.ts`                                                 |
-| Full keyboard operation                      | `tests/e2e/accessibility.spec.ts`                                                 |
-| No horizontal scroll at 360px                | `tests/e2e/accessibility.spec.ts`                                                 |
+| Constraint                                         | Where it is enforced                                                                   |
+| -------------------------------------------------- | -------------------------------------------------------------------------------------- |
+| Zero network requests during a full session        | `tests/e2e/wizard.spec.ts`                                                             |
+| No external references in the built file           | `scripts/inline.mjs`, at build time                                                    |
+| No `'` or `"` in any composed output               | `tests/unit/composer.test.ts`, all fixtures                                            |
+| No non-ASCII in any composed output                | `tests/unit/composer.test.ts`, all fixtures                                            |
+| Every fixture clears the 300 character floor       | `tests/unit/composer.test.ts`                                                          |
+| PII guard fires on every seeded identifier         | `tests/unit/composer.test.ts`                                                          |
+| No gendered pronoun reaches the output             | `tests/unit/composer.test.ts`                                                          |
+| Filler text never satisfies a blocking question    | `tests/unit/adversarial.test.ts`, every blocking question against seven filler strings |
+| Escape hatches score as unresolved, never green    | `tests/unit/adversarial.test.ts`                                                       |
+| Closing a branch drops its answers, and only those | `tests/unit/adversarial.test.ts`                                                       |
+| User input never reaches an HTML sink              | `eslint.config.js` bans `innerHTML`; `tests/e2e/wizard.spec.ts` asserts inertness      |
+| 44px minimum tap targets                           | `tests/e2e/accessibility.spec.ts`                                                      |
+| Full keyboard operation                            | `tests/e2e/accessibility.spec.ts`                                                      |
+| No horizontal scroll at 360px                      | `tests/e2e/accessibility.spec.ts`                                                      |
 
 ## Open questions for the form owner
 

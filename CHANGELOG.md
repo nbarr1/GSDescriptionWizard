@@ -30,9 +30,9 @@ First release.
   usable offline from `file://`.
 - **Content as data.** Questions, help text, examples, thresholds, vocabulary,
   scoring weights and output templates all live in `src/config/*.json`.
-- **Test suite**: 244 unit tests, 42 end-to-end tests across desktop and tablet
-  viewports, 12 scenario fixtures with golden outputs, and a regression benchmark
-  published in the README.
+- **Test suite**: 281 unit tests, 48 end-to-end tests across desktop and tablet
+  viewports, 12 scenario fixtures with golden outputs, an adversarial input suite,
+  and a regression benchmark published in the README.
 - Accessibility: WCAG 2.1 AA, full keyboard operation, 44px minimum tap targets,
   focus management and live-region announcements on every screen transition.
 - Opt-in draft persistence with a 24 hour TTL, off by default for shared kiosks.

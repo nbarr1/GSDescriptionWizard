@@ -310,3 +310,82 @@ test('clear all data resets the session', async ({ page }) => {
   await page.getByRole('button', { name: 'Clear all data' }).click();
   await expect(page.locator('.question__prompt')).toContainText('Which pattern best describes');
 });
+
+// --- refresh and persistence across the whole flow --------------------------
+
+test('a refresh at any stage starts clean while persistence is off', async ({ page }) => {
+  await page.goto(APP_URL);
+  await chooseOption(page, 'Acute single event');
+  await continueOn(page);
+
+  // Refresh at several points through the flow, not just the first screen.
+  for (let stage = 0; stage < 6; stage += 1) {
+    for (let i = 0; i < 4; i += 1) {
+      const radios = page.getByRole('radio');
+      const textbox = page.locator('.field__textarea, .field__input').first();
+      if (await textbox.count()) {
+        await textbox.fill(
+          'The operator was clearing a jammed carton from the conveyor at station 4 while the belt was still running and the hand was drawn against the guard edge.',
+        );
+      } else if (await radios.count()) {
+        await radios.first().check();
+      }
+      await continueOn(page);
+      if (await page.locator('.feedback--challenge, .feedback--block').count())
+        await continueOn(page);
+    }
+
+    await page.reload();
+    // Nothing was opted into storage, so every refresh returns to the start.
+    await expect(page.locator('.question__prompt')).toContainText('Which pattern best describes');
+    await chooseOption(page, 'Acute single event');
+    await continueOn(page);
+  }
+});
+
+test('opting into persistence survives a refresh, and clearing removes it', async ({ page }) => {
+  await page.goto(APP_URL);
+  await completeWizard(page);
+
+  await page.locator('#persist-draft').check();
+  await page.reload();
+  // The draft is restored, so the wizard does not start from the first question.
+  await expect(page.locator('.question__prompt')).not.toContainText('Which pattern best describes');
+
+  page.once('dialog', (dialog) => void dialog.accept());
+  await page.getByRole('button', { name: 'Clear all data' }).click();
+  await page.reload();
+  await expect(page.locator('.question__prompt')).toContainText('Which pattern best describes');
+});
+
+test('rapid back and forth mid-validation does not lose answers or wedge the flow', async ({
+  page,
+}) => {
+  await page.goto(APP_URL);
+  await chooseOption(page, 'Acute single event');
+  await continueOn(page);
+
+  for (let i = 0; i < 10; i += 1) {
+    const radios = page.getByRole('radio');
+    if (await radios.count()) await radios.first().check();
+    await continueOn(page);
+    if ((await promptText(page)).includes('What specific task was being performed')) break;
+  }
+
+  const answer = 'Clearing a jammed carton from the infeed conveyor at station 4';
+  await fill(page, answer);
+
+  // Trigger validation, then immediately navigate away and back, repeatedly.
+  for (let i = 0; i < 8; i += 1) {
+    await continueOn(page);
+    await page.getByRole('button', { name: 'Back' }).click();
+    await continueOn(page);
+  }
+
+  // The answer is intact and the flow is still usable.
+  await page.getByRole('button', { name: 'Back' }).click();
+  const box = page.locator('.field__textarea, .field__input').first();
+  await expect(box).toHaveValue(answer);
+  await continueOn(page);
+  expect(await promptText(page)).not.toBe('');
+});

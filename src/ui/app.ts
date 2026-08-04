@@ -52,8 +52,11 @@ export interface AppHandles {
 }
 
 export function mountApp(root: HTMLElement): AppHandles {
-  let session: SessionState = loadDraft() ?? createSession();
-  let step: StepId = firstStep(session);
+  const restored = loadDraft();
+  let session: SessionState = restored?.session ?? createSession();
+  // Restoring answers but dropping the user back at question one is disorienting,
+  // so the draft carries the step as well.
+  let step: StepId = restored?.step ?? firstStep(session);
   /** Findings are only shown once the user has tried to move on. */
   let showFeedback = false;
 
@@ -94,13 +97,14 @@ export function mountApp(root: HTMLElement): AppHandles {
   function update(next: SessionState, options: { resetFeedback?: boolean } = {}): void {
     session = next;
     if (options.resetFeedback !== false) showFeedback = false;
-    saveDraft(session);
+    saveDraft(session, step);
     render();
   }
 
   function goTo(target: StepId): void {
     step = target;
     showFeedback = false;
+    saveDraft(session, step);
     render();
   }
 
@@ -122,7 +126,7 @@ export function mountApp(root: HTMLElement): AppHandles {
       if (result.tier === 'challenge' && !showFeedback) {
         showFeedback = true;
         session = recordChallenge(session, question.id);
-        saveDraft(session);
+        saveDraft(session, step);
         render();
         announce(live, result.findings[0]?.message ?? 'Please review your answer.');
         return;
@@ -370,7 +374,7 @@ export function mountApp(root: HTMLElement): AppHandles {
         // shown for a previous attempt would let the next one straight through,
         // and a user could clear a challenge by typing anything at all.
         showFeedback = false;
-        saveDraft(session);
+        saveDraft(session, step);
       });
 
       // Deliberately no re-render on blur. Blur fires before the click that

@@ -17,6 +17,13 @@ interface StoredDraft {
   version: string;
   savedAt: number;
   session: SessionState;
+  /** Where the user was. Restoring answers but not position is disorienting. */
+  step: string;
+}
+
+export interface RestoredDraft {
+  session: SessionState;
+  step: string;
 }
 
 function available(): boolean {
@@ -30,17 +37,22 @@ function available(): boolean {
   }
 }
 
-export function saveDraft(session: SessionState): void {
-  if (!session.persist || !available()) return;
+export function saveDraft(session: SessionState, step: string): void {
+  if (!available()) return;
+  // Opting out must actively remove what was already stored, not just stop writing.
+  if (!session.persist) {
+    clearDraft();
+    return;
+  }
   try {
-    const draft: StoredDraft = { version: APP_VERSION, savedAt: Date.now(), session };
+    const draft: StoredDraft = { version: APP_VERSION, savedAt: Date.now(), session, step };
     window.localStorage.setItem(KEY, JSON.stringify(draft));
   } catch {
     // A full or restricted store is not worth interrupting the user over.
   }
 }
 
-export function loadDraft(ttlMs: number = DEFAULT_TTL_MS): SessionState | null {
+export function loadDraft(ttlMs: number = DEFAULT_TTL_MS): RestoredDraft | null {
   if (!available()) return null;
   try {
     const raw = window.localStorage.getItem(KEY);
@@ -55,7 +67,11 @@ export function loadDraft(ttlMs: number = DEFAULT_TTL_MS): SessionState | null {
       clearDraft();
       return null;
     }
-    return draft.session;
+    if (!draft.session?.answers || !draft.step) {
+      clearDraft();
+      return null;
+    }
+    return { session: draft.session, step: draft.step };
   } catch {
     clearDraft();
     return null;
