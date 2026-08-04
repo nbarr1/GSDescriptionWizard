@@ -20,7 +20,6 @@ import type {
 import { GAP_CATEGORIES } from '../types';
 import {
   APP_VERSION,
-  optionLabel,
   optionsFor,
   outputTemplates as defaultTemplates,
   questionsConfig,
@@ -182,11 +181,10 @@ function renderedAnswer(
     case 'choice':
       return fragment.valueTemplates
         ? answer.value.value
-        : optionLabel(question, answer.value.value).toLowerCase();
+        : outputTextFor(question, answer.value.value);
     case 'multi': {
       if (answer.value.values.length === 0) return null;
-      const labels = answer.value.values.map((v) => optionLabel(question, v).toLowerCase());
-      return joinList(labels);
+      return joinList(answer.value.values.map((v) => outputTextFor(question, v)));
     }
     case 'boolean':
       return answer.value.value ? 'yes' : 'no';
@@ -292,6 +290,27 @@ export function roleNoun(session: SessionState): string {
 function choiceValue(session: SessionState, questionId: string): string | undefined {
   const answer = session.answers[questionId];
   return answer?.value.kind === 'choice' ? answer.value.value : undefined;
+}
+
+/**
+ * How an option reads in the description. UI labels are kept short so they scan
+ * on a tablet; `outputText` carries the clause the sentence actually needs.
+ */
+function outputTextFor(question: Question, value: string): string {
+  const option = optionsFor(question).find((o) => o.value === value);
+  if (!option) return value;
+  return option.outputText ?? lowerPreservingAcronyms(option.label);
+}
+
+/**
+ * Lowercases a label for mid-sentence use without destroying acronyms - "EHS"
+ * must not become "ehs" just because the sentence around it is lower case.
+ */
+function lowerPreservingAcronyms(label: string): string {
+  return label
+    .split(/(\s+)/)
+    .map((word) => (/^[A-Z0-9]{2,}$/.test(word) ? word : word.toLowerCase()))
+    .join('');
 }
 
 function joinList(items: string[]): string {

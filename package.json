@@ -1,6 +1,6 @@
 {
   "name": "ii-description-wizard",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "private": true,
   "description": "Deterministic, offline wizard that walks a reporter through a complete EHS Injury and Illness description.",
   "type": "module",

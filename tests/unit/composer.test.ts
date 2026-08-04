@@ -277,3 +277,34 @@ describe('sentence frames that supply their own subject', () => {
     );
   });
 });
+
+describe('option wording in the output', () => {
+  it('preserves acronyms when an option label is used mid-sentence', () => {
+    const session = sessionWith({
+      onset_pattern: choice('acute'),
+      employee_role: choice('operator'),
+      resp_notified: { kind: 'multi', values: ['the team lead', 'EHS'] },
+    });
+    const { text: out } = compose(session);
+    expect(out).toContain('EHS');
+    expect(out).not.toContain('ehs');
+  });
+
+  it('joins a multiselect into readable prose', () => {
+    const session = sessionWith({
+      onset_pattern: choice('acute'),
+      employee_role: choice('operator'),
+      ppe_in_use: { kind: 'multi', values: ['safety glasses', 'cut resistant gloves'] },
+    });
+    expect(compose(session).text).toContain('PPE in use: safety glasses and cut resistant gloves.');
+  });
+
+  it('turns a posture pick into a body-position sentence', () => {
+    const session = sessionWith({
+      onset_pattern: choice('acute'),
+      employee_role: choice('operator'),
+      posture_at_event: choice('bent_and_twisted'),
+    });
+    expect(compose(session).text).toContain('Body position at the moment: bent and twisted.');
+  });
+});

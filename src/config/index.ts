@@ -24,7 +24,7 @@ export const allowlistConfig = allowlistRaw as unknown as AllowlistConfig;
 export const scoringConfig = scoringRaw as unknown as ScoringConfig;
 
 /** Bumped by hand on release. Rendered in the footer and available to the version tag. */
-export const APP_VERSION = '1.0.0';
+export const APP_VERSION = '1.1.0';
 
 const questionById = new Map<string, Question>(questionsConfig.questions.map((q) => [q.id, q]));
 
@@ -61,6 +61,7 @@ export function optionLabel(question: Question, value: string): string {
 export function validateConfig(): string[] {
   const problems: string[] = [];
   const stageIds = new Set(questionsConfig.stages.map((s) => s.id));
+  const screenIds = new Set(questionsConfig.screens.map((s) => s.id));
   const ids = new Set<string>();
 
   for (const q of questionsConfig.questions) {
@@ -68,11 +69,15 @@ export function validateConfig(): string[] {
     ids.add(q.id);
 
     if (!stageIds.has(q.stage)) problems.push(`${q.id}: unknown stage "${q.stage}"`);
+    if (!screenIds.has(q.screen)) problems.push(`${q.id}: unknown screen "${q.screen}"`);
 
     if (q.optionsRef && !vocabularyConfig.lists[q.optionsRef]) {
       problems.push(`${q.id}: unknown optionsRef "${q.optionsRef}"`);
     }
-    if ((q.kind === 'select' || q.kind === 'multiselect') && optionsFor(q).length === 0) {
+    if (
+      (q.kind === 'select' || q.kind === 'multiselect' || q.kind === 'posture') &&
+      optionsFor(q).length === 0
+    ) {
       problems.push(`${q.id}: a ${q.kind} question needs options`);
     }
     if ((q.kind === 'text' || q.kind === 'textarea') && !q.examples?.length) {
@@ -105,6 +110,12 @@ export function validateConfig(): string[] {
   }
   for (const id of Object.keys(outputTemplates.fragments)) {
     if (!sectioned.has(id)) problems.push(`fragment "${id}" is not placed in any output section`);
+  }
+
+  // Every screen must hold at least one question, or it would render blank.
+  const usedScreens = new Set(questionsConfig.questions.map((q) => q.screen));
+  for (const screen of questionsConfig.screens) {
+    if (!usedScreens.has(screen.id)) problems.push(`screen "${screen.id}" has no questions`);
   }
 
   const checklistIds = new Set<string>();

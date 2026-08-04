@@ -53,6 +53,8 @@ describe.each(scenarios)('scenario: $id', (scenario) => {
   it('answers every question the flow makes visible', () => {
     const unanswered = questionsConfig.questions
       .filter((q) => isVisible(q, session))
+      // Questions that only warn when blank are genuinely optional.
+      .filter((q) => (q.validation?.emptyTier ?? 'warn') !== 'warn')
       .filter((q) => !session.answers[q.id])
       .map((q) => q.id);
     expect(unanswered, `${scenario.id} leaves questions unanswered`).toEqual([]);

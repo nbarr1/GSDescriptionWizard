@@ -48,11 +48,11 @@ export function renderReview(options: ReviewOptions): HTMLElement {
 
   const screen = el('section', { class: 'screen review' });
   screen.appendChild(
-    el('h2', { class: 'question__prompt', 'data-focus': 'true', text: 'Review and copy' }),
+    el('h2', { class: 'screen__title', 'data-focus': 'true', text: 'Review and copy' }),
   );
   screen.appendChild(
     el('p', {
-      class: 'question__help',
+      class: 'screen__intro',
       text: 'This is the text to paste into the Injury/Illness Description field. You can edit it here before copying.',
     }),
   );

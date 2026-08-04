@@ -35,6 +35,29 @@ the onset pattern, because the acute-event narrative simply does not fit a
 gradual-onset strain - so people faced with it write nothing. Gradual, discovered
 and aggravation cases each get their own question set.
 
+## How long it takes
+
+A typical case is **14 screens** and about **11 to 13 things to type**. Everything
+else is a tap. The first version asked one question per screen, which came to
+roughly 35 screens and 25 typed answers for the same case - and answer quality
+falls off long before a reporter reaches the end of that.
+
+|                               | First version | Now   |
+| ----------------------------- | ------------- | ----- |
+| Screens for one acute case    | ~35           | 14    |
+| Questions answered by typing  | ~25           | 11-13 |
+| Questions answered by tapping | ~10           | ~35   |
+
+Free text is reserved for the things a picker genuinely cannot hold: the task,
+the three-part sequence, the deviation from the method, and why it happened.
+Weights, heights, durations, PPE, first aid, scene actions and timing are all
+bands or checklists now.
+
+**Body position is a picture.** Describing your own posture in words is slow and
+most people do it badly - "bent over" covers a squat, a stoop and a twist, which
+are three different mechanisms. The wizard shows thirteen labelled figures and
+composes the pick into precise prose.
+
 ## What it does
 
 - **Asks only what the form cannot capture.** Names, dates, body parts, severity,
@@ -98,18 +121,18 @@ records why it is absent. Regenerate with `npm run benchmark`.
 
 | Scenario                                  | Score | Band                | Chars | Root cause | Equipment | Immediate actions | Procedure | Activity | Sequence |
 | ----------------------------------------- | ----- | ------------------- | ----- | ---------- | --------- | ----------------- | --------- | -------- | -------- |
-| Acute laceration with a hand tool         | 100   | Investigation-ready | 3531  | covered    | covered   | covered           | covered   | covered  | covered  |
-| Overexertion during a two-person lift     | 96    | Investigation-ready | 4006  | covered    | covered   | covered           | covered   | covered  | covered  |
-| Slip on a wet floor                       | 97    | Investigation-ready | 3598  | covered    | covered   | covered           | covered   | covered  | covered  |
-| Caught in during guard removal            | 95    | Investigation-ready | 3996  | covered    | covered   | covered           | covered   | covered  | covered  |
-| Gradual onset shoulder strain             | 96    | Investigation-ready | 3594  | covered    | covered   | covered           | covered   | covered  | covered  |
-| Chemical splash to the forearm            | 96    | Investigation-ready | 3564  | covered    | covered   | covered           | covered   | covered  | covered  |
-| Fall from a ladder                        | 100   | Investigation-ready | 4091  | covered    | covered   | covered           | covered   | covered  | covered  |
-| Thermal burn from a heated platen         | 96    | Investigation-ready | 3993  | covered    | covered   | covered           | covered   | covered  | covered  |
-| Struck by dropped material                | 96    | Investigation-ready | 3658  | covered    | covered   | covered           | covered   | covered  | covered  |
-| Repetitive motion wrist symptoms          | 92    | Investigation-ready | 3852  | covered    | covered   | covered           | partial   | covered  | covered  |
-| Delayed report of a back injury           | 89    | Investigation-ready | 3859  | covered    | covered   | covered           | covered   | covered  | covered  |
-| Aggravation of a prior shoulder condition | 98    | Investigation-ready | 3896  | covered    | covered   | covered           | covered   | covered  | covered  |
+| Acute laceration with a hand tool         | 100   | Investigation-ready | 3253  | covered    | covered   | covered           | covered   | covered  | covered  |
+| Overexertion during a two-person lift     | 100   | Investigation-ready | 3475  | covered    | covered   | covered           | covered   | covered  | covered  |
+| Slip on a wet floor                       | 96    | Investigation-ready | 3094  | covered    | covered   | covered           | covered   | covered  | covered  |
+| Caught in during guard removal            | 99    | Investigation-ready | 3769  | covered    | covered   | covered           | covered   | covered  | covered  |
+| Gradual onset shoulder strain             | 95    | Investigation-ready | 3052  | covered    | covered   | covered           | covered   | covered  | covered  |
+| Chemical splash to the forearm            | 96    | Investigation-ready | 3375  | covered    | covered   | covered           | covered   | covered  | covered  |
+| Fall from a ladder                        | 99    | Investigation-ready | 3461  | covered    | covered   | covered           | covered   | covered  | covered  |
+| Thermal burn from a heated platen         | 97    | Investigation-ready | 3538  | covered    | covered   | covered           | covered   | covered  | covered  |
+| Struck by dropped material                | 95    | Investigation-ready | 3172  | covered    | covered   | covered           | covered   | covered  | covered  |
+| Repetitive motion wrist symptoms          | 90    | Investigation-ready | 3133  | covered    | covered   | covered           | partial   | covered  | covered  |
+| Delayed report of a back injury           | 94    | Investigation-ready | 3354  | covered    | covered   | covered           | covered   | covered  | covered  |
+| Aggravation of a prior shoulder condition | 94    | Investigation-ready | 3408  | covered    | covered   | covered           | covered   | covered  | covered  |
 
 | Deficiency category           | Missing in the 656 baseline records | Addressed across the 12 fixtures |
 | ----------------------------- | ----------------------------------- | -------------------------------- |
@@ -162,14 +185,13 @@ trimming and that is a content change, not a code change.
 
 **A finding worth surfacing:** the brief proposed a 400 to 1200 character target
 with a warning above 2000. Measurement contradicts that. All twelve benchmark
-fixtures compose to between 3531 and 4091 characters, because a description that
+fixtures compose to between 3052 and 3769 characters, because a description that
 genuinely covers task, procedure, equipment, a three-part sequence, mechanism,
-contributing conditions and immediate response does not fit in 1200 characters.
-Warning above 2000 would have fired on every correct output and trained users to
-ignore the warning, so the shipped defaults are `targetMax: 3000` and
-`warnAbove: 4500`. The `warnBelow: 300` floor is unchanged from the brief. If the
-original numbers are wanted, they are two values in
-`src/config/output-templates.json`.
+contributing conditions and immediate response does not fit in 1200. Warning
+above 2000 would have fired on every correct output and trained users to ignore
+the warning, so the shipped defaults are `targetMax: 3500` and `warnAbove: 4200`.
+The `warnBelow: 300` floor is unchanged from the brief. If the original numbers
+are wanted, they are two values in `src/config/output-templates.json`.
 
 ### 2. The exact Accident Type vocabulary at this site — ASSUMED
 

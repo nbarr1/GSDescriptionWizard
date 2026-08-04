@@ -1,4 +1,5 @@
 {
+  "_comment": "Shared option lists. Most of these exist to replace a free-text box: a reporter picks a band in a second and the composer turns it into precise prose. Where a band is genuinely not good enough - the task itself, the sequence, the cause - the question stays free text.",
   "lists": {
     "onsetPattern": [
       {
@@ -9,187 +10,1600 @@
       {
         "value": "gradual",
         "label": "Gradual onset or cumulative",
-        "note": "Symptoms built up over days, weeks or months of the same work. Strains, sprains, ergonomic complaints."
+        "note": "Built up over days, weeks or months of the same work. Strains, sprains, ergonomic complaints."
       },
       {
         "value": "discovered",
         "label": "Discovered condition or exposure",
-        "note": "Found later. A rash, a hearing shift, a positive monitoring result, an exposure noticed after the fact."
+        "note": "Found later. A rash, a hearing shift, an exposure noticed after the fact."
       },
       {
         "value": "aggravation",
         "label": "Aggravation of a prior condition",
-        "note": "An existing injury or condition made worse by a work event or work activity."
+        "note": "An existing injury made worse by a work event or work activity."
       }
     ],
-
     "injuryOrIllness": [
-      { "value": "injury", "label": "Injury" },
-      { "value": "illness", "label": "Illness" }
+      {
+        "value": "injury",
+        "label": "Injury"
+      },
+      {
+        "value": "illness",
+        "label": "Illness"
+      }
     ],
-
     "accidentType": [
-      { "value": "struck_by", "label": "Struck by object or equipment" },
-      { "value": "struck_against", "label": "Struck against object or equipment" },
-      { "value": "caught_in_between", "label": "Caught in, under or between" },
+      {
+        "value": "struck_by",
+        "label": "Struck by object or equipment"
+      },
+      {
+        "value": "struck_against",
+        "label": "Struck against object or equipment"
+      },
+      {
+        "value": "caught_in_between",
+        "label": "Caught in, under or between"
+      },
       {
         "value": "overexertion",
-        "label": "Overexertion - lifting, lowering, pushing, pulling, carrying"
+        "label": "Overexertion - lifting, pushing, pulling, carrying"
       },
-      { "value": "fall_same_level", "label": "Fall, slip or trip on the same level" },
-      { "value": "fall_elevation", "label": "Fall from elevation" },
-      { "value": "repetitive_motion", "label": "Repetitive motion or sustained posture" },
-      { "value": "contact_temperature", "label": "Contact with temperature extreme - hot or cold" },
-      { "value": "contact_chemical", "label": "Contact with chemical or harmful substance" },
-      { "value": "contact_electrical", "label": "Contact with electricity" },
+      {
+        "value": "fall_same_level",
+        "label": "Fall, slip or trip on the same level"
+      },
+      {
+        "value": "fall_elevation",
+        "label": "Fall from elevation"
+      },
+      {
+        "value": "repetitive_motion",
+        "label": "Repetitive motion or sustained posture"
+      },
+      {
+        "value": "contact_temperature",
+        "label": "Contact with temperature extreme"
+      },
+      {
+        "value": "contact_chemical",
+        "label": "Contact with chemical or harmful substance"
+      },
+      {
+        "value": "contact_electrical",
+        "label": "Contact with electricity"
+      },
       {
         "value": "exposure_inhalation",
         "label": "Exposure or inhalation - air, noise, biological"
       },
-      { "value": "motor_vehicle", "label": "Motor vehicle or powered industrial truck incident" },
-      { "value": "other", "label": "Other - none of the above fits" }
+      {
+        "value": "motor_vehicle",
+        "label": "Vehicle or powered industrial truck"
+      },
+      {
+        "value": "other",
+        "label": "Other - none of the above fits"
+      }
     ],
-
     "principalBodyPart": [
-      { "value": "head", "label": "Head or face" },
-      { "value": "eye", "label": "Eye" },
-      { "value": "neck", "label": "Neck" },
-      { "value": "shoulder", "label": "Shoulder" },
-      { "value": "arm", "label": "Arm or elbow" },
-      { "value": "wrist", "label": "Wrist" },
-      { "value": "hand", "label": "Hand" },
-      { "value": "finger", "label": "Finger or thumb" },
-      { "value": "back_upper", "label": "Upper back" },
-      { "value": "back_lower", "label": "Lower back" },
-      { "value": "trunk", "label": "Chest, abdomen or trunk" },
-      { "value": "hip", "label": "Hip or groin" },
-      { "value": "leg", "label": "Leg or knee" },
-      { "value": "ankle", "label": "Ankle" },
-      { "value": "foot", "label": "Foot or toe" },
-      { "value": "multiple", "label": "Multiple body parts" },
-      { "value": "systemic", "label": "Systemic or whole body" }
+      {
+        "value": "head",
+        "label": "Head or face"
+      },
+      {
+        "value": "eye",
+        "label": "Eye"
+      },
+      {
+        "value": "neck",
+        "label": "Neck"
+      },
+      {
+        "value": "shoulder",
+        "label": "Shoulder"
+      },
+      {
+        "value": "arm",
+        "label": "Arm or elbow"
+      },
+      {
+        "value": "wrist",
+        "label": "Wrist"
+      },
+      {
+        "value": "hand",
+        "label": "Hand"
+      },
+      {
+        "value": "finger",
+        "label": "Finger or thumb"
+      },
+      {
+        "value": "back_upper",
+        "label": "Upper back"
+      },
+      {
+        "value": "back_lower",
+        "label": "Lower back"
+      },
+      {
+        "value": "trunk",
+        "label": "Chest, abdomen or trunk"
+      },
+      {
+        "value": "hip",
+        "label": "Hip or groin"
+      },
+      {
+        "value": "leg",
+        "label": "Leg or knee"
+      },
+      {
+        "value": "ankle",
+        "label": "Ankle"
+      },
+      {
+        "value": "foot",
+        "label": "Foot or toe"
+      },
+      {
+        "value": "multiple",
+        "label": "Multiple body parts"
+      },
+      {
+        "value": "systemic",
+        "label": "Systemic or whole body"
+      }
     ],
-
     "employeeRole": [
-      { "value": "employee", "label": "Employee (generic)" },
-      { "value": "operator", "label": "Operator" },
-      { "value": "technician", "label": "Technician" },
-      { "value": "maintenance technician", "label": "Maintenance technician" },
-      { "value": "material handler", "label": "Material handler" },
-      { "value": "assembler", "label": "Assembler" },
-      { "value": "machinist", "label": "Machinist" },
-      { "value": "welder", "label": "Welder" },
-      { "value": "electrician", "label": "Electrician" },
-      { "value": "forklift operator", "label": "Forklift operator" },
-      { "value": "warehouse associate", "label": "Warehouse associate" },
-      { "value": "quality inspector", "label": "Quality inspector" },
-      { "value": "engineer", "label": "Engineer" },
-      { "value": "janitorial staff member", "label": "Janitorial staff member" },
-      { "value": "contractor", "label": "Contractor" },
-      { "value": "driver", "label": "Driver" }
+      {
+        "value": "employee",
+        "label": "Employee (generic)"
+      },
+      {
+        "value": "operator",
+        "label": "Operator"
+      },
+      {
+        "value": "technician",
+        "label": "Technician"
+      },
+      {
+        "value": "maintenance technician",
+        "label": "Maintenance technician",
+        "outputText": "maintenance technician"
+      },
+      {
+        "value": "material handler",
+        "label": "Material handler",
+        "outputText": "material handler"
+      },
+      {
+        "value": "assembler",
+        "label": "Assembler"
+      },
+      {
+        "value": "machinist",
+        "label": "Machinist"
+      },
+      {
+        "value": "welder",
+        "label": "Welder"
+      },
+      {
+        "value": "electrician",
+        "label": "Electrician"
+      },
+      {
+        "value": "forklift operator",
+        "label": "Forklift operator",
+        "outputText": "forklift operator"
+      },
+      {
+        "value": "warehouse associate",
+        "label": "Warehouse associate",
+        "outputText": "warehouse associate"
+      },
+      {
+        "value": "quality inspector",
+        "label": "Quality inspector",
+        "outputText": "quality inspector"
+      },
+      {
+        "value": "engineer",
+        "label": "Engineer"
+      },
+      {
+        "value": "janitorial staff member",
+        "label": "Janitorial staff member",
+        "outputText": "janitorial staff member"
+      },
+      {
+        "value": "contractor",
+        "label": "Contractor"
+      },
+      {
+        "value": "driver",
+        "label": "Driver"
+      }
     ],
-
     "discoveryMode": [
-      { "value": "witnessed", "label": "Witnessed by at least one other person" },
-      { "value": "self_reported_immediate", "label": "Not witnessed - self reported at the time" },
-      { "value": "self_reported_delayed", "label": "Not witnessed - self reported later" },
-      { "value": "discovered_later", "label": "Discovered later by the employee or another person" }
+      {
+        "value": "witnessed",
+        "label": "Witnessed by someone else"
+      },
+      {
+        "value": "self_reported_immediate",
+        "label": "Not witnessed - reported at the time"
+      },
+      {
+        "value": "self_reported_delayed",
+        "label": "Not witnessed - reported later"
+      },
+      {
+        "value": "discovered_later",
+        "label": "Discovered later"
+      }
     ],
-
+    "posture": [
+      {
+        "value": "standing_upright",
+        "label": "Standing upright"
+      },
+      {
+        "value": "reaching_forward",
+        "label": "Reaching forward"
+      },
+      {
+        "value": "reaching_overhead",
+        "label": "Reaching overhead"
+      },
+      {
+        "value": "bent_forward",
+        "label": "Bent forward at the waist"
+      },
+      {
+        "value": "bent_and_twisted",
+        "label": "Bent and twisted"
+      },
+      {
+        "value": "squatting",
+        "label": "Squatting"
+      },
+      {
+        "value": "kneeling",
+        "label": "Kneeling"
+      },
+      {
+        "value": "seated",
+        "label": "Seated"
+      },
+      {
+        "value": "leaning_over_barrier",
+        "label": "Leaning over a rail or machine"
+      },
+      {
+        "value": "on_ladder",
+        "label": "On a ladder or step"
+      },
+      {
+        "value": "carrying_load",
+        "label": "Carrying a load"
+      },
+      {
+        "value": "walking",
+        "label": "Walking"
+      },
+      {
+        "value": "lying_or_fallen",
+        "label": "On the floor"
+      }
+    ],
     "taskStage": [
-      { "value": "setup", "label": "Setup or preparation" },
-      { "value": "in_process", "label": "In process - normal running work" },
-      { "value": "teardown", "label": "Teardown, changeover or breakdown" },
-      { "value": "transport", "label": "Transport, moving or handling material" },
-      { "value": "inspection", "label": "Inspection, checking or measuring" },
-      { "value": "troubleshooting", "label": "Troubleshooting a fault or abnormal condition" },
-      { "value": "maintenance", "label": "Planned maintenance or servicing" },
-      { "value": "cleanup", "label": "Cleaning, housekeeping or waste handling" },
-      { "value": "walking", "label": "Walking or moving between areas" },
-      { "value": "other", "label": "Other" }
+      {
+        "value": "setup",
+        "label": "Setup or preparation"
+      },
+      {
+        "value": "in_process",
+        "label": "In process - normal running work"
+      },
+      {
+        "value": "teardown",
+        "label": "Teardown or changeover"
+      },
+      {
+        "value": "transport",
+        "label": "Transport or handling material"
+      },
+      {
+        "value": "inspection",
+        "label": "Inspection or checking"
+      },
+      {
+        "value": "troubleshooting",
+        "label": "Troubleshooting a fault"
+      },
+      {
+        "value": "maintenance",
+        "label": "Planned maintenance"
+      },
+      {
+        "value": "cleanup",
+        "label": "Cleaning or housekeeping"
+      },
+      {
+        "value": "walking",
+        "label": "Walking between areas"
+      },
+      {
+        "value": "other",
+        "label": "Other"
+      }
     ],
-
+    "taskPurpose": [
+      {
+        "value": "routine",
+        "label": "Routine scheduled work"
+      },
+      {
+        "value": "fault",
+        "label": "Responding to a fault, jam or alarm"
+      },
+      {
+        "value": "behind_schedule",
+        "label": "Catching up - behind the plan or a deadline"
+      },
+      {
+        "value": "changeover",
+        "label": "Changeover between jobs or products"
+      },
+      {
+        "value": "quality",
+        "label": "Quality issue or rework"
+      },
+      {
+        "value": "request",
+        "label": "Asked to by someone else"
+      },
+      {
+        "value": "covering",
+        "label": "Covering for someone or an unfamiliar station"
+      },
+      {
+        "value": "end_of_shift",
+        "label": "End of shift or handover"
+      },
+      {
+        "value": "other",
+        "label": "Other reason"
+      }
+    ],
     "procedureFollowed": [
-      { "value": "as_written", "label": "Yes - the task was being done as written" },
-      { "value": "differed", "label": "No - something differed from the written method" },
-      { "value": "none_exists", "label": "No written procedure exists for this task" },
-      { "value": "unknown", "label": "Not known at the time of this report" }
+      {
+        "value": "as_written",
+        "label": "Yes - done as written"
+      },
+      {
+        "value": "differed",
+        "label": "No - something differed"
+      },
+      {
+        "value": "none_exists",
+        "label": "No written procedure exists"
+      },
+      {
+        "value": "unknown",
+        "label": "Not known at time of report"
+      }
     ],
-
     "equipmentState": [
-      { "value": "energized", "label": "Energized" },
-      { "value": "de_energized", "label": "De-energized" },
-      { "value": "locked_out", "label": "Locked out and tagged out" },
-      { "value": "moving", "label": "Moving or rotating" },
-      { "value": "at_rest", "label": "At rest or stopped" },
-      { "value": "pressurized", "label": "Pressurized" },
-      { "value": "hot", "label": "Hot" },
-      { "value": "cold", "label": "Cold or cryogenic" },
-      { "value": "loaded", "label": "Loaded or under tension" },
-      { "value": "guard_removed", "label": "Guard, cover or barrier removed" },
-      { "value": "not_known", "label": "State not known" }
+      {
+        "value": "energized",
+        "label": "Energized"
+      },
+      {
+        "value": "de_energized",
+        "label": "De-energized"
+      },
+      {
+        "value": "locked_out",
+        "label": "Locked and tagged out"
+      },
+      {
+        "value": "moving",
+        "label": "Moving or rotating"
+      },
+      {
+        "value": "at_rest",
+        "label": "At rest or stopped"
+      },
+      {
+        "value": "pressurized",
+        "label": "Pressurized"
+      },
+      {
+        "value": "hot",
+        "label": "Hot"
+      },
+      {
+        "value": "cold",
+        "label": "Cold or cryogenic"
+      },
+      {
+        "value": "loaded",
+        "label": "Loaded or under tension"
+      },
+      {
+        "value": "guard_removed",
+        "label": "Guard or cover removed"
+      },
+      {
+        "value": "not_known",
+        "label": "State not known"
+      }
     ],
-
+    "equipmentCondition": [
+      {
+        "value": "normal",
+        "label": "Normal working order, nothing outstanding"
+      },
+      {
+        "value": "worn",
+        "label": "Worn, dull or near end of life"
+      },
+      {
+        "value": "damaged",
+        "label": "Damaged or broken"
+      },
+      {
+        "value": "modified",
+        "label": "Modified from original"
+      },
+      {
+        "value": "overdue",
+        "label": "Overdue for service or inspection"
+      },
+      {
+        "value": "intermittent_fault",
+        "label": "Behaving abnormally or intermittently"
+      },
+      {
+        "value": "known_fault",
+        "label": "Known fault already reported"
+      },
+      {
+        "value": "unknown",
+        "label": "Condition not known"
+      }
+    ],
+    "weightBand": [
+      {
+        "value": "under_10",
+        "label": "Under 10 lb"
+      },
+      {
+        "value": "10_25",
+        "label": "10 to 25 lb"
+      },
+      {
+        "value": "25_50",
+        "label": "25 to 50 lb"
+      },
+      {
+        "value": "50_75",
+        "label": "50 to 75 lb"
+      },
+      {
+        "value": "75_100",
+        "label": "75 to 100 lb"
+      },
+      {
+        "value": "over_100",
+        "label": "Over 100 lb"
+      },
+      {
+        "value": "no_discrete_weight",
+        "label": "No discrete weight - a push, pull or jammed part"
+      }
+    ],
+    "objectSize": [
+      {
+        "value": "small_one_hand",
+        "label": "Small - fits in one hand"
+      },
+      {
+        "value": "medium_two_hands",
+        "label": "Medium - needs two hands"
+      },
+      {
+        "value": "bulky",
+        "label": "Bulky - hard to get arms around"
+      },
+      {
+        "value": "long",
+        "label": "Long - bar, pipe or sheet"
+      },
+      {
+        "value": "awkward_shifting",
+        "label": "Shifting or flexible contents"
+      },
+      {
+        "value": "no_handholds",
+        "label": "No hand holds"
+      }
+    ],
+    "gripMethod": [
+      {
+        "value": "two_hands",
+        "label": "Both hands"
+      },
+      {
+        "value": "one_hand",
+        "label": "One hand"
+      },
+      {
+        "value": "handles",
+        "label": "By handles or hand holds"
+      },
+      {
+        "value": "underneath",
+        "label": "Gripped underneath"
+      },
+      {
+        "value": "pinch_grip",
+        "label": "Pinch grip between fingers"
+      },
+      {
+        "value": "against_body",
+        "label": "Held against the body"
+      },
+      {
+        "value": "gloved",
+        "label": "Wearing gloves that affected the grip"
+      },
+      {
+        "value": "bare_hand",
+        "label": "Bare handed for feel"
+      }
+    ],
+    "heightLevel": [
+      {
+        "value": "floor",
+        "label": "Floor level"
+      },
+      {
+        "value": "knee",
+        "label": "Knee height"
+      },
+      {
+        "value": "waist",
+        "label": "Waist height"
+      },
+      {
+        "value": "chest",
+        "label": "Chest height"
+      },
+      {
+        "value": "shoulder",
+        "label": "Shoulder height"
+      },
+      {
+        "value": "overhead",
+        "label": "Above shoulder or overhead"
+      }
+    ],
+    "fallHeightBand": [
+      {
+        "value": "under_4",
+        "label": "Under 4 feet"
+      },
+      {
+        "value": "4_6",
+        "label": "4 to 6 feet"
+      },
+      {
+        "value": "6_10",
+        "label": "6 to 10 feet"
+      },
+      {
+        "value": "10_20",
+        "label": "10 to 20 feet"
+      },
+      {
+        "value": "over_20",
+        "label": "Over 20 feet"
+      }
+    ],
+    "distanceBand": [
+      {
+        "value": "under_1",
+        "label": "Under 1 foot"
+      },
+      {
+        "value": "1_3",
+        "label": "1 to 3 feet"
+      },
+      {
+        "value": "3_6",
+        "label": "3 to 6 feet"
+      },
+      {
+        "value": "6_12",
+        "label": "6 to 12 feet"
+      },
+      {
+        "value": "over_12",
+        "label": "Over 12 feet"
+      }
+    ],
+    "impactDirection": [
+      {
+        "value": "from_above",
+        "label": "From above"
+      },
+      {
+        "value": "from_behind",
+        "label": "From behind"
+      },
+      {
+        "value": "from_the_side",
+        "label": "From the side"
+      },
+      {
+        "value": "from_in_front",
+        "label": "From in front"
+      },
+      {
+        "value": "from_below",
+        "label": "From below"
+      },
+      {
+        "value": "toward_the_body",
+        "label": "Toward the body"
+      }
+    ],
+    "ppeItems": [
+      {
+        "value": "safety glasses",
+        "label": "Safety glasses",
+        "outputText": "safety glasses"
+      },
+      {
+        "value": "goggles",
+        "label": "Goggles"
+      },
+      {
+        "value": "a face shield",
+        "label": "Face shield",
+        "outputText": "a face shield"
+      },
+      {
+        "value": "cut resistant gloves",
+        "label": "Cut resistant gloves",
+        "outputText": "cut resistant gloves"
+      },
+      {
+        "value": "chemical gloves",
+        "label": "Chemical gloves",
+        "outputText": "chemical gloves"
+      },
+      {
+        "value": "general purpose gloves",
+        "label": "General purpose gloves",
+        "outputText": "general purpose gloves"
+      },
+      {
+        "value": "heat resistant gloves",
+        "label": "Heat resistant gloves",
+        "outputText": "heat resistant gloves"
+      },
+      {
+        "value": "sleeve protection",
+        "label": "Sleeve or arm protection",
+        "outputText": "sleeve protection"
+      },
+      {
+        "value": "hearing protection",
+        "label": "Hearing protection",
+        "outputText": "hearing protection"
+      },
+      {
+        "value": "a respirator",
+        "label": "Respirator or dust mask",
+        "outputText": "a respirator"
+      },
+      {
+        "value": "steel toe boots",
+        "label": "Steel toe boots",
+        "outputText": "steel toe boots"
+      },
+      {
+        "value": "a hard hat",
+        "label": "Hard hat",
+        "outputText": "a hard hat"
+      },
+      {
+        "value": "a fall harness",
+        "label": "Fall harness",
+        "outputText": "a fall harness"
+      },
+      {
+        "value": "high visibility clothing",
+        "label": "High visibility clothing",
+        "outputText": "high visibility clothing"
+      },
+      {
+        "value": "no PPE",
+        "label": "None was being worn",
+        "outputText": "no PPE"
+      }
+    ],
     "ppeSpecified": [
-      { "value": "yes", "label": "Yes - it was the PPE specified for this task" },
-      { "value": "no", "label": "No - it differed from what is specified" },
-      { "value": "none_specified", "label": "No PPE is specified for this task" },
-      { "value": "unknown", "label": "Not known at the time of this report" }
+      {
+        "value": "yes",
+        "label": "Yes - matched what is specified"
+      },
+      {
+        "value": "no",
+        "label": "No - differed from what is specified"
+      },
+      {
+        "value": "none_specified",
+        "label": "No PPE is specified for this task"
+      },
+      {
+        "value": "unknown",
+        "label": "Not known at time of report"
+      }
     ],
-
     "yesNoUnknown": [
-      { "value": "yes", "label": "Yes" },
-      { "value": "no", "label": "No" },
-      { "value": "unknown", "label": "Not known at the time of this report" }
+      {
+        "value": "yes",
+        "label": "Yes"
+      },
+      {
+        "value": "no",
+        "label": "No"
+      },
+      {
+        "value": "unknown",
+        "label": "Not known at time of report"
+      }
     ],
-
     "environmentFactors": [
-      { "value": "lighting_poor", "label": "Poor or glaring lighting" },
-      { "value": "noise_high", "label": "High noise" },
-      { "value": "temperature_hot", "label": "Hot" },
-      { "value": "temperature_cold", "label": "Cold" },
-      { "value": "floor_wet", "label": "Wet, oily or contaminated floor" },
-      { "value": "floor_uneven", "label": "Uneven, damaged or obstructed floor" },
-      { "value": "housekeeping_poor", "label": "Poor housekeeping or clutter" },
-      { "value": "congestion", "label": "Congested or restricted working space" },
-      { "value": "visibility_restricted", "label": "Restricted visibility or blind corner" },
-      { "value": "weather", "label": "Weather - outdoor work" },
-      { "value": "vibration", "label": "Vibration" },
-      { "value": "time_pressure", "label": "Time or production pressure" },
-      { "value": "none_notable", "label": "Nothing notable about the environment" }
+      {
+        "value": "poor or glaring lighting",
+        "label": "Poor or glaring lighting",
+        "outputText": "poor or glaring lighting"
+      },
+      {
+        "value": "high noise",
+        "label": "High noise",
+        "outputText": "high noise"
+      },
+      {
+        "value": "heat",
+        "label": "Hot"
+      },
+      {
+        "value": "cold",
+        "label": "Cold"
+      },
+      {
+        "value": "a wet, oily or contaminated floor",
+        "label": "Wet, oily or contaminated floor",
+        "outputText": "a wet, oily or contaminated floor"
+      },
+      {
+        "value": "an uneven or obstructed floor",
+        "label": "Uneven or obstructed floor",
+        "outputText": "an uneven or obstructed floor"
+      },
+      {
+        "value": "poor housekeeping",
+        "label": "Poor housekeeping or clutter",
+        "outputText": "poor housekeeping"
+      },
+      {
+        "value": "restricted working space",
+        "label": "Congested or restricted space",
+        "outputText": "restricted working space"
+      },
+      {
+        "value": "restricted visibility",
+        "label": "Restricted visibility or blind corner",
+        "outputText": "restricted visibility"
+      },
+      {
+        "value": "weather",
+        "label": "Weather - outdoor work"
+      },
+      {
+        "value": "vibration",
+        "label": "Vibration"
+      },
+      {
+        "value": "time or production pressure",
+        "label": "Time or production pressure",
+        "outputText": "time or production pressure"
+      },
+      {
+        "value": "nothing notable",
+        "label": "Nothing notable about the environment",
+        "outputText": "nothing notable"
+      }
     ],
-
-    "workStatusAfter": [
-      { "value": "stopped", "label": "Work stopped" },
-      { "value": "modified", "label": "Work continued in a modified way" },
-      { "value": "continued", "label": "Work continued unchanged" }
+    "timeIntoShift": [
+      {
+        "value": "the first hour of the shift",
+        "label": "First hour",
+        "outputText": "the first hour of the shift"
+      },
+      {
+        "value": "the first half of the shift",
+        "label": "First half",
+        "outputText": "the first half of the shift"
+      },
+      {
+        "value": "the second half of the shift",
+        "label": "Second half",
+        "outputText": "the second half of the shift"
+      },
+      {
+        "value": "the last hour of the shift",
+        "label": "Last hour",
+        "outputText": "the last hour of the shift"
+      },
+      {
+        "value": "beyond the scheduled shift end",
+        "label": "Past scheduled end",
+        "outputText": "beyond the scheduled shift end"
+      },
+      {
+        "value": "an unknown point in the shift",
+        "label": "Not known",
+        "outputText": "an unknown point in the shift"
+      }
     ],
-
-    "evaluationPath": [
-      { "value": "none", "label": "No evaluation sought" },
-      { "value": "onsite_medical", "label": "Onsite medical or occupational health" },
-      { "value": "offsite_clinic", "label": "Offsite occupational clinic" },
-      { "value": "emergency_room", "label": "Emergency room" },
-      { "value": "personal_physician", "label": "Personal physician" },
-      { "value": "pending", "label": "Evaluation planned but not yet completed" }
+    "overtimeState": [
+      {
+        "value": "no_overtime",
+        "label": "No overtime"
+      },
+      {
+        "value": "overtime_today",
+        "label": "Overtime that day"
+      },
+      {
+        "value": "consecutive_overtime",
+        "label": "Several consecutive days of overtime"
+      },
+      {
+        "value": "unknown",
+        "label": "Not known"
+      }
     ],
-
+    "timeIntoTask": [
+      {
+        "value": "the first few seconds",
+        "label": "First few seconds",
+        "outputText": "the first few seconds"
+      },
+      {
+        "value": "the first few minutes",
+        "label": "First few minutes",
+        "outputText": "the first few minutes"
+      },
+      {
+        "value": "roughly half an hour in",
+        "label": "About half an hour in",
+        "outputText": "roughly half an hour in"
+      },
+      {
+        "value": "several hours in",
+        "label": "Several hours in",
+        "outputText": "several hours in"
+      },
+      {
+        "value": "an unknown point in the task",
+        "label": "Not known",
+        "outputText": "an unknown point in the task"
+      }
+    ],
+    "firstAidActions": [
+      {
+        "value": "the wound was rinsed or irrigated",
+        "label": "Rinsed or irrigated",
+        "outputText": "the wound was rinsed or irrigated"
+      },
+      {
+        "value": "an eyewash station was used",
+        "label": "Eyewash station used",
+        "outputText": "an eyewash station was used"
+      },
+      {
+        "value": "an emergency shower was used",
+        "label": "Emergency shower used",
+        "outputText": "an emergency shower was used"
+      },
+      {
+        "value": "a sterile dressing was applied",
+        "label": "Dressing or bandage applied",
+        "outputText": "a sterile dressing was applied"
+      },
+      {
+        "value": "pressure was applied to control bleeding",
+        "label": "Pressure to control bleeding",
+        "outputText": "pressure was applied to control bleeding"
+      },
+      {
+        "value": "a cold pack was applied",
+        "label": "Cold pack applied",
+        "outputText": "a cold pack was applied"
+      },
+      {
+        "value": "the area was cooled under running water",
+        "label": "Cooled under running water",
+        "outputText": "the area was cooled under running water"
+      },
+      {
+        "value": "a splint or support was applied",
+        "label": "Splint or support applied",
+        "outputText": "a splint or support was applied"
+      },
+      {
+        "value": "the employee was moved to a safe area",
+        "label": "Moved to a safe area",
+        "outputText": "the employee was moved to a safe area"
+      },
+      {
+        "value": "oxygen or resuscitation was given",
+        "label": "Oxygen or resuscitation",
+        "outputText": "oxygen or resuscitation was given"
+      },
+      {
+        "value": "no first aid was given at the scene",
+        "label": "None given at the scene",
+        "outputText": "no first aid was given at the scene"
+      }
+    ],
     "responderRole": [
-      { "value": "self", "label": "The employee, self-administered" },
-      { "value": "coworker", "label": "A coworker" },
-      { "value": "first_aid_responder", "label": "A trained first aid responder" },
-      { "value": "emergency_response_team", "label": "The site emergency response team" },
-      { "value": "onsite_medical", "label": "Onsite medical or occupational health staff" },
-      { "value": "supervisor", "label": "The supervisor or team lead" },
-      { "value": "external_ems", "label": "External emergency medical services" },
-      { "value": "none", "label": "No first aid or treatment was given at the scene" }
+      {
+        "value": "self",
+        "label": "Self-administered"
+      },
+      {
+        "value": "coworker",
+        "label": "A coworker"
+      },
+      {
+        "value": "first_aid_responder",
+        "label": "A trained first aid responder"
+      },
+      {
+        "value": "emergency_response_team",
+        "label": "Site emergency response team"
+      },
+      {
+        "value": "onsite_medical",
+        "label": "Onsite medical staff"
+      },
+      {
+        "value": "supervisor",
+        "label": "Supervisor or team lead"
+      },
+      {
+        "value": "external_ems",
+        "label": "External emergency services"
+      },
+      {
+        "value": "none",
+        "label": "Nobody - no first aid given"
+      }
     ],
-
+    "notifiedRoles": [
+      {
+        "value": "the team lead",
+        "label": "Team lead",
+        "outputText": "the team lead"
+      },
+      {
+        "value": "the supervisor",
+        "label": "Supervisor",
+        "outputText": "the supervisor"
+      },
+      {
+        "value": "EHS",
+        "label": "EHS"
+      },
+      {
+        "value": "onsite medical",
+        "label": "Onsite medical",
+        "outputText": "onsite medical"
+      },
+      {
+        "value": "the control room",
+        "label": "Control room",
+        "outputText": "the control room"
+      },
+      {
+        "value": "the site emergency response team",
+        "label": "Emergency response team",
+        "outputText": "the site emergency response team"
+      },
+      {
+        "value": "nobody at the time",
+        "label": "Nobody at the time",
+        "outputText": "nobody at the time"
+      }
+    ],
+    "elapsedBand": [
+      {
+        "value": "immediately",
+        "label": "Immediately"
+      },
+      {
+        "value": "within a few minutes",
+        "label": "Within a few minutes",
+        "outputText": "within a few minutes"
+      },
+      {
+        "value": "within the hour",
+        "label": "Within the hour",
+        "outputText": "within the hour"
+      },
+      {
+        "value": "later the same shift",
+        "label": "Later the same shift",
+        "outputText": "later the same shift"
+      },
+      {
+        "value": "at the end of the shift",
+        "label": "At the end of the shift",
+        "outputText": "at the end of the shift"
+      },
+      {
+        "value": "the following day or later",
+        "label": "The following day or later",
+        "outputText": "the following day or later"
+      }
+    ],
+    "sceneActions": [
+      {
+        "value": "the equipment was stopped",
+        "label": "Equipment stopped",
+        "outputText": "the equipment was stopped"
+      },
+      {
+        "value": "the equipment was locked and tagged out",
+        "label": "Locked and tagged out",
+        "outputText": "the equipment was locked and tagged out"
+      },
+      {
+        "value": "the area was barriered off",
+        "label": "Area barriered off",
+        "outputText": "the area was barriered off"
+      },
+      {
+        "value": "a spill was contained",
+        "label": "Spill contained",
+        "outputText": "a spill was contained"
+      },
+      {
+        "value": "the scene was photographed",
+        "label": "Scene photographed",
+        "outputText": "the scene was photographed"
+      },
+      {
+        "value": "the scene was left undisturbed for EHS",
+        "label": "Left undisturbed for EHS",
+        "outputText": "the scene was left undisturbed for EHS"
+      },
+      {
+        "value": "nothing was secured",
+        "label": "Nothing was secured",
+        "outputText": "nothing was secured"
+      }
+    ],
+    "workStatusAfter": [
+      {
+        "value": "stopped",
+        "label": "Work stopped"
+      },
+      {
+        "value": "modified",
+        "label": "Work continued, modified"
+      },
+      {
+        "value": "continued",
+        "label": "Work continued unchanged"
+      }
+    ],
+    "evaluationPath": [
+      {
+        "value": "none",
+        "label": "No evaluation sought"
+      },
+      {
+        "value": "onsite_medical",
+        "label": "Onsite medical"
+      },
+      {
+        "value": "offsite_clinic",
+        "label": "Offsite occupational clinic"
+      },
+      {
+        "value": "emergency_room",
+        "label": "Emergency room"
+      },
+      {
+        "value": "personal_physician",
+        "label": "Personal physician"
+      },
+      {
+        "value": "pending",
+        "label": "Planned, not yet done"
+      }
+    ],
     "priorConditionSource": [
-      { "value": "prior_work_case", "label": "A previous work-related case at this site" },
-      { "value": "prior_work_case_other", "label": "A previous work-related case elsewhere" },
-      { "value": "non_work", "label": "A non-work condition" },
-      { "value": "unknown", "label": "Not known at the time of this report" }
+      {
+        "value": "prior_work_case",
+        "label": "A previous work case at this site"
+      },
+      {
+        "value": "prior_work_case_other",
+        "label": "A previous work case elsewhere"
+      },
+      {
+        "value": "non_work",
+        "label": "A non-work condition"
+      },
+      {
+        "value": "unknown",
+        "label": "Not known at time of report"
+      }
+    ],
+    "frequencyBand": [
+      {
+        "value": "a few times per shift",
+        "label": "A few times per shift",
+        "outputText": "a few times per shift"
+      },
+      {
+        "value": "tens of times per shift",
+        "label": "Tens of times per shift",
+        "outputText": "tens of times per shift"
+      },
+      {
+        "value": "over a hundred times per shift",
+        "label": "Over 100 times per shift",
+        "outputText": "over a hundred times per shift"
+      },
+      {
+        "value": "several hundred times per shift",
+        "label": "Several hundred times per shift",
+        "outputText": "several hundred times per shift"
+      },
+      {
+        "value": "continuously for most of the shift",
+        "label": "Continuously, most of the shift",
+        "outputText": "continuously for most of the shift"
+      },
+      {
+        "value": "a few times per week",
+        "label": "A few times per week",
+        "outputText": "a few times per week"
+      }
+    ],
+    "tenureBand": [
+      {
+        "value": "less than a month",
+        "label": "Less than a month",
+        "outputText": "less than a month"
+      },
+      {
+        "value": "one to six months",
+        "label": "1 to 6 months",
+        "outputText": "one to six months"
+      },
+      {
+        "value": "six months to two years",
+        "label": "6 months to 2 years",
+        "outputText": "six months to two years"
+      },
+      {
+        "value": "over two years",
+        "label": "Over 2 years",
+        "outputText": "over two years"
+      }
+    ],
+    "forceBand": [
+      {
+        "value": "light force",
+        "label": "Light - barely noticeable effort",
+        "outputText": "light force"
+      },
+      {
+        "value": "moderate force",
+        "label": "Moderate - noticeable effort",
+        "outputText": "moderate force"
+      },
+      {
+        "value": "heavy force",
+        "label": "Heavy - near maximum effort",
+        "outputText": "heavy force"
+      },
+      {
+        "value": "a sudden unexpected force",
+        "label": "Sudden or unexpected force",
+        "outputText": "a sudden unexpected force"
+      },
+      {
+        "value": "a sustained static hold",
+        "label": "Sustained static hold",
+        "outputText": "a sustained static hold"
+      }
+    ],
+    "symptomProgression": [
+      {
+        "value": "worse and now present outside work",
+        "label": "Worse, present outside work too",
+        "outputText": "worse and now present outside work"
+      },
+      {
+        "value": "worse but only at work",
+        "label": "Worse, but only at work",
+        "outputText": "worse but only at work"
+      },
+      {
+        "value": "unchanged since it started",
+        "label": "Unchanged since it started",
+        "outputText": "unchanged since it started"
+      },
+      {
+        "value": "improving",
+        "label": "Improving"
+      },
+      {
+        "value": "affecting grip or function",
+        "label": "Now affecting grip or function",
+        "outputText": "affecting grip or function"
+      }
+    ],
+    "surfaceType": [
+      {
+        "value": "sealed concrete",
+        "label": "Sealed concrete",
+        "outputText": "sealed concrete"
+      },
+      {
+        "value": "bare concrete",
+        "label": "Bare concrete",
+        "outputText": "bare concrete"
+      },
+      {
+        "value": "painted steel decking",
+        "label": "Painted or steel decking",
+        "outputText": "painted steel decking"
+      },
+      {
+        "value": "grating or mesh",
+        "label": "Grating or mesh",
+        "outputText": "grating or mesh"
+      },
+      {
+        "value": "tile or vinyl",
+        "label": "Tile or vinyl",
+        "outputText": "tile or vinyl"
+      },
+      {
+        "value": "asphalt or outdoor yard",
+        "label": "Asphalt or outdoor yard",
+        "outputText": "asphalt or outdoor yard"
+      },
+      {
+        "value": "a stair or step",
+        "label": "Stair or step",
+        "outputText": "a stair or step"
+      },
+      {
+        "value": "a ramp or slope",
+        "label": "Ramp or slope",
+        "outputText": "a ramp or slope"
+      }
+    ],
+    "surfaceCondition": [
+      {
+        "value": "water",
+        "label": "Wet with water"
+      },
+      {
+        "value": "oil or coolant",
+        "label": "Oil, coolant or hydraulic fluid",
+        "outputText": "oil or coolant"
+      },
+      {
+        "value": "product or debris",
+        "label": "Product, powder or debris",
+        "outputText": "product or debris"
+      },
+      {
+        "value": "ice or snow",
+        "label": "Ice or snow",
+        "outputText": "ice or snow"
+      },
+      {
+        "value": "an uneven or damaged surface",
+        "label": "Uneven or damaged",
+        "outputText": "an uneven or damaged surface"
+      },
+      {
+        "value": "a trailing cable or hose",
+        "label": "Trailing cable or hose",
+        "outputText": "a trailing cable or hose"
+      },
+      {
+        "value": "an obstruction left in the walkway",
+        "label": "Obstruction in the walkway",
+        "outputText": "an obstruction left in the walkway"
+      },
+      {
+        "value": "a change in floor level",
+        "label": "Change in floor level",
+        "outputText": "a change in floor level"
+      },
+      {
+        "value": "nothing - the surface was clean and dry",
+        "label": "Clean and dry",
+        "outputText": "nothing - the surface was clean and dry"
+      }
+    ],
+    "footwearState": [
+      {
+        "value": "slip resistant safety boots in good condition",
+        "label": "Slip resistant, good condition",
+        "outputText": "slip resistant safety boots in good condition"
+      },
+      {
+        "value": "slip resistant safety boots with worn soles",
+        "label": "Slip resistant, worn soles",
+        "outputText": "slip resistant safety boots with worn soles"
+      },
+      {
+        "value": "standard safety boots",
+        "label": "Standard safety boots",
+        "outputText": "standard safety boots"
+      },
+      {
+        "value": "personal footwear",
+        "label": "Personal, non-issued footwear",
+        "outputText": "personal footwear"
+      },
+      {
+        "value": "footwear that was not recorded",
+        "label": "Not known",
+        "outputText": "footwear that was not recorded"
+      }
+    ],
+    "assistDevice": [
+      {
+        "value": "no assist device exists for this task",
+        "label": "None exists for this task",
+        "outputText": "no assist device exists for this task"
+      },
+      {
+        "value": "an assist device was available and used",
+        "label": "Available and used",
+        "outputText": "an assist device was available and used"
+      },
+      {
+        "value": "an assist device was available but not used",
+        "label": "Available but not used",
+        "outputText": "an assist device was available but not used"
+      },
+      {
+        "value": "an assist device was used but did not work",
+        "label": "Used but failed",
+        "outputText": "an assist device was used but did not work"
+      },
+      {
+        "value": "an assist device exists but was out of service",
+        "label": "Exists but out of service",
+        "outputText": "an assist device exists but was out of service"
+      }
+    ],
+    "liftConfiguration": [
+      {
+        "value": "one_person",
+        "label": "One person"
+      },
+      {
+        "value": "two_person",
+        "label": "Two person"
+      },
+      {
+        "value": "three_plus",
+        "label": "Three or more"
+      },
+      {
+        "value": "not_a_lift",
+        "label": "Not a lift - push, pull or carry"
+      }
+    ],
+    "isolationState": [
+      {
+        "value": "the source was locked and tagged out",
+        "label": "Locked and tagged out",
+        "outputText": "the source was locked and tagged out"
+      },
+      {
+        "value": "the source was isolated but not locked out",
+        "label": "Isolated, not locked out",
+        "outputText": "the source was isolated but not locked out"
+      },
+      {
+        "value": "the line was drained but still pressurized",
+        "label": "Drained but still pressurized",
+        "outputText": "the line was drained but still pressurized"
+      },
+      {
+        "value": "the source was live or energized",
+        "label": "Live or energized",
+        "outputText": "the source was live or energized"
+      },
+      {
+        "value": "the source had not been allowed to cool",
+        "label": "Not allowed to cool",
+        "outputText": "the source had not been allowed to cool"
+      },
+      {
+        "value": "a second energy source remained live",
+        "label": "A second source stayed live",
+        "outputText": "a second energy source remained live"
+      },
+      {
+        "value": "isolation is not required by the written method",
+        "label": "Not required by the method",
+        "outputText": "isolation is not required by the written method"
+      }
+    ],
+    "ventilationState": [
+      {
+        "value": "local exhaust ventilation was in place and working",
+        "label": "Local exhaust, working",
+        "outputText": "local exhaust ventilation was in place and working"
+      },
+      {
+        "value": "local exhaust ventilation was in place but not switched on",
+        "label": "Local exhaust, not switched on",
+        "outputText": "local exhaust ventilation was in place but not switched on"
+      },
+      {
+        "value": "local exhaust ventilation was in place but badly positioned",
+        "label": "Local exhaust, badly positioned",
+        "outputText": "local exhaust ventilation was in place but badly positioned"
+      },
+      {
+        "value": "only general room ventilation was in place",
+        "label": "General room ventilation only",
+        "outputText": "only general room ventilation was in place"
+      },
+      {
+        "value": "no ventilation control was in place",
+        "label": "No ventilation control",
+        "outputText": "no ventilation control was in place"
+      },
+      {
+        "value": "the ventilation state was not known",
+        "label": "Not known",
+        "outputText": "the ventilation state was not known"
+      }
+    ],
+    "contactDurationBand": [
+      {
+        "value": "momentary",
+        "label": "Momentary - under a second"
+      },
+      {
+        "value": "a few seconds",
+        "label": "A few seconds",
+        "outputText": "a few seconds"
+      },
+      {
+        "value": "up to a minute",
+        "label": "Up to a minute",
+        "outputText": "up to a minute"
+      },
+      {
+        "value": "several minutes",
+        "label": "Several minutes",
+        "outputText": "several minutes"
+      },
+      {
+        "value": "an unknown duration",
+        "label": "Not known",
+        "outputText": "an unknown duration"
+      }
+    ],
+    "exposureDurationBand": [
+      {
+        "value": "under 15 minutes",
+        "label": "Under 15 minutes",
+        "outputText": "under 15 minutes"
+      },
+      {
+        "value": "15 minutes to an hour",
+        "label": "15 minutes to an hour",
+        "outputText": "15 minutes to an hour"
+      },
+      {
+        "value": "several hours",
+        "label": "Several hours",
+        "outputText": "several hours"
+      },
+      {
+        "value": "most of the shift",
+        "label": "Most of the shift",
+        "outputText": "most of the shift"
+      },
+      {
+        "value": "repeated across multiple shifts",
+        "label": "Repeated across shifts",
+        "outputText": "repeated across multiple shifts"
+      }
+    ],
+    "releaseMethod": [
+      {
+        "value": "the employee pulled free unaided",
+        "label": "Pulled free unaided",
+        "outputText": "the employee pulled free unaided"
+      },
+      {
+        "value": "a coworker hit the emergency stop",
+        "label": "Coworker hit e-stop",
+        "outputText": "a coworker hit the emergency stop"
+      },
+      {
+        "value": "the employee hit the emergency stop",
+        "label": "Employee hit e-stop",
+        "outputText": "the employee hit the emergency stop"
+      },
+      {
+        "value": "the machine completed its cycle",
+        "label": "Machine completed its cycle",
+        "outputText": "the machine completed its cycle"
+      },
+      {
+        "value": "the load was lifted off",
+        "label": "Load was lifted off",
+        "outputText": "the load was lifted off"
+      },
+      {
+        "value": "the equipment was shut down at the panel",
+        "label": "Shut down at the panel",
+        "outputText": "the equipment was shut down at the panel"
+      }
+    ],
+    "reachDistance": [
+      {
+        "value": "close to the body",
+        "label": "Close to the body",
+        "outputText": "close to the body"
+      },
+      {
+        "value": "at about arm reach",
+        "label": "About arm reach",
+        "outputText": "at about arm reach"
+      },
+      {
+        "value": "at full extended reach",
+        "label": "Full extended reach",
+        "outputText": "at full extended reach"
+      }
     ]
-  }
+  },
+  "_comment_posture": "Values are also figure ids in src/ui/postures.ts. Adding a value here without adding a figure falls back to a text option, which is safe but plainer."
 }
