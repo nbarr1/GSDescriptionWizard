@@ -259,7 +259,7 @@
     {
       "id": "honorific",
       "label": "a personal title followed by a name",
-      "pattern": "\\b(?:mr|mrs|ms|miss|dr)\\.?\\s+[A-Z][a-z]+",
+      "pattern": "\\b(?:[Mm]r|[Mm]rs|[Mm]s|[Mm]iss|[Dd]r|[Pp]rof|[Nn]urse)\\.?\\s+[A-Z][a-z]+",
       "flags": "g"
     }
   ]

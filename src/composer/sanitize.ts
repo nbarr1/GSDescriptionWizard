@@ -82,7 +82,20 @@ export function normalizeUnicode(
   allowlist: AllowlistConfig = defaultAllowlist,
   changes: SanitizeChange[] = [],
 ): string {
-  let text = input.normalize('NFKC');
+  // The map runs before NFKC as well as after. NFKC would otherwise decompose
+  // "3 1/2" from the single vulgar-fraction character straight into "31/2",
+  // which reads as thirty-one halves. Mapping first inserts the needed space.
+  let text = applyMap(input, allowlist, changes);
+  text = text.normalize('NFKC');
+  return applyMap(text, allowlist, changes);
+}
+
+function applyMap(
+  input: string,
+  allowlist: AllowlistConfig,
+  changes: SanitizeChange[],
+): string {
+  let text = input;
   for (const [from, to] of Object.entries(allowlist.unicodeMap)) {
     if (!text.includes(from)) continue;
     text = text.split(from).join(to);
