@@ -80,7 +80,9 @@ describe('config integrity', () => {
       const options = optionsFor(question);
       expect(options.length, `${question.id} has no options`).toBeGreaterThan(0);
       const values = options.map((o) => o.value);
-      expect(new Set(values).size, `${question.id} has duplicate option values`).toBe(values.length);
+      expect(new Set(values).size, `${question.id} has duplicate option values`).toBe(
+        values.length,
+      );
     }
   });
 
@@ -107,8 +109,10 @@ describe('config integrity', () => {
         if ('in' in cond && cond.field === 'accident_type') return cond.in.includes(type);
         return false;
       });
-      expect(branchQuestions.length, `accident type ${type} has no mechanism questions`)
-        .toBeGreaterThan(0);
+      expect(
+        branchQuestions.length,
+        `accident type ${type} has no mechanism questions`,
+      ).toBeGreaterThan(0);
     }
   });
 

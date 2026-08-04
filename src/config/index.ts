@@ -92,7 +92,8 @@ export function validateConfig(): string[] {
 
   for (const q of questionsConfig.questions) {
     for (const field of conditionFields(q.showIf)) {
-      if (!questionById.has(field)) problems.push(`${q.id}: showIf references unknown id "${field}"`);
+      if (!questionById.has(field))
+        problems.push(`${q.id}: showIf references unknown id "${field}"`);
     }
   }
 

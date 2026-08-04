@@ -58,7 +58,9 @@ export function scoreSession(
     const weakest = relevant
       .map((q) => ({ questionId: q.id, state: states[q.id] ?? ('missing' as AnswerState) }))
       .filter((entry) => entry.state !== 'satisfied')
-      .sort((a, b) => rank(a.state) - rank(b.state) || weightOf(b.questionId) - weightOf(a.questionId));
+      .sort(
+        (a, b) => rank(a.state) - rank(b.state) || weightOf(b.questionId) - weightOf(a.questionId),
+      );
 
     return { category, score, status: statusFor(score), weakest };
   });

@@ -200,7 +200,8 @@ export const scenarios: Scenario[] = [
       cond_stop_work:
         'The rebuild could have waited for the hoist inspection to finish, but the unit was needed back in service the same day',
 
-      resp_first_aid: 'A cold pack was applied to the lower back in the first aid room for about 20 minutes',
+      resp_first_aid:
+        'A cold pack was applied to the lower back in the first aid room for about 20 minutes',
       resp_provider_role: choice('first_aid_responder'),
       resp_notification: 'The supervisor was told within about two minutes and EHS within the hour',
       ...commonResponse,
@@ -223,7 +224,8 @@ export const scenarios: Scenario[] = [
       equipment_involved: false,
       discovery_mode: choice('witnessed'),
 
-      task_performed: 'Walking from the inspection bench to the parts washer carrying a tote of samples',
+      task_performed:
+        'Walking from the inspection bench to the parts washer carrying a tote of samples',
       task_purpose: 'The samples were being taken for a scheduled cleanliness check',
       task_stage: choice('walking'),
       procedure_reference: 'No written procedure exists for walking between these areas',
@@ -231,7 +233,8 @@ export const scenarios: Scenario[] = [
       object_handled: true,
       object_weight: 'Approximately 15 pounds',
       object_dimensions: 'A tote about 18 by 12 by 8 inches, carried level in both arms',
-      grip_method: 'Carried in both arms against the chest, which blocked the view of the floor ahead',
+      grip_method:
+        'Carried in both arms against the chest, which blocked the view of the floor ahead',
       ppe_in_use: 'Safety glasses and steel toe boots',
       ppe_specified: choice('yes'),
 
@@ -247,7 +250,8 @@ export const scenarios: Scenario[] = [
       mech_fall_foot_contact:
         'The right foot slid forward on the coolant, balance was lost backwards, and the fall was taken onto the right hip and the outstretched right hand',
       mech_fall_footwear: 'Site issued slip resistant safety boots, soles worn smooth at the heel',
-      mech_fall_carried: 'A tote of samples held in both arms, obscuring the view of the floor ahead',
+      mech_fall_carried:
+        'A tote of samples held in both arms, obscuring the view of the floor ahead',
 
       point_of_contact:
         'The right hip contacted the floor first with the force directed upward through the hip, followed by the outstretched right hand',
@@ -268,9 +272,11 @@ export const scenarios: Scenario[] = [
       cond_stop_work:
         'The leak could have been reported and the aisle coned when it was first noticed earlier in the shift, but it was treated as a routine drip',
 
-      resp_first_aid: 'A cold pack was applied to the right hip in the first aid room for about 15 minutes',
+      resp_first_aid:
+        'A cold pack was applied to the right hip in the first aid room for about 15 minutes',
       resp_provider_role: choice('first_aid_responder'),
-      resp_notification: 'The team lead attended within about a minute and EHS was notified within ten minutes',
+      resp_notification:
+        'The team lead attended within about a minute and EHS was notified within ten minutes',
       resp_scene: 'The aisle was coned and the coolant was absorbed before the area was reopened',
       resp_work_status: choice('stopped'),
       resp_evaluation: choice('offsite_clinic'),
@@ -314,10 +320,12 @@ export const scenarios: Scenario[] = [
       sequence_after:
         'A coworker hit the station e-stop after about three seconds, the hand was withdrawn, and the line was left stopped until the supervisor arrived',
 
-      mech_caught_surfaces: 'Between the moving conveyor belt and the fixed steel edge of the guard opening',
+      mech_caught_surfaces:
+        'Between the moving conveyor belt and the fixed steel edge of the guard opening',
       mech_caught_entry:
         'The right hand was reaching through a 5 inch service gap in the guard to free the jammed carton without stopping the belt',
-      mech_caught_release: 'The belt was stopped by a coworker at the station e-stop after about three seconds',
+      mech_caught_release:
+        'The belt was stopped by a coworker at the station e-stop after about three seconds',
 
       point_of_contact:
         'Across the back of the right hand at the base of the index and middle fingers, with force applied from the little finger side toward the thumb',
@@ -344,7 +352,8 @@ export const scenarios: Scenario[] = [
       resp_provider_role: choice('first_aid_responder'),
       resp_notification:
         'The team lead was called from the station intercom within about two minutes and EHS was notified roughly twenty minutes later',
-      resp_scene: 'The conveyor was stopped and locked out and the station was barriered off until EHS attended',
+      resp_scene:
+        'The conveyor was stopped and locked out and the station was barriered off until EHS attended',
       resp_work_status: choice('stopped'),
       resp_evaluation: choice('emergency_room'),
     },
@@ -375,7 +384,8 @@ export const scenarios: Scenario[] = [
       object_handled: true,
       object_weight: 'Approximately 14 pounds per tray',
       object_dimensions: 'About 24 by 16 by 4 inches, rigid with a lip on each short side',
-      grip_method: 'Gripped by the lip at each short side with both hands, wearing general purpose gloves',
+      grip_method:
+        'Gripped by the lip at each short side with both hands, wearing general purpose gloves',
       ppe_in_use: 'Safety glasses and general purpose gloves',
       ppe_specified: choice('yes'),
 
@@ -409,9 +419,11 @@ export const scenarios: Scenario[] = [
       cond_stop_work:
         'The symptoms could have been reported when they were first noticed six weeks ago, but they were mild and were expected to settle',
 
-      resp_first_aid: 'No first aid was given at the scene because the condition was reported at the end of a shift',
+      resp_first_aid:
+        'No first aid was given at the scene because the condition was reported at the end of a shift',
       resp_provider_role: choice('none'),
-      resp_notification: 'The team lead was told at the end of the shift and EHS the following morning',
+      resp_notification:
+        'The team lead was told at the end of the shift and EHS the following morning',
       resp_delay_reason:
         'The aching was mild at first and was expected to settle with rest over the weekend',
       resp_scene: 'Nothing was secured because there was no single event or scene to preserve',
@@ -435,14 +447,16 @@ export const scenarios: Scenario[] = [
       equipment_involved: true,
       discovery_mode: choice('witnessed'),
 
-      task_performed: 'Swapping the transfer hose on the parts washer at the quick disconnect fitting',
+      task_performed:
+        'Swapping the transfer hose on the parts washer at the quick disconnect fitting',
       task_purpose: 'The hose had been reported as weeping at the fitting on the previous shift',
       task_stage: choice('maintenance'),
       procedure_reference: 'WI-905 Parts Washer Hose Replacement',
       procedure_followed: choice('as_written'),
       equipment_identifier: 'Parts washer PW-02 transfer line at the quick disconnect fitting',
       equipment_state: multi('pressurized', 'hot', 'energized'),
-      equipment_condition: 'The fitting had been weeping at the seal for about two shifts and was on the maintenance list',
+      equipment_condition:
+        'The fitting had been weeping at the seal for about two shifts and was on the maintenance list',
       object_handled: false,
       ppe_in_use: 'Safety glasses, chemical gloves and a face shield, no sleeve protection',
       ppe_specified: choice('no'),
@@ -454,9 +468,11 @@ export const scenarios: Scenario[] = [
       sequence_after:
         'The technician pulled back from the machine, called out to Michael at the next bay, and walked to the emergency shower about 20 feet away',
 
-      mech_energy_source: 'Heated caustic wash solution from the parts washer transfer line at the quick disconnect fitting',
+      mech_energy_source:
+        'Heated caustic wash solution from the parts washer transfer line at the quick disconnect fitting',
       mech_energy_magnitude: 'Approximately 180 degrees Fahrenheit at roughly 4 percent caustic',
-      mech_contact_duration: 'About 2 seconds of spray before the arm was withdrawn, across the inner left forearm',
+      mech_contact_duration:
+        'About 2 seconds of spray before the arm was withdrawn, across the inner left forearm',
       mech_isolation_state:
         'The line was drained at the tank but not depressurized at the fitting, and the written method does not require a pressure check before the disconnect is released',
 
@@ -482,8 +498,10 @@ export const scenarios: Scenario[] = [
       resp_first_aid:
         'The forearm was irrigated at the emergency shower for about 15 minutes and covered with a sterile dressing',
       resp_provider_role: choice('emergency_response_team'),
-      resp_notification: 'The supervisor was told within about a minute and EHS attended within five minutes',
-      resp_scene: 'The washer was isolated and locked out and the area was barriered until EHS attended',
+      resp_notification:
+        'The supervisor was told within about a minute and EHS attended within five minutes',
+      resp_scene:
+        'The washer was isolated and locked out and the area was barriered until EHS attended',
       resp_work_status: choice('stopped'),
       resp_evaluation: choice('emergency_room'),
     },
@@ -503,14 +521,17 @@ export const scenarios: Scenario[] = [
       equipment_involved: true,
       discovery_mode: choice('witnessed'),
 
-      task_performed: 'Closing an isolation valve on the overhead compressed air line above the assembly cell',
-      task_purpose: 'The line was being isolated for a scheduled repair to a leaking fitting downstream',
+      task_performed:
+        'Closing an isolation valve on the overhead compressed air line above the assembly cell',
+      task_purpose:
+        'The line was being isolated for a scheduled repair to a leaking fitting downstream',
       task_stage: choice('maintenance'),
       procedure_reference: 'WI-330 Compressed Air Line Isolation',
       procedure_followed: choice('differed'),
       procedure_deviation:
         'The written method calls for the valve to be reached from the mobile platform, but the platform was in use on the other side of the plant so a stepladder was used instead',
-      equipment_identifier: 'An 8 foot fiberglass stepladder, asset 20114, and the overhead air line isolation valve',
+      equipment_identifier:
+        'An 8 foot fiberglass stepladder, asset 20114, and the overhead air line isolation valve',
       equipment_state: multi('at_rest'),
       equipment_condition:
         'The ladder was in serviceable condition with a current inspection tag and no visible damage',
@@ -528,12 +549,14 @@ export const scenarios: Scenario[] = [
       sequence_after:
         'The wrench was dropped clear, the technician sat on the floor unable to bear weight on the right foot, and a nearby operator called the supervisor',
 
-      mech_fall_height: 'Approximately 3 feet, from the third step of the stepladder to the concrete floor',
+      mech_fall_height:
+        'Approximately 3 feet, from the third step of the stepladder to the concrete floor',
       mech_fall_working_surface:
         'An 8 foot fiberglass stepladder set on sealed concrete with one leg resting partly on a cable tray cover, landing on sealed concrete',
       mech_fall_protection:
         'No fall protection is required below 6 feet on this site, none was available at the location, and none was in use',
-      mech_fall_initiator: 'The ladder shifted to the left as the reach extended out past the side rail toward the valve',
+      mech_fall_initiator:
+        'The ladder shifted to the left as the reach extended out past the side rail toward the valve',
       mech_fall_footwear: 'Site issued steel toe boots in good condition with the tread intact',
       mech_fall_carried: 'A pipe wrench in the right hand, which left only one hand for the ladder',
 
@@ -545,17 +568,21 @@ export const scenarios: Scenario[] = [
       cond_environment_factors: multi('congestion', 'floor_uneven'),
       cond_environment_detail:
         'The floor under the valve carries a cable tray cover about 2 inches proud, so the ladder could not be set level',
-      cond_time_factors: 'About 90 minutes into an 8 hour shift and roughly 5 minutes into this task',
+      cond_time_factors:
+        'About 90 minutes into an 8 hour shift and roughly 5 minutes into this task',
       cond_first_time: choice('no'),
       cond_known_hazard: choice('no'),
       cond_barriers_bypassed: choice('no'),
       cond_stop_work:
         'The job could have waited for the mobile platform to become available, but the repair was scheduled for that morning',
 
-      resp_first_aid: 'The right boot was left on and a cold pack was applied to the ankle while waiting for transport',
+      resp_first_aid:
+        'The right boot was left on and a cold pack was applied to the ankle while waiting for transport',
       resp_provider_role: choice('first_aid_responder'),
-      resp_notification: 'The supervisor attended within about a minute and EHS was notified immediately after',
-      resp_scene: 'The ladder was left in place and the area was barriered off until EHS had photographed it',
+      resp_notification:
+        'The supervisor attended within about a minute and EHS was notified immediately after',
+      resp_scene:
+        'The ladder was left in place and the area was barriered off until EHS had photographed it',
       resp_work_status: choice('stopped'),
       resp_evaluation: choice('emergency_room'),
     },
@@ -576,7 +603,8 @@ export const scenarios: Scenario[] = [
       discovery_mode: choice('self_reported_immediate'),
 
       task_performed: 'Removing a misfed sheet from the laminating press during a size changeover',
-      task_purpose: 'A sheet had misfed at the end of the previous run and had to be cleared before the changeover could finish',
+      task_purpose:
+        'A sheet had misfed at the end of the previous run and had to be cleared before the changeover could finish',
       task_stage: choice('teardown'),
       procedure_reference: 'SW-508 Laminator Changeover',
       procedure_followed: choice('differed'),
@@ -613,7 +641,8 @@ export const scenarios: Scenario[] = [
       cond_environment_factors: multi('temperature_hot', 'time_pressure'),
       cond_environment_detail:
         'The area in front of the press runs warm during a changeover and the crew were working to hand the machine over at shift change',
-      cond_time_factors: 'About 7 and a half hours into an 8 hour shift and roughly 15 minutes into the changeover',
+      cond_time_factors:
+        'About 7 and a half hours into an 8 hour shift and roughly 15 minutes into the changeover',
       cond_first_time: choice('no'),
       cond_known_hazard: choice('yes'),
       cond_known_hazard_detail:
@@ -624,9 +653,11 @@ export const scenarios: Scenario[] = [
       cond_stop_work:
         'The changeover could have been left for the incoming shift once the platens had cooled, but the handover was already late',
 
-      resp_first_aid: 'The hand was held under cool running water at the sink for about 20 minutes and covered loosely with a sterile dressing',
+      resp_first_aid:
+        'The hand was held under cool running water at the sink for about 20 minutes and covered loosely with a sterile dressing',
       resp_provider_role: choice('self'),
-      resp_notification: 'The team lead was told within about five minutes and EHS at the end of the shift',
+      resp_notification:
+        'The team lead was told within about five minutes and EHS at the end of the shift',
       resp_scene: 'The press was left open to cool and tagged out of service until EHS attended',
       resp_work_status: choice('stopped'),
       resp_evaluation: choice('offsite_clinic'),
@@ -647,7 +678,8 @@ export const scenarios: Scenario[] = [
       equipment_involved: true,
       discovery_mode: choice('witnessed'),
 
-      task_performed: 'Picking bar stock from the third level of the material rack in the stores area',
+      task_performed:
+        'Picking bar stock from the third level of the material rack in the stores area',
       task_purpose: 'The bar stock was on a pick list for a machining job due that afternoon',
       task_stage: choice('transport'),
       procedure_reference: 'SW-077 Material Rack Picking',
@@ -672,7 +704,8 @@ export const scenarios: Scenario[] = [
 
       mech_struck_moving:
         'A 6 foot length of steel bar stock rolled off the open end of the third rack level and fell onto the left shoulder, which was stationary',
-      mech_struck_direction: 'From above and slightly behind, falling about 2 feet from the level above',
+      mech_struck_direction:
+        'From above and slightly behind, falling about 2 feet from the level above',
       mech_struck_force: 'Approximately 30 pounds, falling freely',
 
       point_of_contact:
@@ -694,9 +727,11 @@ export const scenarios: Scenario[] = [
       cond_stop_work:
         'The pick could have been stopped once the mixed lengths were seen, but loading mixed lengths is common and was not treated as a hazard',
 
-      resp_first_aid: 'A cold pack was applied to the left shoulder in the first aid room for about 20 minutes',
+      resp_first_aid:
+        'A cold pack was applied to the left shoulder in the first aid room for about 20 minutes',
       resp_provider_role: choice('first_aid_responder'),
-      resp_notification: 'The supervisor attended within about two minutes and EHS within fifteen minutes',
+      resp_notification:
+        'The supervisor attended within about two minutes and EHS within fifteen minutes',
       resp_scene: 'The aisle was barriered and the rack level was unloaded before picking resumed',
       resp_work_status: choice('stopped'),
       resp_evaluation: choice('offsite_clinic'),
@@ -720,16 +755,22 @@ export const scenarios: Scenario[] = [
       task_performed: 'Seating connector housings into the fixture at final assembly station 6',
       task_purpose: 'This is the normal running work at this station for the whole shift',
       task_stage: choice('in_process'),
-      procedure_reference: escape('unknown', 'The station standard work number is being confirmed by the area lead'),
+      procedure_reference: escape(
+        'unknown',
+        'The station standard work number is being confirmed by the area lead',
+      ),
       procedure_followed: choice('as_written'),
       equipment_identifier: 'Final assembly fixture at station 6',
       equipment_state: multi('at_rest'),
-      equipment_condition: 'The fixture was replaced about six weeks ago and sits roughly 4 inches further forward than the previous one',
+      equipment_condition:
+        'The fixture was replaced about six weeks ago and sits roughly 4 inches further forward than the previous one',
       object_handled: true,
       object_weight: 'Approximately 4 ounces per connector housing',
       object_dimensions: 'About 2 inches square, gripped between the thumb and first two fingers',
-      grip_method: 'Pinch grip between the thumb and the first two fingers of the right hand, with a bare hand for feel',
-      ppe_in_use: 'Safety glasses only, gloves are not worn at this station because they reduce feel',
+      grip_method:
+        'Pinch grip between the thumb and the first two fingers of the right hand, with a bare hand for feel',
+      ppe_in_use:
+        'Safety glasses only, gloves are not worn at this station because they reduce feel',
       ppe_specified: choice('yes'),
 
       gradual_task_frequency: 'Approximately 300 units per shift',
@@ -759,11 +800,16 @@ export const scenarios: Scenario[] = [
       cond_first_time: choice('no'),
       cond_known_hazard: choice('unknown'),
       cond_barriers_bypassed: choice('no'),
-      cond_stop_work: escape('not_applicable', 'There was no single event at which work could have been stopped'),
+      cond_stop_work: escape(
+        'not_applicable',
+        'There was no single event at which work could have been stopped',
+      ),
 
-      resp_first_aid: 'No first aid was given because the condition was reported at the end of a shift rather than at the time',
+      resp_first_aid:
+        'No first aid was given because the condition was reported at the end of a shift rather than at the time',
       resp_provider_role: choice('none'),
-      resp_notification: 'The team lead was told at the end of the shift and EHS the following morning',
+      resp_notification:
+        'The team lead was told at the end of the shift and EHS the following morning',
       resp_delay_reason:
         'The tingling was mild at first and was expected to settle, and reporting it would have meant stopping the line',
       resp_scene: 'Nothing was secured because there was no single event or scene to preserve',
@@ -787,7 +833,8 @@ export const scenarios: Scenario[] = [
       discovery_mode: choice('self_reported_delayed'),
 
       task_performed: 'Restacking fallen cartons from a damaged pallet in the shipping bay by hand',
-      task_purpose: 'A pallet had shifted in transit and had to be restacked before the trailer could be loaded',
+      task_purpose:
+        'A pallet had shifted in transit and had to be restacked before the trailer could be loaded',
       task_stage: choice('transport'),
       procedure_reference: 'SW-140 Manual Restacking of Damaged Pallets',
       procedure_followed: choice('differed'),
@@ -799,7 +846,8 @@ export const scenarios: Scenario[] = [
       object_handled: true,
       object_weight: 'Approximately 45 pounds per carton',
       object_dimensions: 'About 24 inches square with no hand holds',
-      grip_method: 'Gripped underneath at opposite corners with both hands and held against the chest',
+      grip_method:
+        'Gripped underneath at opposite corners with both hands and held against the chest',
       ppe_in_use: 'Safety glasses, steel toe boots and general purpose gloves',
       ppe_specified: choice('yes'),
 
@@ -818,12 +866,14 @@ export const scenarios: Scenario[] = [
         'A pallet jack and a lift table are available in the bay but neither helps with restacking cartons by hand, so nothing was used',
       mech_exert_team: choice('one_person'),
 
-      point_of_contact: 'Across the lower back on the right side, with the load pulling forward and the torso rotating right',
+      point_of_contact:
+        'Across the lower back on the right side, with the load pulling forward and the torso rotating right',
 
       cond_difference_from_normal:
         'The written method requires two people for a damaged pallet and only one operator was in the bay at that hour',
       cond_environment_factors: multi('time_pressure'),
-      cond_environment_detail: 'The trailer was booked out within the hour and the bay was otherwise empty',
+      cond_environment_detail:
+        'The trailer was booked out within the hour and the bay was otherwise empty',
       cond_time_factors:
         'About 10 hours into a 12 hour shift, the second consecutive day of overtime, and roughly 15 minutes into this task',
       cond_first_time: choice('no'),
@@ -832,9 +882,11 @@ export const scenarios: Scenario[] = [
       cond_stop_work:
         'The restack could have waited for a second person, but that would have meant missing the trailer departure and no cover was available in the bay',
 
-      resp_first_aid: 'No first aid was given at the time because the pain was not reported until the following morning',
+      resp_first_aid:
+        'No first aid was given at the time because the pain was not reported until the following morning',
       resp_provider_role: choice('none'),
-      resp_notification: 'The supervisor was told at the start of the following shift, about fourteen hours after the event',
+      resp_notification:
+        'The supervisor was told at the start of the following shift, about fourteen hours after the event',
       resp_delay_reason:
         'The pain was mild at the time and was expected to settle overnight, and the trailer still had to be loaded. It was worse the following morning',
       resp_scene: 'Nothing was secured because the event was not reported at the time',
@@ -857,8 +909,10 @@ export const scenarios: Scenario[] = [
       equipment_involved: true,
       discovery_mode: choice('self_reported_immediate'),
 
-      task_performed: 'Freeing a seized clamping lever on the vertical mill at the start of a setup',
-      task_purpose: 'The lever had to be released before the fixture could be changed for the next job',
+      task_performed:
+        'Freeing a seized clamping lever on the vertical mill at the start of a setup',
+      task_purpose:
+        'The lever had to be released before the fixture could be changed for the next job',
       task_stage: choice('setup'),
       procedure_reference: 'SW-612 Vertical Mill Fixture Changeover',
       procedure_followed: choice('differed'),
@@ -866,7 +920,8 @@ export const scenarios: Scenario[] = [
         'The written method says a seized lever is to be reported to maintenance rather than freed by hand, but the job was due to run that shift so it was pulled by hand first',
       equipment_identifier: 'Vertical mill VM-07, fixture clamping lever',
       equipment_state: multi('de_energized', 'at_rest'),
-      equipment_condition: 'The clamping lever has been stiff for several weeks and is on the maintenance backlog',
+      equipment_condition:
+        'The clamping lever has been stiff for several weeks and is on the maintenance backlog',
       object_handled: false,
       ppe_in_use: 'Safety glasses and general purpose gloves',
       ppe_specified: choice('yes'),
@@ -882,8 +937,10 @@ export const scenarios: Scenario[] = [
       prior_condition_change:
         'The previously repaired right shoulder had full range of motion and no symptoms before this. After the lever gave, the arm could not be raised above shoulder height and the pain has been constant since',
 
-      mech_exert_weight: 'A hard pull on a lever that had seized, estimated at around 40 pounds of force',
-      mech_exert_heights: 'The hand was at about shoulder height throughout and travelled up past it as the lever gave',
+      mech_exert_weight:
+        'A hard pull on a lever that had seized, estimated at around 40 pounds of force',
+      mech_exert_heights:
+        'The hand was at about shoulder height throughout and travelled up past it as the lever gave',
       mech_exert_posture:
         'The right arm was extended forward at shoulder height with the body square to the machine, and the arm travelled back and up when the resistance released',
       mech_exert_assist:
@@ -896,7 +953,8 @@ export const scenarios: Scenario[] = [
       cond_difference_from_normal:
         'The lever had been stiff for weeks but gave suddenly on this occasion rather than freeing gradually',
       cond_environment_factors: multi('none_notable'),
-      cond_time_factors: 'About 30 minutes into an 8 hour shift and roughly 3 minutes into the setup',
+      cond_time_factors:
+        'About 30 minutes into an 8 hour shift and roughly 3 minutes into the setup',
       cond_first_time: choice('no'),
       cond_known_hazard: choice('yes'),
       cond_known_hazard_detail:
@@ -905,10 +963,13 @@ export const scenarios: Scenario[] = [
       cond_stop_work:
         'The lever could have been reported to maintenance as the written method requires, but the job was due to run that shift and the wait was expected to be long',
 
-      resp_first_aid: 'A cold pack was applied to the front of the right shoulder in the first aid room for about 15 minutes',
+      resp_first_aid:
+        'A cold pack was applied to the front of the right shoulder in the first aid room for about 15 minutes',
       resp_provider_role: choice('first_aid_responder'),
-      resp_notification: 'The team lead was told within about a minute and EHS within twenty minutes',
-      resp_scene: 'The mill was left as it was and tagged out until maintenance had looked at the lever',
+      resp_notification:
+        'The team lead was told within about a minute and EHS within twenty minutes',
+      resp_scene:
+        'The mill was left as it was and tagged out until maintenance had looked at the lever',
       resp_work_status: choice('stopped'),
       resp_evaluation: choice('offsite_clinic'),
     },

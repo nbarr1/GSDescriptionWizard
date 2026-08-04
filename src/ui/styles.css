@@ -1,0 +1,834 @@
+/*
+ * Shop-floor first. This runs on a tablet under plant lighting, often with
+ * gloves on, sometimes at arm's length. Every choice below follows from that:
+ * large targets, heavy contrast, generous type, no hover-only affordances.
+ */
+
+:root {
+  --bg: #10151c;
+  --surface: #1a222d;
+  --surface-raised: #232d3b;
+  --border: #3a4759;
+  --text: #f2f6fa;
+  --text-muted: #b7c3d2;
+
+  --accent: #4da3ff;
+  --accent-text: #04101f;
+
+  --block: #ff6b6b;
+  --block-bg: #3a1a1e;
+  --challenge: #ffc14d;
+  --challenge-bg: #3a2e14;
+  --warn: #9fb4cc;
+  --ok: #5ddba4;
+  --ok-bg: #10312a;
+
+  --radius: 10px;
+  --tap: 48px;
+  --measure: 40rem;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg: #eef2f7;
+    --surface: #ffffff;
+    --surface-raised: #f4f7fb;
+    --border: #9aa9bb;
+    --text: #0e151d;
+    --text-muted: #48576a;
+    --accent: #0b5fbe;
+    --accent-text: #ffffff;
+    --block: #b3261e;
+    --block-bg: #fdecec;
+    --challenge: #7a4f00;
+    --challenge-bg: #fff5e0;
+    --warn: #48576a;
+    --ok: #10653f;
+    --ok-bg: #e6f5ee;
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font:
+    400 1.0625rem/1.55 system-ui,
+    -apple-system,
+    'Segoe UI',
+    Roboto,
+    Arial,
+    sans-serif;
+}
+
+/* Visible focus everywhere. This is a keyboard-and-glove tool. */
+:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 100;
+  padding: 0.75rem 1rem;
+  background: var(--accent);
+  color: var(--accent-text);
+  font-weight: 700;
+}
+.skip-link:focus {
+  left: 0;
+}
+
+/* --- Layout -------------------------------------------------------------- */
+
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.app__header {
+  background: var(--surface);
+  border-bottom: 2px solid var(--border);
+  padding: 0.75rem 1rem;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.header__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  max-width: 64rem;
+  margin: 0 auto;
+}
+
+.header__title {
+  font-size: 1rem;
+  font-weight: 700;
+  margin: 0;
+  letter-spacing: 0.01em;
+}
+
+.header__actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.app__main {
+  flex: 1;
+  width: 100%;
+  max-width: 64rem;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 6rem;
+}
+
+.app__footer {
+  border-top: 1px solid var(--border);
+  padding: 1rem;
+  color: var(--text-muted);
+  font-size: 0.8125rem;
+  text-align: center;
+}
+
+/* --- Progress ------------------------------------------------------------ */
+
+.progress {
+  max-width: 64rem;
+  margin: 0.75rem auto 0;
+}
+
+.progress__bar {
+  height: 10px;
+  background: var(--surface-raised);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.progress__fill {
+  height: 100%;
+  background: var(--accent);
+  transition: width 180ms ease-out;
+}
+
+.progress__label {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  margin-top: 0.35rem;
+}
+
+.progress__stage {
+  font-weight: 700;
+  color: var(--text);
+}
+
+/* --- Question screen ----------------------------------------------------- */
+
+.screen {
+  max-width: var(--measure);
+  margin: 0 auto;
+}
+
+.screen__stage-intro {
+  background: var(--surface);
+  border-left: 4px solid var(--accent);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  padding: 0.85rem 1rem;
+  margin: 0 0 1.5rem;
+  color: var(--text-muted);
+  font-size: 0.9375rem;
+}
+
+.question__prompt {
+  font-size: 1.375rem;
+  line-height: 1.3;
+  font-weight: 700;
+  margin: 0 0 0.5rem;
+}
+
+.question__help {
+  color: var(--text-muted);
+  margin: 0 0 1rem;
+}
+
+.question__why {
+  margin: 0 0 1.25rem;
+}
+
+.question__why summary {
+  cursor: pointer;
+  color: var(--accent);
+  font-weight: 600;
+  padding: 0.5rem 0;
+  min-height: var(--tap);
+  display: flex;
+  align-items: center;
+}
+
+.question__why-body {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.85rem 1rem;
+  color: var(--text-muted);
+  font-size: 0.9375rem;
+}
+
+/* --- Inputs -------------------------------------------------------------- */
+
+.field {
+  margin-bottom: 1.25rem;
+}
+
+.field__input,
+.field__textarea,
+.field__select {
+  width: 100%;
+  min-height: var(--tap);
+  padding: 0.75rem;
+  font: inherit;
+  color: var(--text);
+  background: var(--surface);
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.field__textarea {
+  min-height: 8rem;
+  resize: vertical;
+  line-height: 1.5;
+}
+
+.field__input:focus,
+.field__textarea:focus,
+.field__select:focus {
+  border-color: var(--accent);
+}
+
+.field--invalid .field__input,
+.field--invalid .field__textarea {
+  border-color: var(--block);
+}
+
+.field__counter {
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+  margin-top: 0.35rem;
+  text-align: right;
+}
+
+/* Options are big tap targets, not radio dots. */
+.options {
+  border: 0;
+  margin: 0 0 1.25rem;
+  padding: 0;
+}
+
+.options__legend {
+  padding: 0;
+  font-weight: 600;
+}
+
+.option {
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-start;
+  min-height: var(--tap);
+  padding: 0.75rem;
+  margin-bottom: 0.5rem;
+  background: var(--surface);
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  cursor: pointer;
+}
+
+.option:hover {
+  border-color: var(--accent);
+}
+
+.option input {
+  width: 1.5rem;
+  height: 1.5rem;
+  margin: 0.1rem 0 0;
+  flex: none;
+  accent-color: var(--accent);
+}
+
+.option:has(input:checked) {
+  border-color: var(--accent);
+  background: var(--surface-raised);
+}
+
+.option__label {
+  font-weight: 600;
+}
+
+.option__note {
+  display: block;
+  font-weight: 400;
+  color: var(--text-muted);
+  font-size: 0.9375rem;
+  margin-top: 0.2rem;
+}
+
+/* --- Examples ------------------------------------------------------------ */
+
+.examples {
+  margin: 0 0 1.25rem;
+}
+
+.examples summary {
+  cursor: pointer;
+  color: var(--accent);
+  font-weight: 600;
+  min-height: var(--tap);
+  display: flex;
+  align-items: center;
+}
+
+.examples__list {
+  margin: 0.25rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.examples__item {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--ok);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  padding: 0.7rem 0.85rem;
+  margin-bottom: 0.5rem;
+  color: var(--text-muted);
+  font-size: 0.9375rem;
+}
+
+/* --- Feedback ------------------------------------------------------------ */
+
+.feedback {
+  border-radius: var(--radius);
+  padding: 1rem;
+  margin-bottom: 1.25rem;
+  border: 2px solid;
+}
+
+.feedback--block {
+  border-color: var(--block);
+  background: var(--block-bg);
+}
+
+.feedback--challenge {
+  border-color: var(--challenge);
+  background: var(--challenge-bg);
+}
+
+.feedback--warn {
+  border-color: var(--border);
+  background: var(--surface);
+}
+
+.feedback__title {
+  font-weight: 700;
+  margin: 0 0 0.4rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.feedback__message {
+  margin: 0 0 0.5rem;
+}
+
+.feedback__example {
+  background: var(--surface-raised);
+  border-radius: var(--radius);
+  padding: 0.7rem 0.85rem;
+  font-size: 0.9375rem;
+  color: var(--text-muted);
+  margin: 0.5rem 0 0;
+}
+
+.feedback__actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-top: 0.85rem;
+}
+
+/* --- Buttons ------------------------------------------------------------- */
+
+.btn {
+  min-height: var(--tap);
+  min-width: var(--tap);
+  padding: 0.7rem 1.15rem;
+  font: inherit;
+  font-weight: 600;
+  color: var(--text);
+  background: var(--surface-raised);
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  cursor: pointer;
+}
+
+.btn:hover:not(:disabled) {
+  border-color: var(--accent);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn--primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-text);
+}
+
+.btn--danger {
+  border-color: var(--block);
+  color: var(--block);
+}
+
+/*
+ * "Small" is about visual weight, not about tap area. 44px is the floor for a
+ * gloved hand on a tablet, so it holds here too.
+ */
+.btn--small {
+  min-height: 44px;
+  padding: 0.4rem 0.8rem;
+  font-size: 0.875rem;
+}
+
+.nav {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-top: 2rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--border);
+}
+
+.nav .btn--primary {
+  margin-left: auto;
+}
+
+/* --- Escape hatches ------------------------------------------------------ */
+
+.hatches {
+  margin: 1.25rem 0;
+  padding-top: 1rem;
+  border-top: 1px dashed var(--border);
+}
+
+.hatches__intro {
+  color: var(--text-muted);
+  font-size: 0.9375rem;
+  margin: 0 0 0.6rem;
+}
+
+.hatches__buttons {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+/* --- Checklist ----------------------------------------------------------- */
+
+.checklist {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.checklist__item {
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-start;
+  padding: 0.85rem;
+  margin-bottom: 0.5rem;
+  background: var(--surface);
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  min-height: var(--tap);
+  cursor: pointer;
+}
+
+.checklist__item input {
+  width: 1.5rem;
+  height: 1.5rem;
+  margin: 0.15rem 0 0;
+  flex: none;
+  accent-color: var(--accent);
+}
+
+.checklist__section {
+  display: block;
+  font-size: 0.8125rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  margin-bottom: 0.15rem;
+}
+
+.checklist__note {
+  display: block;
+  color: var(--text-muted);
+  font-size: 0.9375rem;
+  margin-top: 0.2rem;
+}
+
+/* --- Review -------------------------------------------------------------- */
+
+.review {
+  max-width: 100%;
+}
+
+.review__grid {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 62rem) {
+  .review__grid {
+    grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+    align-items: start;
+  }
+}
+
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.15rem;
+}
+
+.panel__title {
+  margin: 0 0 0.85rem;
+  font-size: 1.0625rem;
+}
+
+.output {
+  width: 100%;
+  min-height: 20rem;
+  padding: 1rem;
+  font:
+    400 0.9375rem/1.6 ui-monospace,
+    SFMono-Regular,
+    Menlo,
+    Consolas,
+    monospace;
+  color: var(--text);
+  background: var(--bg);
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  resize: vertical;
+  white-space: pre-wrap;
+}
+
+.output__meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  margin-top: 0.5rem;
+}
+
+.output__meta--short,
+.output__meta--overLimit {
+  color: var(--challenge);
+  font-weight: 600;
+}
+
+.mode-toggle {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.85rem;
+  flex-wrap: wrap;
+}
+
+.meter {
+  margin-bottom: 1.15rem;
+}
+
+.meter__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.75rem;
+  margin-bottom: 0.4rem;
+}
+
+.meter__label {
+  font-weight: 700;
+  font-size: 1.0625rem;
+}
+
+.meter__track {
+  height: 14px;
+  background: var(--surface-raised);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.meter__fill {
+  height: 100%;
+  transition: width 200ms ease-out;
+}
+
+.meter__fill--low {
+  background: var(--block);
+}
+.meter__fill--mid {
+  background: var(--challenge);
+}
+.meter__fill--high {
+  background: var(--ok);
+}
+
+.gaps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.gap {
+  display: flex;
+  gap: 0.6rem;
+  align-items: baseline;
+  padding: 0.6rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.gap:last-child {
+  border-bottom: 0;
+}
+
+.gap__status {
+  flex: none;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 0.2rem 0.5rem;
+  border-radius: 999px;
+  border: 1px solid;
+}
+
+.gap__status--satisfied {
+  color: var(--ok);
+  border-color: var(--ok);
+  background: var(--ok-bg);
+}
+.gap__status--thin {
+  color: var(--challenge);
+  border-color: var(--challenge);
+  background: var(--challenge-bg);
+}
+.gap__status--missing {
+  color: var(--block);
+  border-color: var(--block);
+  background: var(--block-bg);
+}
+
+.gap__body {
+  flex: 1;
+  min-width: 0;
+}
+
+.gap__name {
+  font-weight: 600;
+}
+
+.gap__detail {
+  color: var(--text-muted);
+  font-size: 0.875rem;
+}
+
+.notices {
+  list-style: none;
+  margin: 0.85rem 0 0;
+  padding: 0;
+}
+
+.notice {
+  padding: 0.7rem 0.85rem;
+  margin-bottom: 0.5rem;
+  border-radius: var(--radius);
+  border-left: 4px solid;
+  background: var(--surface-raised);
+  font-size: 0.9375rem;
+}
+
+.notice--blocking {
+  border-color: var(--block);
+}
+.notice--advisory {
+  border-color: var(--challenge);
+}
+.notice--info {
+  border-color: var(--border);
+  color: var(--text-muted);
+}
+
+.copy-actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-top: 1.15rem;
+}
+
+.copy-status {
+  margin-top: 0.75rem;
+  font-weight: 600;
+  min-height: 1.5rem;
+}
+
+.copy-status--ok {
+  color: var(--ok);
+}
+.copy-status--fail {
+  color: var(--block);
+}
+
+/* --- Persistence notice -------------------------------------------------- */
+
+.persist {
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-start;
+  padding: 0.85rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin-top: 1.5rem;
+  cursor: pointer;
+}
+
+.persist input {
+  width: 1.5rem;
+  height: 1.5rem;
+  margin: 0.1rem 0 0;
+  flex: none;
+  accent-color: var(--accent);
+}
+
+.persist__text {
+  font-size: 0.9375rem;
+  color: var(--text-muted);
+}
+
+/* --- Small screens ------------------------------------------------------- */
+
+@media (max-width: 30rem) {
+  body {
+    font-size: 1rem;
+  }
+  .question__prompt {
+    font-size: 1.1875rem;
+  }
+  .app__main {
+    padding: 1rem 0.75rem 5rem;
+  }
+  .nav .btn {
+    flex: 1 1 auto;
+  }
+  .nav .btn--primary {
+    margin-left: 0;
+    order: -1;
+    flex-basis: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+/* Print the description, not the chrome. */
+@media print {
+  .app__header,
+  .nav,
+  .copy-actions,
+  .app__footer {
+    display: none;
+  }
+}

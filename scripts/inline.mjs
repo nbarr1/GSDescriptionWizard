@@ -14,34 +14,37 @@ const buildDir = join(root, 'dist', 'single');
 const outFile = join(root, 'dist', 'ii-description-wizard.html');
 
 if (!existsSync(buildDir)) {
-  console.error(`Build directory not found: ${buildDir}. Run "vite build --outDir dist/single" first.`);
+  console.error(
+    `Build directory not found: ${buildDir}. Run "vite build --outDir dist/single" first.`,
+  );
   process.exit(1);
 }
 
 let html = readFileSync(join(buildDir, 'index.html'), 'utf8');
-const assets = join(buildDir, 'assets');
-const assetFiles = existsSync(assets) ? readdirSync(assets) : [];
 
-const readAsset = (name) => readFileSync(join(assets, name), 'utf8');
+// Vite is configured to emit flat filenames, but handle an assets/ subdirectory
+// too so a future config change does not silently break the single-file build.
+const readAsset = (relativePath) => {
+  const cleaned = relativePath.replace(/^\.?\//, '');
+  return readFileSync(join(buildDir, cleaned), 'utf8');
+};
 
 // Inline <script type="module" src="..."></script>
-html = html.replace(
-  /<script\b[^>]*\bsrc=["']\.?\/?assets\/([^"']+)["'][^>]*><\/script>/g,
-  (_match, file) => {
-    const code = readAsset(file);
-    // </script> inside a string literal would end the tag early.
-    return `<script type="module">\n${code.replace(/<\/script>/gi, '<\\/script>')}\n</script>`;
-  },
-);
+html = html.replace(/<script\b[^>]*\bsrc=["']([^"']+\.js)["'][^>]*><\/script>/g, (_match, file) => {
+  const code = readAsset(file);
+  // A literal </script> inside a string would end the tag early.
+  return `<script type="module">\n${code.replace(/<\/script>/gi, '<\\/script>')}\n</script>`;
+});
 
-// Inline <link rel="stylesheet" href="...">
+// Inline <link rel="stylesheet" href="..."> in either attribute order.
+const inlineStyle = (_match, file) => `<style>\n${readAsset(file)}\n</style>`;
 html = html.replace(
-  /<link\b[^>]*\brel=["']stylesheet["'][^>]*\bhref=["']\.?\/?assets\/([^"']+)["'][^>]*>/g,
-  (_match, file) => `<style>\n${readAsset(file)}\n</style>`,
+  /<link\b[^>]*\brel=["']stylesheet["'][^>]*\bhref=["']([^"']+\.css)["'][^>]*>/g,
+  inlineStyle,
 );
 html = html.replace(
-  /<link\b[^>]*\bhref=["']\.?\/?assets\/([^"']+)["'][^>]*\brel=["']stylesheet["'][^>]*>/g,
-  (_match, file) => `<style>\n${readAsset(file)}\n</style>`,
+  /<link\b[^>]*\bhref=["']([^"']+\.css)["'][^>]*\brel=["']stylesheet["'][^>]*>/g,
+  inlineStyle,
 );
 
 // Drop modulepreload hints - they point at files that no longer exist standalone.
@@ -57,7 +60,10 @@ const failures = [];
 
 const forbidden = [
   [/<script\b[^>]*\bsrc\s*=/i, 'external <script src=...> reference'],
-  [/<link\b[^>]*\bhref\s*=\s*["']?(?!data:)[^"'>]*\.(css|js)/i, 'external <link href=...> reference'],
+  [
+    /<link\b[^>]*\bhref\s*=\s*["']?(?!data:)[^"'>]*\.(css|js)/i,
+    'external <link href=...> reference',
+  ],
   [/@import\s+(url\()?["']?https?:/i, 'CSS @import over http'],
   [/\bnew\s+XMLHttpRequest\b/, 'XMLHttpRequest usage'],
   [/\bnavigator\s*\.\s*sendBeacon\b/, 'sendBeacon usage'],
@@ -79,8 +85,12 @@ for (const body of scriptBodies) {
   if (/(^|[^.\w])fetch\s*\(/.test(body)) failures.push('fetch() call in script');
 }
 
-if (assetFiles.some((f) => !/\.(js|css)$/.test(f))) {
-  failures.push(`non-inlined asset files remain: ${assetFiles.join(', ')}`);
+// Any emitted file other than the HTML and the two things we just inlined would
+// have to be fetched at runtime, which the tool must never do.
+const emitted = readdirSync(buildDir).filter((f) => f !== 'index.html');
+const unexpected = emitted.filter((f) => !/\.(js|css)$/.test(f));
+if (unexpected.length > 0) {
+  failures.push(`build emitted files that cannot be inlined: ${unexpected.join(', ')}`);
 }
 
 if (failures.length > 0) {
@@ -90,4 +100,6 @@ if (failures.length > 0) {
 }
 
 const kb = (Buffer.byteLength(html, 'utf8') / 1024).toFixed(1);
-console.log(`Single-file build OK -> dist/ii-description-wizard.html (${kb} KB, zero external references)`);
+console.log(
+  `Single-file build OK -> dist/ii-description-wizard.html (${kb} KB, zero external references)`,
+);

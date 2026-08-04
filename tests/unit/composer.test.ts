@@ -115,7 +115,10 @@ describe('escape hatches in the output', () => {
     const session = sessionWith({
       onset_pattern: choice('acute'),
       employee_role: choice('operator'),
-      procedure_reference: escape('unknown', 'The area supervisor is confirming the document number'),
+      procedure_reference: escape(
+        'unknown',
+        'The area supervisor is confirming the document number',
+      ),
     });
     const { text } = compose(session);
     expect(text).toContain('Procedure reference not determined at time of report');
@@ -246,5 +249,31 @@ describe('adversarial composition', () => {
     session = setAnswer(session, 'task_performed', { kind: 'text', text: '🙂 ... !!! 日本語' });
     const { text } = compose(session);
     expect(text).not.toMatch(/[^\x20-\x7E\n]/);
+  });
+});
+
+describe('sentence frames that supply their own subject', () => {
+  it('uses the frame when the answer continues the sentence', () => {
+    const session = sessionWith({
+      onset_pattern: choice('acute'),
+      employee_role: choice('operator'),
+      task_performed: text('Clearing a jammed carton from the infeed conveyor at station 4'),
+    });
+    expect(compose(session).text).toContain(
+      'The operator was clearing a jammed carton from the infeed conveyor at station 4.',
+    );
+  });
+
+  it('falls back rather than doubling the subject when the answer starts its own sentence', () => {
+    const session = sessionWith({
+      onset_pattern: choice('acute'),
+      employee_role: choice('operator'),
+      task_performed: text('The operator was clearing a jammed carton from the conveyor'),
+    });
+    const { text: out } = compose(session);
+    expect(out).not.toContain('The operator was the operator was');
+    expect(out).toContain(
+      'Task being performed: The operator was clearing a jammed carton from the conveyor.',
+    );
   });
 });

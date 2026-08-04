@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Offline wizard that walks a reporter through a complete EHS Injury and Illness description."
+    />
+    <meta name="robots" content="noindex" />
+    <!--
+      Content-Security-Policy is set here as well as in the build assertions.
+      Belt and braces: the tool must never make a network request, and this
+      stops one from working even if a future edit introduced it.
+    -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data:; connect-src 'none'; form-action 'none'; base-uri 'none'"
+    />
+    <title>Injury and Illness Description Wizard</title>
+  </head>
+  <body>
+    <div id="app"></div>
+    <noscript>
+      <p
+        style="
+          padding: 2rem;
+          font:
+            1rem system-ui,
+            sans-serif;
+        "
+      >
+        This tool needs JavaScript. It runs entirely on your own device and sends nothing anywhere.
+      </p>
+    </noscript>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

@@ -60,11 +60,26 @@ export default [
     },
   },
   {
-    files: ['tests/**/*.ts', 'scripts/**/*.mjs'],
+    // Build scripts and tests run in Node, not the browser, and are exempt from
+    // the runtime constraints the application itself must honour.
+    files: ['tests/**/*.ts', 'scripts/**/*.mjs', '*.config.ts', 'eslint.config.js'],
+    languageOptions: {
+      globals: {
+        process: 'readonly',
+        console: 'readonly',
+        Buffer: 'readonly',
+        __dirname: 'readonly',
+        URL: 'readonly',
+        Blob: 'readonly',
+      },
+    },
     rules: {
       'no-restricted-properties': 'off',
       'no-restricted-globals': 'off',
       '@typescript-eslint/no-explicit-any': 'off',
+      // Tests deliberately contain non-breaking spaces and smart quotes: that is
+      // the input the sanitizer exists to handle.
+      'no-irregular-whitespace': 'off',
     },
   },
 ];

@@ -21,6 +21,7 @@
 import type { AllowlistConfig } from '../types';
 import { allowlistConfig as defaultAllowlist } from '../config';
 
+// eslint-disable-next-line no-control-regex
 const CONTROL_CHARS = new RegExp('[\\u0000-\\u0008\\u000B\\u000C\\u000E-\\u001F\\u007F]', 'g');
 const NON_ASCII = new RegExp('[^\\u0020-\\u007E\\n]', 'g');
 const NON_PRINTABLE = new RegExp('[^\\u0020-\\u007E\\n]');
@@ -90,11 +91,7 @@ export function normalizeUnicode(
   return applyMap(text, allowlist, changes);
 }
 
-function applyMap(
-  input: string,
-  allowlist: AllowlistConfig,
-  changes: SanitizeChange[],
-): string {
+function applyMap(input: string, allowlist: AllowlistConfig, changes: SanitizeChange[]): string {
   let text = input;
   for (const [from, to] of Object.entries(allowlist.unicodeMap)) {
     if (!text.includes(from)) continue;

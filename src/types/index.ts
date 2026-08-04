@@ -87,13 +87,7 @@ export interface QuestionValidation {
 // ---------------------------------------------------------------------------
 // Questions
 // ---------------------------------------------------------------------------
-export type QuestionKind =
-  | 'text'
-  | 'textarea'
-  | 'select'
-  | 'multiselect'
-  | 'boolean'
-  | 'checklist';
+export type QuestionKind = 'text' | 'textarea' | 'select' | 'multiselect' | 'boolean' | 'checklist';
 
 export interface QuestionOption {
   value: string;
@@ -221,6 +215,17 @@ export interface Fragment {
   topic: string;
   /** For select questions: a complete sentence per option value, instead of `template`. */
   valueTemplates?: Record<string, string>;
+  /**
+   * Set when `template` supplies its own subject and verb, so the answer has to
+   * continue the sentence rather than start a new one - "The operator was
+   * {answer}" only works if {answer} reads like "clearing a jam". When the answer
+   * does not fit, `fallbackTemplate` is used instead. Without this, a user who
+   * writes "The operator was clearing a jam" gets "The operator was the operator
+   * was clearing a jam".
+   */
+  requiresGerund?: boolean;
+  /** Used in place of `template` when the answer does not fit its frame. */
+  fallbackTemplate?: string;
 }
 
 export interface OutputTemplatesConfig {

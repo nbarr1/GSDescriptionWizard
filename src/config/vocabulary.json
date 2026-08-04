@@ -32,14 +32,20 @@
       { "value": "struck_by", "label": "Struck by object or equipment" },
       { "value": "struck_against", "label": "Struck against object or equipment" },
       { "value": "caught_in_between", "label": "Caught in, under or between" },
-      { "value": "overexertion", "label": "Overexertion - lifting, lowering, pushing, pulling, carrying" },
+      {
+        "value": "overexertion",
+        "label": "Overexertion - lifting, lowering, pushing, pulling, carrying"
+      },
       { "value": "fall_same_level", "label": "Fall, slip or trip on the same level" },
       { "value": "fall_elevation", "label": "Fall from elevation" },
       { "value": "repetitive_motion", "label": "Repetitive motion or sustained posture" },
       { "value": "contact_temperature", "label": "Contact with temperature extreme - hot or cold" },
       { "value": "contact_chemical", "label": "Contact with chemical or harmful substance" },
       { "value": "contact_electrical", "label": "Contact with electricity" },
-      { "value": "exposure_inhalation", "label": "Exposure or inhalation - air, noise, biological" },
+      {
+        "value": "exposure_inhalation",
+        "label": "Exposure or inhalation - air, noise, biological"
+      },
       { "value": "motor_vehicle", "label": "Motor vehicle or powered industrial truck incident" },
       { "value": "other", "label": "Other - none of the above fits" }
     ],

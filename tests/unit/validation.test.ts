@@ -16,7 +16,14 @@ import { choice, escape, sessionWith, text } from '../helpers/session';
 
 describe('normalization', () => {
   it('tokenizes on words, not characters', () => {
-    expect(tokenize('The right hand, at 40 lbs.')).toEqual(['the', 'right', 'hand', 'at', '40', 'lbs']);
+    expect(tokenize('The right hand, at 40 lbs.')).toEqual([
+      'the',
+      'right',
+      'hand',
+      'at',
+      '40',
+      'lbs',
+    ]);
   });
 
   it('stems common verb forms to a shared root', () => {
@@ -39,7 +46,9 @@ describe('normalization', () => {
 describe('vague token detection', () => {
   it('rejects the literal filler strings found in the real data', () => {
     for (const filler of ['not specified', 'unknown', 'pending', 'n/a', 'N/A', 'TBD', 'none']) {
-      expect(checkVague(filler, validationConfig).isVague, `"${filler}" should be vague`).toBe(true);
+      expect(checkVague(filler, validationConfig).isVague, `"${filler}" should be vague`).toBe(
+        true,
+      );
     }
   });
 
@@ -50,7 +59,9 @@ describe('vague token detection', () => {
       'nothing was different because the standard work was followed',
       'the none-too-obvious trip hazard',
     ]) {
-      expect(checkVague(good, validationConfig).isVague, `"${good}" should not be vague`).toBe(false);
+      expect(checkVague(good, validationConfig).isVague, `"${good}" should not be vague`).toBe(
+        false,
+      );
     }
   });
 
@@ -170,7 +181,9 @@ describe('circularity', () => {
       accident_type: choice('overexertion'),
       principal_body_part: choice('back_lower'),
       task_performed: text('Lifting resin bags from a pallet onto the mixer platform'),
-      sequence_moment: text('Lower back injury sustained while lifting a resin bag from the pallet'),
+      sequence_moment: text(
+        'Lower back injury sustained while lifting a resin bag from the pallet',
+      ),
     });
     const result = validateAnswer(requireQuestion('sequence_moment'), session);
     expect(result.findings.map((f) => f.rule)).toContain('circular');
@@ -183,7 +196,9 @@ describe('lexicon exclusions', () => {
     const exclusions = validationConfig.lexiconExclusions?.motionVerbs ?? [];
     expect(countLexiconMatches('lower back injury', motion, exclusions)).toBe(0);
     // The verb form still counts.
-    expect(countLexiconMatches('the load was lowered to the floor', motion, exclusions)).toBeGreaterThan(0);
+    expect(
+      countLexiconMatches('the load was lowered to the floor', motion, exclusions),
+    ).toBeGreaterThan(0);
   });
 });
 
@@ -217,7 +232,9 @@ describe('response tiers', () => {
     for (let i = 0; i < validationConfig.maxChallenges; i += 1) {
       session = recordChallenge(session, 'cond_difference_from_normal');
     }
-    expect(validateAnswer(requireQuestion('cond_difference_from_normal'), session).tier).toBe('warn');
+    expect(validateAnswer(requireQuestion('cond_difference_from_normal'), session).tier).toBe(
+      'warn',
+    );
   });
 
   it('downgrades a challenge when the user dismisses it with a reason', () => {
@@ -237,7 +254,10 @@ describe('response tiers', () => {
 describe('escape hatches', () => {
   it('accepts a justified escape hatch but scores it as unresolved', () => {
     const session = sessionWith({
-      procedure_reference: escape('unknown', 'The area supervisor is confirming the document number'),
+      procedure_reference: escape(
+        'unknown',
+        'The area supervisor is confirming the document number',
+      ),
     });
     const result = validateAnswer(requireQuestion('procedure_reference'), session);
     expect(result.canAdvance).toBe(true);

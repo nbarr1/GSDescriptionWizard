@@ -140,10 +140,28 @@
   ],
 
   "fragments": {
-    "task_performed": { "template": "The {role} was {answer}.", "case": "lower", "topic": "Task being performed" },
-    "task_purpose": { "template": "The task was underway because {answer}.", "case": "lower", "topic": "Reason for the task" },
-    "task_stage": { "template": "Stage of the task: {answer}.", "case": "lower", "topic": "Stage of the task" },
-    "procedure_reference": { "template": "Method in effect: {answer}.", "case": "sentence", "topic": "Procedure reference" },
+    "task_performed": {
+      "template": "The {role} was {answer}.",
+      "case": "lower",
+      "topic": "Task being performed",
+      "requiresGerund": true,
+      "fallbackTemplate": "Task being performed: {answer}."
+    },
+    "task_purpose": {
+      "template": "The task was underway because {answer}.",
+      "case": "lower",
+      "topic": "Reason for the task"
+    },
+    "task_stage": {
+      "template": "Stage of the task: {answer}.",
+      "case": "lower",
+      "topic": "Stage of the task"
+    },
+    "procedure_reference": {
+      "template": "Method in effect: {answer}.",
+      "case": "sentence",
+      "topic": "Procedure reference"
+    },
     "procedure_followed": {
       "template": "{answer}",
       "case": "sentence",
@@ -155,14 +173,46 @@
         "unknown": "Whether the task was being performed as written was not determined at time of report."
       }
     },
-    "procedure_deviation": { "template": "The difference from the written method was as follows: {answer}.", "case": "lower", "topic": "Deviation from the method" },
-    "equipment_identifier": { "template": "Equipment involved: {answer}.", "case": "sentence", "topic": "Equipment involved" },
-    "equipment_state": { "template": "Equipment state at the time: {answer}.", "case": "lower", "topic": "Equipment state" },
-    "equipment_condition": { "template": "Equipment condition: {answer}.", "case": "sentence", "topic": "Equipment condition" },
-    "object_weight": { "template": "Object handled weighed {answer}.", "case": "lower", "topic": "Weight of the object handled" },
-    "object_dimensions": { "template": "Object size and shape: {answer}.", "case": "lower", "topic": "Size of the object handled" },
-    "grip_method": { "template": "The object was held as follows: {answer}.", "case": "lower", "topic": "Grip and handling method" },
-    "ppe_in_use": { "template": "PPE in use: {answer}.", "case": "sentence", "topic": "PPE in use" },
+    "procedure_deviation": {
+      "template": "The difference from the written method was as follows: {answer}.",
+      "case": "lower",
+      "topic": "Deviation from the method"
+    },
+    "equipment_identifier": {
+      "template": "Equipment involved: {answer}.",
+      "case": "sentence",
+      "topic": "Equipment involved"
+    },
+    "equipment_state": {
+      "template": "Equipment state at the time: {answer}.",
+      "case": "lower",
+      "topic": "Equipment state"
+    },
+    "equipment_condition": {
+      "template": "Equipment condition: {answer}.",
+      "case": "sentence",
+      "topic": "Equipment condition"
+    },
+    "object_weight": {
+      "template": "Object handled weighed {answer}.",
+      "case": "lower",
+      "topic": "Weight of the object handled"
+    },
+    "object_dimensions": {
+      "template": "Object size and shape: {answer}.",
+      "case": "lower",
+      "topic": "Size of the object handled"
+    },
+    "grip_method": {
+      "template": "The object was held as follows: {answer}.",
+      "case": "lower",
+      "topic": "Grip and handling method"
+    },
+    "ppe_in_use": {
+      "template": "PPE in use: {answer}.",
+      "case": "sentence",
+      "topic": "PPE in use"
+    },
     "ppe_specified": {
       "template": "{answer}",
       "case": "sentence",
@@ -175,17 +225,57 @@
       }
     },
 
-    "sequence_before": { "template": "Immediately before the event: {answer}.", "case": "lower", "topic": "Events immediately before" },
-    "sequence_moment": { "template": "At the moment of the event: {answer}.", "case": "lower", "topic": "The moment of the event" },
-    "sequence_after": { "template": "Immediately after the event: {answer}.", "case": "lower", "topic": "Events immediately after" },
+    "sequence_before": {
+      "template": "Immediately before the event: {answer}.",
+      "case": "lower",
+      "topic": "Events immediately before"
+    },
+    "sequence_moment": {
+      "template": "At the moment of the event: {answer}.",
+      "case": "lower",
+      "topic": "The moment of the event"
+    },
+    "sequence_after": {
+      "template": "Immediately after the event: {answer}.",
+      "case": "lower",
+      "topic": "Events immediately after"
+    },
 
-    "gradual_task_frequency": { "template": "The task is performed {answer}.", "case": "lower", "topic": "Task frequency" },
-    "gradual_duration_at_task": { "template": "The {role} has performed this task for {answer}.", "case": "lower", "topic": "Time on the task" },
-    "gradual_cycle_description": { "template": "One cycle of the task consists of the following: {answer}.", "case": "lower", "topic": "Task cycle" },
-    "gradual_force_posture": { "template": "Force and posture required: {answer}.", "case": "lower", "topic": "Force and posture" },
-    "gradual_symptom_onset": { "template": "Symptom onset: {answer}.", "case": "sentence", "topic": "Symptom onset" },
-    "gradual_symptom_progression": { "template": "Symptom progression: {answer}.", "case": "sentence", "topic": "Symptom progression" },
-    "gradual_recent_change": { "template": "Recent change in the work: {answer}.", "case": "sentence", "topic": "Recent change in the work" },
+    "gradual_task_frequency": {
+      "template": "The task is performed {answer}.",
+      "case": "lower",
+      "topic": "Task frequency"
+    },
+    "gradual_duration_at_task": {
+      "template": "The {role} has performed this task for {answer}.",
+      "case": "lower",
+      "topic": "Time on the task"
+    },
+    "gradual_cycle_description": {
+      "template": "One cycle of the task consists of the following: {answer}.",
+      "case": "lower",
+      "topic": "Task cycle"
+    },
+    "gradual_force_posture": {
+      "template": "Force and posture required: {answer}.",
+      "case": "lower",
+      "topic": "Force and posture"
+    },
+    "gradual_symptom_onset": {
+      "template": "Symptom onset: {answer}.",
+      "case": "sentence",
+      "topic": "Symptom onset"
+    },
+    "gradual_symptom_progression": {
+      "template": "Symptom progression: {answer}.",
+      "case": "sentence",
+      "topic": "Symptom progression"
+    },
+    "gradual_recent_change": {
+      "template": "Recent change in the work: {answer}.",
+      "case": "sentence",
+      "topic": "Recent change in the work"
+    },
 
     "prior_condition_source": {
       "template": "{answer}",
@@ -198,23 +288,75 @@
         "unknown": "The origin of the prior condition was not determined at time of report."
       }
     },
-    "prior_condition_change": { "template": "Change in the condition: {answer}.", "case": "sentence", "topic": "Change in the prior condition" },
+    "prior_condition_change": {
+      "template": "Change in the condition: {answer}.",
+      "case": "sentence",
+      "topic": "Change in the prior condition"
+    },
 
-    "discovered_noticed": { "template": "The condition was noticed as follows: {answer}.", "case": "lower", "topic": "How the condition was noticed" },
-    "discovered_exposure_window": { "template": "Possible exposure window: {answer}.", "case": "lower", "topic": "Exposure window" },
+    "discovered_noticed": {
+      "template": "The condition was noticed as follows: {answer}.",
+      "case": "lower",
+      "topic": "How the condition was noticed"
+    },
+    "discovered_exposure_window": {
+      "template": "Possible exposure window: {answer}.",
+      "case": "lower",
+      "topic": "Exposure window"
+    },
 
-    "mech_struck_moving": { "template": "Mechanism: {answer}.", "case": "sentence", "topic": "What moved and what it struck" },
-    "mech_struck_direction": { "template": "Direction and distance of travel: {answer}.", "case": "lower", "topic": "Direction of travel" },
-    "mech_struck_force": { "template": "Mass or speed of the object: {answer}.", "case": "lower", "topic": "Mass or speed of the object" },
+    "mech_struck_moving": {
+      "template": "Mechanism: {answer}.",
+      "case": "sentence",
+      "topic": "What moved and what it struck"
+    },
+    "mech_struck_direction": {
+      "template": "Direction and distance of travel: {answer}.",
+      "case": "lower",
+      "topic": "Direction of travel"
+    },
+    "mech_struck_force": {
+      "template": "Mass or speed of the object: {answer}.",
+      "case": "lower",
+      "topic": "Mass or speed of the object"
+    },
 
-    "mech_caught_surfaces": { "template": "The body part was caught {answer}.", "case": "lower", "topic": "Surfaces involved" },
-    "mech_caught_entry": { "template": "The body part entered the zone as follows: {answer}.", "case": "lower", "topic": "How the body part entered the zone" },
-    "mech_caught_release": { "template": "Release: {answer}.", "case": "sentence", "topic": "What released the body part" },
+    "mech_caught_surfaces": {
+      "template": "The body part was caught {answer}.",
+      "case": "lower",
+      "topic": "Surfaces involved"
+    },
+    "mech_caught_entry": {
+      "template": "The body part entered the zone as follows: {answer}.",
+      "case": "lower",
+      "topic": "How the body part entered the zone"
+    },
+    "mech_caught_release": {
+      "template": "Release: {answer}.",
+      "case": "sentence",
+      "topic": "What released the body part"
+    },
 
-    "mech_exert_weight": { "template": "Load or force involved: {answer}.", "case": "lower", "topic": "Load or force" },
-    "mech_exert_heights": { "template": "The load moved {answer}.", "case": "lower", "topic": "Start and end height" },
-    "mech_exert_posture": { "template": "Body position during the movement: {answer}.", "case": "lower", "topic": "Body position" },
-    "mech_exert_assist": { "template": "Assist device: {answer}.", "case": "sentence", "topic": "Assist device" },
+    "mech_exert_weight": {
+      "template": "Load or force involved: {answer}.",
+      "case": "lower",
+      "topic": "Load or force"
+    },
+    "mech_exert_heights": {
+      "template": "The load moved {answer}.",
+      "case": "lower",
+      "topic": "Start and end height"
+    },
+    "mech_exert_posture": {
+      "template": "Body position during the movement: {answer}.",
+      "case": "lower",
+      "topic": "Body position"
+    },
+    "mech_exert_assist": {
+      "template": "Assist device: {answer}.",
+      "case": "sentence",
+      "topic": "Assist device"
+    },
     "mech_exert_team": {
       "template": "{answer}",
       "case": "sentence",
@@ -226,40 +368,148 @@
         "not_a_lift": "This was a push, pull or carry rather than a lift."
       }
     },
-    "mech_exert_team_detail": { "template": "Coordination of the team lift: {answer}.", "case": "lower", "topic": "Team lift coordination" },
+    "mech_exert_team_detail": {
+      "template": "Coordination of the team lift: {answer}.",
+      "case": "lower",
+      "topic": "Team lift coordination"
+    },
 
-    "mech_fall_surface": { "template": "Walking surface: {answer}.", "case": "sentence", "topic": "Walking surface" },
-    "mech_fall_foot_contact": { "template": "Loss of footing: {answer}.", "case": "lower", "topic": "Loss of footing" },
-    "mech_fall_footwear": { "template": "Footwear: {answer}.", "case": "sentence", "topic": "Footwear" },
-    "mech_fall_carried": { "template": "Carried at the time: {answer}.", "case": "sentence", "topic": "What was being carried" },
-    "mech_fall_height": { "template": "Fall height: {answer}.", "case": "lower", "topic": "Fall height" },
-    "mech_fall_working_surface": { "template": "Working surface and landing surface: {answer}.", "case": "sentence", "topic": "Working and landing surface" },
-    "mech_fall_protection": { "template": "Fall protection: {answer}.", "case": "sentence", "topic": "Fall protection" },
-    "mech_fall_initiator": { "template": "The fall was initiated when {answer}.", "case": "lower", "topic": "What initiated the fall" },
+    "mech_fall_surface": {
+      "template": "Walking surface: {answer}.",
+      "case": "sentence",
+      "topic": "Walking surface"
+    },
+    "mech_fall_foot_contact": {
+      "template": "Loss of footing: {answer}.",
+      "case": "lower",
+      "topic": "Loss of footing"
+    },
+    "mech_fall_footwear": {
+      "template": "Footwear: {answer}.",
+      "case": "sentence",
+      "topic": "Footwear"
+    },
+    "mech_fall_carried": {
+      "template": "Carried at the time: {answer}.",
+      "case": "sentence",
+      "topic": "What was being carried"
+    },
+    "mech_fall_height": {
+      "template": "Fall height: {answer}.",
+      "case": "lower",
+      "topic": "Fall height"
+    },
+    "mech_fall_working_surface": {
+      "template": "Working surface and landing surface: {answer}.",
+      "case": "sentence",
+      "topic": "Working and landing surface"
+    },
+    "mech_fall_protection": {
+      "template": "Fall protection: {answer}.",
+      "case": "sentence",
+      "topic": "Fall protection"
+    },
+    "mech_fall_initiator": {
+      "template": "The fall was initiated when {answer}.",
+      "case": "lower",
+      "topic": "What initiated the fall"
+    },
 
-    "mech_rep_motion": { "template": "Motion involved: {answer}.", "case": "sentence", "topic": "Motion involved" },
-    "mech_rep_counts": { "template": "Repetition: {answer}.", "case": "lower", "topic": "Repetition counts" },
-    "mech_rep_force_posture": { "template": "Force and posture: {answer}.", "case": "sentence", "topic": "Force and posture" },
+    "mech_rep_motion": {
+      "template": "Motion involved: {answer}.",
+      "case": "sentence",
+      "topic": "Motion involved"
+    },
+    "mech_rep_counts": {
+      "template": "Repetition: {answer}.",
+      "case": "lower",
+      "topic": "Repetition counts"
+    },
+    "mech_rep_force_posture": {
+      "template": "Force and posture: {answer}.",
+      "case": "sentence",
+      "topic": "Force and posture"
+    },
 
-    "mech_energy_source": { "template": "Source: {answer}.", "case": "sentence", "topic": "Energy or substance source" },
-    "mech_energy_magnitude": { "template": "Magnitude: {answer}.", "case": "sentence", "topic": "Temperature, voltage or concentration" },
-    "mech_contact_duration": { "template": "Contact duration and area: {answer}.", "case": "lower", "topic": "Contact duration" },
-    "mech_isolation_state": { "template": "Isolation state: {answer}.", "case": "sentence", "topic": "Isolation state" },
+    "mech_energy_source": {
+      "template": "Source: {answer}.",
+      "case": "sentence",
+      "topic": "Energy or substance source"
+    },
+    "mech_energy_magnitude": {
+      "template": "Magnitude: {answer}.",
+      "case": "sentence",
+      "topic": "Temperature, voltage or concentration"
+    },
+    "mech_contact_duration": {
+      "template": "Contact duration and area: {answer}.",
+      "case": "lower",
+      "topic": "Contact duration"
+    },
+    "mech_isolation_state": {
+      "template": "Isolation state: {answer}.",
+      "case": "sentence",
+      "topic": "Isolation state"
+    },
 
-    "mech_agent": { "template": "Agent and source: {answer}.", "case": "sentence", "topic": "Agent and source" },
-    "mech_exposure_duration": { "template": "Exposure duration: {answer}.", "case": "lower", "topic": "Exposure duration" },
-    "mech_ventilation": { "template": "Ventilation and engineering control: {answer}.", "case": "sentence", "topic": "Ventilation" },
-    "mech_respiratory_protection": { "template": "Respiratory or hearing protection: {answer}.", "case": "sentence", "topic": "Respiratory or hearing protection" },
+    "mech_agent": {
+      "template": "Agent and source: {answer}.",
+      "case": "sentence",
+      "topic": "Agent and source"
+    },
+    "mech_exposure_duration": {
+      "template": "Exposure duration: {answer}.",
+      "case": "lower",
+      "topic": "Exposure duration"
+    },
+    "mech_ventilation": {
+      "template": "Ventilation and engineering control: {answer}.",
+      "case": "sentence",
+      "topic": "Ventilation"
+    },
+    "mech_respiratory_protection": {
+      "template": "Respiratory or hearing protection: {answer}.",
+      "case": "sentence",
+      "topic": "Respiratory or hearing protection"
+    },
 
-    "mech_vehicle_detail": { "template": "Vehicle movement and impact: {answer}.", "case": "sentence", "topic": "Vehicle movement" },
-    "mech_other_description": { "template": "Mechanism: {answer}.", "case": "sentence", "topic": "Mechanism" },
+    "mech_vehicle_detail": {
+      "template": "Vehicle movement and impact: {answer}.",
+      "case": "sentence",
+      "topic": "Vehicle movement"
+    },
+    "mech_other_description": {
+      "template": "Mechanism: {answer}.",
+      "case": "sentence",
+      "topic": "Mechanism"
+    },
 
-    "point_of_contact": { "template": "Point of contact and direction of force: {answer}.", "case": "lower", "topic": "Point of contact" },
+    "point_of_contact": {
+      "template": "Point of contact and direction of force: {answer}.",
+      "case": "lower",
+      "topic": "Point of contact"
+    },
 
-    "cond_difference_from_normal": { "template": "Difference from a normal run of this task: {answer}.", "case": "sentence", "topic": "Difference from normal" },
-    "cond_environment_factors": { "template": "Conditions at the point of injury: {answer}.", "case": "lower", "topic": "Environmental conditions" },
-    "cond_environment_detail": { "template": "Detail: {answer}.", "case": "sentence", "topic": "Environmental detail" },
-    "cond_time_factors": { "template": "Timing: {answer}.", "case": "sentence", "topic": "Time into shift and task" },
+    "cond_difference_from_normal": {
+      "template": "Difference from a normal run of this task: {answer}.",
+      "case": "sentence",
+      "topic": "Difference from normal"
+    },
+    "cond_environment_factors": {
+      "template": "Conditions at the point of injury: {answer}.",
+      "case": "lower",
+      "topic": "Environmental conditions"
+    },
+    "cond_environment_detail": {
+      "template": "Detail: {answer}.",
+      "case": "sentence",
+      "topic": "Environmental detail"
+    },
+    "cond_time_factors": {
+      "template": "Timing: {answer}.",
+      "case": "sentence",
+      "topic": "Time into shift and task"
+    },
     "cond_first_time": {
       "template": "{answer}",
       "case": "sentence",
@@ -280,7 +530,11 @@
         "unknown": "Whether a known hazard or prior action covers this task was not determined at time of report."
       }
     },
-    "cond_known_hazard_detail": { "template": "Detail: {answer}.", "case": "sentence", "topic": "Known hazard detail" },
+    "cond_known_hazard_detail": {
+      "template": "Detail: {answer}.",
+      "case": "sentence",
+      "topic": "Known hazard detail"
+    },
     "cond_barriers_bypassed": {
       "template": "{answer}",
       "case": "sentence",
@@ -291,10 +545,22 @@
         "unknown": "The state of guards, interlocks and controls was not determined at time of report."
       }
     },
-    "cond_barriers_detail": { "template": "Detail: {answer}.", "case": "sentence", "topic": "Control detail" },
-    "cond_stop_work": { "template": "Stop-work opportunity: {answer}.", "case": "sentence", "topic": "Stop-work opportunity" },
+    "cond_barriers_detail": {
+      "template": "Detail: {answer}.",
+      "case": "sentence",
+      "topic": "Control detail"
+    },
+    "cond_stop_work": {
+      "template": "Stop-work opportunity: {answer}.",
+      "case": "sentence",
+      "topic": "Stop-work opportunity"
+    },
 
-    "resp_first_aid": { "template": "First aid at the scene: {answer}.", "case": "sentence", "topic": "First aid given" },
+    "resp_first_aid": {
+      "template": "First aid at the scene: {answer}.",
+      "case": "sentence",
+      "topic": "First aid given"
+    },
     "resp_provider_role": {
       "template": "{answer}",
       "case": "sentence",
@@ -310,9 +576,21 @@
         "none": "No first aid was given at the scene."
       }
     },
-    "resp_notification": { "template": "Notification: {answer}.", "case": "sentence", "topic": "Notification path" },
-    "resp_delay_reason": { "template": "Reason for the delay in reporting: {answer}.", "case": "lower", "topic": "Reason for reporting delay" },
-    "resp_scene": { "template": "Scene and equipment: {answer}.", "case": "sentence", "topic": "Scene control" },
+    "resp_notification": {
+      "template": "Notification: {answer}.",
+      "case": "sentence",
+      "topic": "Notification path"
+    },
+    "resp_delay_reason": {
+      "template": "Reason for the delay in reporting: {answer}.",
+      "case": "lower",
+      "topic": "Reason for reporting delay"
+    },
+    "resp_scene": {
+      "template": "Scene and equipment: {answer}.",
+      "case": "sentence",
+      "topic": "Scene control"
+    },
     "resp_work_status": {
       "template": "{answer}",
       "case": "sentence",

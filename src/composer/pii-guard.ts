@@ -37,10 +37,7 @@ export interface PiiReport {
   hasBlocking: boolean;
 }
 
-export function scanForPii(
-  text: string,
-  allowlist: AllowlistConfig = defaultAllowlist,
-): PiiReport {
+export function scanForPii(text: string, allowlist: AllowlistConfig = defaultAllowlist): PiiReport {
   const findings: PiiFinding[] = [
     ...scanIdentifiers(text, allowlist),
     ...scanProbableNames(text, allowlist),

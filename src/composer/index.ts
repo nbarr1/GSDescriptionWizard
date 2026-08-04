@@ -141,14 +141,29 @@ function sentenceFor(
   }
 
   const cleaned = stripTrailingPeriod(raw.trim());
+
+  // A frame that supplies its own subject and verb needs an answer that continues
+  // the sentence. When the answer starts a sentence of its own, use the fallback
+  // rather than emitting "The operator was the operator was clearing a jam".
+  const useFallback =
+    fragment.requiresGerund && fragment.fallbackTemplate && !startsWithGerund(cleaned);
+  const template = useFallback ? (fragment.fallbackTemplate as string) : fragment.template;
+  const effectiveCase = useFallback ? 'sentence' : fragment.case;
+
   const cased =
-    fragment.case === 'lower'
+    effectiveCase === 'lower'
       ? lowerFirst(cleaned)
-      : fragment.case === 'sentence'
+      : effectiveCase === 'sentence'
         ? upperFirst(cleaned)
         : cleaned;
 
-  return fragment.template.replace('{answer}', cased).replace(/\{role\}/g, role);
+  return template.replace('{answer}', cased).replace(/\{role\}/g, role);
+}
+
+/** True when the first word is an -ing form, which is what the examples teach. */
+function startsWithGerund(text: string): boolean {
+  const first = text.trim().split(/\s+/)[0] ?? '';
+  return /^[a-z]+ing$/i.test(first);
 }
 
 function renderedAnswer(

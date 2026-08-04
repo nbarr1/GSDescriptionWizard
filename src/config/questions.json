@@ -496,7 +496,11 @@
       "prompt": "How often is this task performed?",
       "help": "Times per shift, per day or per week. A number matters more than a word here.",
       "placeholder": "Example: approximately 300 times per shift",
-      "examples": ["Approximately 300 times per shift", "About 4 hours of every shift", "Twice a week"],
+      "examples": [
+        "Approximately 300 times per shift",
+        "About 4 hours of every shift",
+        "Twice a week"
+      ],
       "showIf": { "field": "onset_pattern", "equals": "gradual" },
       "gapCategories": ["activity", "sequence"],
       "weight": 3,
@@ -521,7 +525,11 @@
       "prompt": "How long has this person been doing this task?",
       "help": "Weeks, months or years on this specific task - not their total service.",
       "placeholder": "Example: about 7 months on this station",
-      "examples": ["About 7 months on this station", "Roughly 3 weeks since the line rebalance", "Over 4 years"],
+      "examples": [
+        "About 7 months on this station",
+        "Roughly 3 weeks since the line rebalance",
+        "Over 4 years"
+      ],
       "showIf": { "field": "onset_pattern", "equals": "gradual" },
       "gapCategories": ["activity"],
       "weight": 2,
@@ -746,7 +754,10 @@
       "prompt": "How heavy or how fast was the object?",
       "help": "An approximate weight, or a speed if it was powered or thrown.",
       "placeholder": "Example: approximately 30 pounds, falling freely",
-      "examples": ["Approximately 30 pounds, falling freely", "A light plastic cover, but driven by the machine at speed"],
+      "examples": [
+        "Approximately 30 pounds, falling freely",
+        "A light plastic cover, but driven by the machine at speed"
+      ],
       "showIf": { "field": "accident_type", "in": ["struck_by", "struck_against"] },
       "gapCategories": ["equipment"],
       "weight": 2,
@@ -817,7 +828,11 @@
       "prompt": "What was the weight or the force involved?",
       "help": "For a lift, the weight. For a push or pull, roughly how hard, or what resisted.",
       "placeholder": "Example: approximately 55 pounds",
-      "examples": ["Approximately 55 pounds", "About 25 kg", "A hard pull on a lever that had seized"],
+      "examples": [
+        "Approximately 55 pounds",
+        "About 25 kg",
+        "A hard pull on a lever that had seized"
+      ],
       "showIf": { "field": "accident_type", "equals": "overexertion" },
       "gapCategories": ["sequence", "equipment"],
       "weight": 4,
@@ -832,7 +847,12 @@
             "example": "Approximately 55 pounds",
             "requirements": [
               { "type": "numeral", "message": "A number." },
-              { "type": "lexicon", "set": "forceWords", "minMatches": 1, "message": "A force description." }
+              {
+                "type": "lexicon",
+                "set": "forceWords",
+                "minMatches": 1,
+                "message": "A force description."
+              }
             ]
           }
         ]
@@ -846,7 +866,10 @@
       "prompt": "Between what heights did the load move?",
       "help": "Start and end height. Floor level, knee, waist, shoulder, overhead - or inches.",
       "placeholder": "Example: from floor level to about waist height",
-      "examples": ["From floor level to about waist height", "From a shelf at shoulder height down to a cart at about 30 inches"],
+      "examples": [
+        "From floor level to about waist height",
+        "From a shelf at shoulder height down to a cart at about 30 inches"
+      ],
       "showIf": { "field": "accident_type", "equals": "overexertion" },
       "gapCategories": ["sequence"],
       "weight": 3,
@@ -982,7 +1005,10 @@
       "prompt": "What was being carried or handled at the time?",
       "help": "Anything in the hands, and whether it blocked the view of the floor.",
       "placeholder": "Example: a stacked tote in both arms, obscuring the view of the floor ahead",
-      "examples": ["A stacked tote in both arms, obscuring the view of the floor ahead", "Nothing was being carried"],
+      "examples": [
+        "A stacked tote in both arms, obscuring the view of the floor ahead",
+        "Nothing was being carried"
+      ],
       "showIf": { "field": "accident_type", "in": ["fall_same_level", "fall_elevation"] },
       "gapCategories": ["equipment", "sequence"],
       "weight": 2,
@@ -1095,7 +1121,10 @@
       "prompt": "How many repetitions per cycle, and how many cycles per shift?",
       "help": "Numbers, even approximate ones. This is the exposure.",
       "placeholder": "Example: 4 repetitions per part, about 300 parts per shift",
-      "examples": ["4 repetitions per part, about 300 parts per shift", "Roughly 12 per minute for about 4 hours of the shift"],
+      "examples": [
+        "4 repetitions per part, about 300 parts per shift",
+        "Roughly 12 per minute for about 4 hours of the shift"
+      ],
       "showIf": { "field": "accident_type", "equals": "repetitive_motion" },
       "gapCategories": ["sequence", "activity"],
       "weight": 4,
@@ -1158,7 +1187,10 @@
       "prompt": "What was the temperature, voltage or concentration?",
       "help": "Approximate is fine. If it is not known, use the escape hatch rather than guessing.",
       "placeholder": "Example: approximately 180 degrees Fahrenheit, roughly 4 percent caustic",
-      "examples": ["Approximately 180 degrees Fahrenheit, roughly 4 percent caustic", "480 volts, three phase"],
+      "examples": [
+        "Approximately 180 degrees Fahrenheit, roughly 4 percent caustic",
+        "480 volts, three phase"
+      ],
       "showIf": {
         "field": "accident_type",
         "in": ["contact_temperature", "contact_chemical", "contact_electrical"]
@@ -1598,20 +1630,73 @@
   ],
 
   "formChecklist": [
-    { "id": "fc_dates", "label": "Case date, reported date and time, shift and shift start time", "formSection": "Case Details" },
-    { "id": "fc_person", "label": "Employee name, occupation, department, SSO, supervisor, contingent or temp status", "formSection": "Employee Details", "note": "None of this belongs in the description text." },
-    { "id": "fc_equipment", "label": "Equipment selected from the structured picker", "formSection": "Equipment" },
-    { "id": "fc_pse", "label": "PSE determination, Injury vs Illness, Site Case number, privacy case flag", "formSection": "Classification" },
-    { "id": "fc_osha", "label": "OSHA recordability and the recordability rationale", "formSection": "Classification" },
-    { "id": "fc_location", "label": "Place of accident or exposure, on-premises flag, incident location, workstation, GPS", "formSection": "Location" },
-    { "id": "fc_process_safety", "label": "Process safety incident flag, associated cases, related customers", "formSection": "Classification" },
-    { "id": "fc_lsr", "label": "Life Saving Rule or Rules selected", "formSection": "Classification" },
-    { "id": "fc_product_safety", "label": "Product safety related flag", "formSection": "Classification" },
+    {
+      "id": "fc_dates",
+      "label": "Case date, reported date and time, shift and shift start time",
+      "formSection": "Case Details"
+    },
+    {
+      "id": "fc_person",
+      "label": "Employee name, occupation, department, SSO, supervisor, contingent or temp status",
+      "formSection": "Employee Details",
+      "note": "None of this belongs in the description text."
+    },
+    {
+      "id": "fc_equipment",
+      "label": "Equipment selected from the structured picker",
+      "formSection": "Equipment"
+    },
+    {
+      "id": "fc_pse",
+      "label": "PSE determination, Injury vs Illness, Site Case number, privacy case flag",
+      "formSection": "Classification"
+    },
+    {
+      "id": "fc_osha",
+      "label": "OSHA recordability and the recordability rationale",
+      "formSection": "Classification"
+    },
+    {
+      "id": "fc_location",
+      "label": "Place of accident or exposure, on-premises flag, incident location, workstation, GPS",
+      "formSection": "Location"
+    },
+    {
+      "id": "fc_process_safety",
+      "label": "Process safety incident flag, associated cases, related customers",
+      "formSection": "Classification"
+    },
+    {
+      "id": "fc_lsr",
+      "label": "Life Saving Rule or Rules selected",
+      "formSection": "Classification"
+    },
+    {
+      "id": "fc_product_safety",
+      "label": "Product safety related flag",
+      "formSection": "Classification"
+    },
     { "id": "fc_severity", "label": "Case Severity level A to E", "formSection": "Classification" },
-    { "id": "fc_accident_type", "label": "Accident Type, Principal Body Part and Detailed Body Parts", "formSection": "Injury Details" },
-    { "id": "fc_object", "label": "Object or substance which directly injured or exposed the employee", "formSection": "Injury Details" },
+    {
+      "id": "fc_accident_type",
+      "label": "Accident Type, Principal Body Part and Detailed Body Parts",
+      "formSection": "Injury Details"
+    },
+    {
+      "id": "fc_object",
+      "label": "Object or substance which directly injured or exposed the employee",
+      "formSection": "Injury Details"
+    },
     { "id": "fc_risk_assessment", "label": "Risk Assessment reference", "formSection": "Risk" },
-    { "id": "fc_medical", "label": "Physician or treatment facility name and address, ER treatment, overnight hospitalization", "formSection": "Medical" },
-    { "id": "fc_attachments", "label": "Photographs and other attachments uploaded", "formSection": "Attachments" }
+    {
+      "id": "fc_medical",
+      "label": "Physician or treatment facility name and address, ER treatment, overnight hospitalization",
+      "formSection": "Medical"
+    },
+    {
+      "id": "fc_attachments",
+      "label": "Photographs and other attachments uploaded",
+      "formSection": "Attachments"
+    }
   ]
 }
