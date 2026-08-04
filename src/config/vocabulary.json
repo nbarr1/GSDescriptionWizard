@@ -1,0 +1,195 @@
+{
+  "lists": {
+    "onsetPattern": [
+      {
+        "value": "acute",
+        "label": "Acute single event",
+        "note": "One identifiable moment. A cut, a fall, a struck-by, a single lift that hurt."
+      },
+      {
+        "value": "gradual",
+        "label": "Gradual onset or cumulative",
+        "note": "Symptoms built up over days, weeks or months of the same work. Strains, sprains, ergonomic complaints."
+      },
+      {
+        "value": "discovered",
+        "label": "Discovered condition or exposure",
+        "note": "Found later. A rash, a hearing shift, a positive monitoring result, an exposure noticed after the fact."
+      },
+      {
+        "value": "aggravation",
+        "label": "Aggravation of a prior condition",
+        "note": "An existing injury or condition made worse by a work event or work activity."
+      }
+    ],
+
+    "injuryOrIllness": [
+      { "value": "injury", "label": "Injury" },
+      { "value": "illness", "label": "Illness" }
+    ],
+
+    "accidentType": [
+      { "value": "struck_by", "label": "Struck by object or equipment" },
+      { "value": "struck_against", "label": "Struck against object or equipment" },
+      { "value": "caught_in_between", "label": "Caught in, under or between" },
+      {
+        "value": "overexertion",
+        "label": "Overexertion - lifting, lowering, pushing, pulling, carrying"
+      },
+      { "value": "fall_same_level", "label": "Fall, slip or trip on the same level" },
+      { "value": "fall_elevation", "label": "Fall from elevation" },
+      { "value": "repetitive_motion", "label": "Repetitive motion or sustained posture" },
+      { "value": "contact_temperature", "label": "Contact with temperature extreme - hot or cold" },
+      { "value": "contact_chemical", "label": "Contact with chemical or harmful substance" },
+      { "value": "contact_electrical", "label": "Contact with electricity" },
+      {
+        "value": "exposure_inhalation",
+        "label": "Exposure or inhalation - air, noise, biological"
+      },
+      { "value": "motor_vehicle", "label": "Motor vehicle or powered industrial truck incident" },
+      { "value": "other", "label": "Other - none of the above fits" }
+    ],
+
+    "principalBodyPart": [
+      { "value": "head", "label": "Head or face" },
+      { "value": "eye", "label": "Eye" },
+      { "value": "neck", "label": "Neck" },
+      { "value": "shoulder", "label": "Shoulder" },
+      { "value": "arm", "label": "Arm or elbow" },
+      { "value": "wrist", "label": "Wrist" },
+      { "value": "hand", "label": "Hand" },
+      { "value": "finger", "label": "Finger or thumb" },
+      { "value": "back_upper", "label": "Upper back" },
+      { "value": "back_lower", "label": "Lower back" },
+      { "value": "trunk", "label": "Chest, abdomen or trunk" },
+      { "value": "hip", "label": "Hip or groin" },
+      { "value": "leg", "label": "Leg or knee" },
+      { "value": "ankle", "label": "Ankle" },
+      { "value": "foot", "label": "Foot or toe" },
+      { "value": "multiple", "label": "Multiple body parts" },
+      { "value": "systemic", "label": "Systemic or whole body" }
+    ],
+
+    "employeeRole": [
+      { "value": "employee", "label": "Employee (generic)" },
+      { "value": "operator", "label": "Operator" },
+      { "value": "technician", "label": "Technician" },
+      { "value": "maintenance technician", "label": "Maintenance technician" },
+      { "value": "material handler", "label": "Material handler" },
+      { "value": "assembler", "label": "Assembler" },
+      { "value": "machinist", "label": "Machinist" },
+      { "value": "welder", "label": "Welder" },
+      { "value": "electrician", "label": "Electrician" },
+      { "value": "forklift operator", "label": "Forklift operator" },
+      { "value": "warehouse associate", "label": "Warehouse associate" },
+      { "value": "quality inspector", "label": "Quality inspector" },
+      { "value": "engineer", "label": "Engineer" },
+      { "value": "janitorial staff member", "label": "Janitorial staff member" },
+      { "value": "contractor", "label": "Contractor" },
+      { "value": "driver", "label": "Driver" }
+    ],
+
+    "discoveryMode": [
+      { "value": "witnessed", "label": "Witnessed by at least one other person" },
+      { "value": "self_reported_immediate", "label": "Not witnessed - self reported at the time" },
+      { "value": "self_reported_delayed", "label": "Not witnessed - self reported later" },
+      { "value": "discovered_later", "label": "Discovered later by the employee or another person" }
+    ],
+
+    "taskStage": [
+      { "value": "setup", "label": "Setup or preparation" },
+      { "value": "in_process", "label": "In process - normal running work" },
+      { "value": "teardown", "label": "Teardown, changeover or breakdown" },
+      { "value": "transport", "label": "Transport, moving or handling material" },
+      { "value": "inspection", "label": "Inspection, checking or measuring" },
+      { "value": "troubleshooting", "label": "Troubleshooting a fault or abnormal condition" },
+      { "value": "maintenance", "label": "Planned maintenance or servicing" },
+      { "value": "cleanup", "label": "Cleaning, housekeeping or waste handling" },
+      { "value": "walking", "label": "Walking or moving between areas" },
+      { "value": "other", "label": "Other" }
+    ],
+
+    "procedureFollowed": [
+      { "value": "as_written", "label": "Yes - the task was being done as written" },
+      { "value": "differed", "label": "No - something differed from the written method" },
+      { "value": "none_exists", "label": "No written procedure exists for this task" },
+      { "value": "unknown", "label": "Not known at the time of this report" }
+    ],
+
+    "equipmentState": [
+      { "value": "energized", "label": "Energized" },
+      { "value": "de_energized", "label": "De-energized" },
+      { "value": "locked_out", "label": "Locked out and tagged out" },
+      { "value": "moving", "label": "Moving or rotating" },
+      { "value": "at_rest", "label": "At rest or stopped" },
+      { "value": "pressurized", "label": "Pressurized" },
+      { "value": "hot", "label": "Hot" },
+      { "value": "cold", "label": "Cold or cryogenic" },
+      { "value": "loaded", "label": "Loaded or under tension" },
+      { "value": "guard_removed", "label": "Guard, cover or barrier removed" },
+      { "value": "not_known", "label": "State not known" }
+    ],
+
+    "ppeSpecified": [
+      { "value": "yes", "label": "Yes - it was the PPE specified for this task" },
+      { "value": "no", "label": "No - it differed from what is specified" },
+      { "value": "none_specified", "label": "No PPE is specified for this task" },
+      { "value": "unknown", "label": "Not known at the time of this report" }
+    ],
+
+    "yesNoUnknown": [
+      { "value": "yes", "label": "Yes" },
+      { "value": "no", "label": "No" },
+      { "value": "unknown", "label": "Not known at the time of this report" }
+    ],
+
+    "environmentFactors": [
+      { "value": "lighting_poor", "label": "Poor or glaring lighting" },
+      { "value": "noise_high", "label": "High noise" },
+      { "value": "temperature_hot", "label": "Hot" },
+      { "value": "temperature_cold", "label": "Cold" },
+      { "value": "floor_wet", "label": "Wet, oily or contaminated floor" },
+      { "value": "floor_uneven", "label": "Uneven, damaged or obstructed floor" },
+      { "value": "housekeeping_poor", "label": "Poor housekeeping or clutter" },
+      { "value": "congestion", "label": "Congested or restricted working space" },
+      { "value": "visibility_restricted", "label": "Restricted visibility or blind corner" },
+      { "value": "weather", "label": "Weather - outdoor work" },
+      { "value": "vibration", "label": "Vibration" },
+      { "value": "time_pressure", "label": "Time or production pressure" },
+      { "value": "none_notable", "label": "Nothing notable about the environment" }
+    ],
+
+    "workStatusAfter": [
+      { "value": "stopped", "label": "Work stopped" },
+      { "value": "modified", "label": "Work continued in a modified way" },
+      { "value": "continued", "label": "Work continued unchanged" }
+    ],
+
+    "evaluationPath": [
+      { "value": "none", "label": "No evaluation sought" },
+      { "value": "onsite_medical", "label": "Onsite medical or occupational health" },
+      { "value": "offsite_clinic", "label": "Offsite occupational clinic" },
+      { "value": "emergency_room", "label": "Emergency room" },
+      { "value": "personal_physician", "label": "Personal physician" },
+      { "value": "pending", "label": "Evaluation planned but not yet completed" }
+    ],
+
+    "responderRole": [
+      { "value": "self", "label": "The employee, self-administered" },
+      { "value": "coworker", "label": "A coworker" },
+      { "value": "first_aid_responder", "label": "A trained first aid responder" },
+      { "value": "emergency_response_team", "label": "The site emergency response team" },
+      { "value": "onsite_medical", "label": "Onsite medical or occupational health staff" },
+      { "value": "supervisor", "label": "The supervisor or team lead" },
+      { "value": "external_ems", "label": "External emergency medical services" },
+      { "value": "none", "label": "No first aid or treatment was given at the scene" }
+    ],
+
+    "priorConditionSource": [
+      { "value": "prior_work_case", "label": "A previous work-related case at this site" },
+      { "value": "prior_work_case_other", "label": "A previous work-related case elsewhere" },
+      { "value": "non_work", "label": "A non-work condition" },
+      { "value": "unknown", "label": "Not known at the time of this report" }
+    ]
+  }
+}

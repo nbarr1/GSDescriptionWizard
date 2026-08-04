@@ -1,0 +1,36 @@
+{
+  "name": "ii-description-wizard",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Deterministic, offline wizard that walks a reporter through a complete EHS Injury and Illness description.",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "npm run build:pages && npm run build:single",
+    "build:pages": "vite build --outDir dist/pages",
+    "build:single": "vite build --outDir dist/single && node scripts/inline.mjs",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:e2e": "playwright test",
+    "lint": "eslint . && prettier --check .",
+    "format": "prettier --write .",
+    "typecheck": "tsc --noEmit",
+    "verify": "npm run typecheck && npm run lint && npm run test && npm run build && npm run test:e2e",
+    "benchmark": "tsx scripts/benchmark.mjs"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.17.0",
+    "@playwright/test": "^1.49.1",
+    "@types/node": "^22.10.5",
+    "@typescript-eslint/eslint-plugin": "^8.19.1",
+    "@typescript-eslint/parser": "^8.19.1",
+    "eslint": "^9.17.0",
+    "jsdom": "^25.0.1",
+    "prettier": "^3.4.2",
+    "tsx": "^4.23.5",
+    "typescript": "^5.7.3",
+    "vite": "^6.0.7",
+    "vitest": "^2.1.8"
+  }
+}

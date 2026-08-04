@@ -1,0 +1,646 @@
+{
+  "_comment": "Deterministic sentence assembly. Each fragment turns one answer into one sentence. {answer} is the user text or the selected option label; {role} is the occupation chosen in stage 0. 'case' controls the first letter of {answer}: 'lower' when the template supplies the sentence opening, 'sentence' when the answer starts the sentence. Nothing here generates text - it only frames what the user wrote.",
+
+  "defaultMode": "labeled",
+
+  "_comment_budget": "The brief proposed a 400-1200 target with a warning above 2000. Measurement says otherwise: all twelve benchmark fixtures compose to 3500-4100 characters, because a description that actually covers task, procedure, equipment, a three-part sequence, mechanism, conditions and response cannot fit in 1200. Warning above 2000 would fire on every correct output and train users to ignore the warning, so the upper thresholds are set from the measured range instead. warnBelow stays at 300 as the brief specifies. Set hardLimit once the form owner confirms the real field limit; null means unconfirmed.",
+
+  "characterBudget": {
+    "targetMin": 400,
+    "targetMax": 3000,
+    "warnBelow": 300,
+    "warnAbove": 4500,
+    "hardLimit": null
+  },
+
+  "versionTag": {
+    "enabled": false,
+    "template": " [Wizard v{version}]"
+  },
+
+  "gapStatement": "{topic} not determined at time of report: {justification}.",
+
+  "categoryGapStatements": {
+    "rootCause": "No contributing conditions were recorded for this case.",
+    "equipment": "No equipment, tool or material detail was recorded for this case.",
+    "immediateActions": "No immediate response detail was recorded for this case.",
+    "procedure": "No procedure or work method detail was recorded for this case.",
+    "sequence": "No sequence of events was recorded for this case.",
+    "activity": "The task being performed was not recorded for this case."
+  },
+
+  "sections": [
+    {
+      "id": "task",
+      "heading": "TASK",
+      "questions": [
+        "task_performed",
+        "task_purpose",
+        "task_stage",
+        "procedure_reference",
+        "procedure_followed",
+        "procedure_deviation",
+        "equipment_identifier",
+        "equipment_state",
+        "equipment_condition",
+        "object_weight",
+        "object_dimensions",
+        "grip_method",
+        "ppe_in_use",
+        "ppe_specified"
+      ]
+    },
+    {
+      "id": "sequence",
+      "heading": "SEQUENCE",
+      "questions": [
+        "sequence_before",
+        "sequence_moment",
+        "sequence_after",
+        "gradual_task_frequency",
+        "gradual_duration_at_task",
+        "gradual_cycle_description",
+        "gradual_force_posture",
+        "gradual_symptom_onset",
+        "gradual_symptom_progression",
+        "gradual_recent_change",
+        "prior_condition_source",
+        "prior_condition_change",
+        "discovered_noticed",
+        "discovered_exposure_window"
+      ]
+    },
+    {
+      "id": "mechanism",
+      "heading": "MECHANISM",
+      "questions": [
+        "mech_struck_moving",
+        "mech_struck_direction",
+        "mech_struck_force",
+        "mech_caught_surfaces",
+        "mech_caught_entry",
+        "mech_caught_release",
+        "mech_exert_weight",
+        "mech_exert_heights",
+        "mech_exert_posture",
+        "mech_exert_assist",
+        "mech_exert_team",
+        "mech_exert_team_detail",
+        "mech_fall_surface",
+        "mech_fall_foot_contact",
+        "mech_fall_footwear",
+        "mech_fall_carried",
+        "mech_fall_height",
+        "mech_fall_working_surface",
+        "mech_fall_protection",
+        "mech_fall_initiator",
+        "mech_rep_motion",
+        "mech_rep_counts",
+        "mech_rep_force_posture",
+        "mech_energy_source",
+        "mech_energy_magnitude",
+        "mech_contact_duration",
+        "mech_isolation_state",
+        "mech_agent",
+        "mech_exposure_duration",
+        "mech_ventilation",
+        "mech_respiratory_protection",
+        "mech_vehicle_detail",
+        "mech_other_description",
+        "point_of_contact"
+      ]
+    },
+    {
+      "id": "conditions",
+      "heading": "CONDITIONS",
+      "questions": [
+        "cond_difference_from_normal",
+        "cond_environment_factors",
+        "cond_environment_detail",
+        "cond_time_factors",
+        "cond_first_time",
+        "cond_known_hazard",
+        "cond_known_hazard_detail",
+        "cond_barriers_bypassed",
+        "cond_barriers_detail",
+        "cond_stop_work"
+      ]
+    },
+    {
+      "id": "response",
+      "heading": "IMMEDIATE ACTIONS",
+      "questions": [
+        "resp_first_aid",
+        "resp_provider_role",
+        "resp_notification",
+        "resp_delay_reason",
+        "resp_scene",
+        "resp_work_status",
+        "resp_evaluation"
+      ]
+    }
+  ],
+
+  "fragments": {
+    "task_performed": {
+      "template": "The {role} was {answer}.",
+      "case": "lower",
+      "topic": "Task being performed",
+      "requiresGerund": true,
+      "fallbackTemplate": "Task being performed: {answer}."
+    },
+    "task_purpose": {
+      "template": "The task was underway because {answer}.",
+      "case": "lower",
+      "topic": "Reason for the task"
+    },
+    "task_stage": {
+      "template": "Stage of the task: {answer}.",
+      "case": "lower",
+      "topic": "Stage of the task"
+    },
+    "procedure_reference": {
+      "template": "Method in effect: {answer}.",
+      "case": "sentence",
+      "topic": "Procedure reference"
+    },
+    "procedure_followed": {
+      "template": "{answer}",
+      "case": "sentence",
+      "topic": "Whether the method was followed",
+      "valueTemplates": {
+        "as_written": "The task was being performed as written.",
+        "differed": "The task was not being performed as written.",
+        "none_exists": "No written procedure exists for this task.",
+        "unknown": "Whether the task was being performed as written was not determined at time of report."
+      }
+    },
+    "procedure_deviation": {
+      "template": "The difference from the written method was as follows: {answer}.",
+      "case": "lower",
+      "topic": "Deviation from the method"
+    },
+    "equipment_identifier": {
+      "template": "Equipment involved: {answer}.",
+      "case": "sentence",
+      "topic": "Equipment involved"
+    },
+    "equipment_state": {
+      "template": "Equipment state at the time: {answer}.",
+      "case": "lower",
+      "topic": "Equipment state"
+    },
+    "equipment_condition": {
+      "template": "Equipment condition: {answer}.",
+      "case": "sentence",
+      "topic": "Equipment condition"
+    },
+    "object_weight": {
+      "template": "Object handled weighed {answer}.",
+      "case": "lower",
+      "topic": "Weight of the object handled"
+    },
+    "object_dimensions": {
+      "template": "Object size and shape: {answer}.",
+      "case": "lower",
+      "topic": "Size of the object handled"
+    },
+    "grip_method": {
+      "template": "The object was held as follows: {answer}.",
+      "case": "lower",
+      "topic": "Grip and handling method"
+    },
+    "ppe_in_use": {
+      "template": "PPE in use: {answer}.",
+      "case": "sentence",
+      "topic": "PPE in use"
+    },
+    "ppe_specified": {
+      "template": "{answer}",
+      "case": "sentence",
+      "topic": "Whether PPE matched the specification",
+      "valueTemplates": {
+        "yes": "This matched the PPE specified for the task.",
+        "no": "This differed from the PPE specified for the task.",
+        "none_specified": "No PPE is specified for this task.",
+        "unknown": "Whether this matched the specified PPE was not determined at time of report."
+      }
+    },
+
+    "sequence_before": {
+      "template": "Immediately before the event: {answer}.",
+      "case": "lower",
+      "topic": "Events immediately before"
+    },
+    "sequence_moment": {
+      "template": "At the moment of the event: {answer}.",
+      "case": "lower",
+      "topic": "The moment of the event"
+    },
+    "sequence_after": {
+      "template": "Immediately after the event: {answer}.",
+      "case": "lower",
+      "topic": "Events immediately after"
+    },
+
+    "gradual_task_frequency": {
+      "template": "The task is performed {answer}.",
+      "case": "lower",
+      "topic": "Task frequency"
+    },
+    "gradual_duration_at_task": {
+      "template": "The {role} has performed this task for {answer}.",
+      "case": "lower",
+      "topic": "Time on the task"
+    },
+    "gradual_cycle_description": {
+      "template": "One cycle of the task consists of the following: {answer}.",
+      "case": "lower",
+      "topic": "Task cycle"
+    },
+    "gradual_force_posture": {
+      "template": "Force and posture required: {answer}.",
+      "case": "lower",
+      "topic": "Force and posture"
+    },
+    "gradual_symptom_onset": {
+      "template": "Symptom onset: {answer}.",
+      "case": "sentence",
+      "topic": "Symptom onset"
+    },
+    "gradual_symptom_progression": {
+      "template": "Symptom progression: {answer}.",
+      "case": "sentence",
+      "topic": "Symptom progression"
+    },
+    "gradual_recent_change": {
+      "template": "Recent change in the work: {answer}.",
+      "case": "sentence",
+      "topic": "Recent change in the work"
+    },
+
+    "prior_condition_source": {
+      "template": "{answer}",
+      "case": "sentence",
+      "topic": "Origin of the prior condition",
+      "valueTemplates": {
+        "prior_work_case": "The prior condition relates to a previous work-related case at this site.",
+        "prior_work_case_other": "The prior condition relates to a previous work-related case at another location.",
+        "non_work": "The prior condition is non-work in origin.",
+        "unknown": "The origin of the prior condition was not determined at time of report."
+      }
+    },
+    "prior_condition_change": {
+      "template": "Change in the condition: {answer}.",
+      "case": "sentence",
+      "topic": "Change in the prior condition"
+    },
+
+    "discovered_noticed": {
+      "template": "The condition was noticed as follows: {answer}.",
+      "case": "lower",
+      "topic": "How the condition was noticed"
+    },
+    "discovered_exposure_window": {
+      "template": "Possible exposure window: {answer}.",
+      "case": "lower",
+      "topic": "Exposure window"
+    },
+
+    "mech_struck_moving": {
+      "template": "Mechanism: {answer}.",
+      "case": "sentence",
+      "topic": "What moved and what it struck"
+    },
+    "mech_struck_direction": {
+      "template": "Direction and distance of travel: {answer}.",
+      "case": "lower",
+      "topic": "Direction of travel"
+    },
+    "mech_struck_force": {
+      "template": "Mass or speed of the object: {answer}.",
+      "case": "lower",
+      "topic": "Mass or speed of the object"
+    },
+
+    "mech_caught_surfaces": {
+      "template": "The body part was caught {answer}.",
+      "case": "lower",
+      "topic": "Surfaces involved"
+    },
+    "mech_caught_entry": {
+      "template": "The body part entered the zone as follows: {answer}.",
+      "case": "lower",
+      "topic": "How the body part entered the zone"
+    },
+    "mech_caught_release": {
+      "template": "Release: {answer}.",
+      "case": "sentence",
+      "topic": "What released the body part"
+    },
+
+    "mech_exert_weight": {
+      "template": "Load or force involved: {answer}.",
+      "case": "lower",
+      "topic": "Load or force"
+    },
+    "mech_exert_heights": {
+      "template": "The load moved {answer}.",
+      "case": "lower",
+      "topic": "Start and end height"
+    },
+    "mech_exert_posture": {
+      "template": "Body position during the movement: {answer}.",
+      "case": "lower",
+      "topic": "Body position"
+    },
+    "mech_exert_assist": {
+      "template": "Assist device: {answer}.",
+      "case": "sentence",
+      "topic": "Assist device"
+    },
+    "mech_exert_team": {
+      "template": "{answer}",
+      "case": "sentence",
+      "topic": "Lift configuration",
+      "valueTemplates": {
+        "one_person": "This was a one-person lift.",
+        "two_person": "This was a two-person lift.",
+        "three_plus": "This was a team lift of three or more people.",
+        "not_a_lift": "This was a push, pull or carry rather than a lift."
+      }
+    },
+    "mech_exert_team_detail": {
+      "template": "Coordination of the team lift: {answer}.",
+      "case": "lower",
+      "topic": "Team lift coordination"
+    },
+
+    "mech_fall_surface": {
+      "template": "Walking surface: {answer}.",
+      "case": "sentence",
+      "topic": "Walking surface"
+    },
+    "mech_fall_foot_contact": {
+      "template": "Loss of footing: {answer}.",
+      "case": "lower",
+      "topic": "Loss of footing"
+    },
+    "mech_fall_footwear": {
+      "template": "Footwear: {answer}.",
+      "case": "sentence",
+      "topic": "Footwear"
+    },
+    "mech_fall_carried": {
+      "template": "Carried at the time: {answer}.",
+      "case": "sentence",
+      "topic": "What was being carried"
+    },
+    "mech_fall_height": {
+      "template": "Fall height: {answer}.",
+      "case": "lower",
+      "topic": "Fall height"
+    },
+    "mech_fall_working_surface": {
+      "template": "Working surface and landing surface: {answer}.",
+      "case": "sentence",
+      "topic": "Working and landing surface"
+    },
+    "mech_fall_protection": {
+      "template": "Fall protection: {answer}.",
+      "case": "sentence",
+      "topic": "Fall protection"
+    },
+    "mech_fall_initiator": {
+      "template": "The fall was initiated when {answer}.",
+      "case": "lower",
+      "topic": "What initiated the fall"
+    },
+
+    "mech_rep_motion": {
+      "template": "Motion involved: {answer}.",
+      "case": "sentence",
+      "topic": "Motion involved"
+    },
+    "mech_rep_counts": {
+      "template": "Repetition: {answer}.",
+      "case": "lower",
+      "topic": "Repetition counts"
+    },
+    "mech_rep_force_posture": {
+      "template": "Force and posture: {answer}.",
+      "case": "sentence",
+      "topic": "Force and posture"
+    },
+
+    "mech_energy_source": {
+      "template": "Source: {answer}.",
+      "case": "sentence",
+      "topic": "Energy or substance source"
+    },
+    "mech_energy_magnitude": {
+      "template": "Magnitude: {answer}.",
+      "case": "sentence",
+      "topic": "Temperature, voltage or concentration"
+    },
+    "mech_contact_duration": {
+      "template": "Contact duration and area: {answer}.",
+      "case": "lower",
+      "topic": "Contact duration"
+    },
+    "mech_isolation_state": {
+      "template": "Isolation state: {answer}.",
+      "case": "sentence",
+      "topic": "Isolation state"
+    },
+
+    "mech_agent": {
+      "template": "Agent and source: {answer}.",
+      "case": "sentence",
+      "topic": "Agent and source"
+    },
+    "mech_exposure_duration": {
+      "template": "Exposure duration: {answer}.",
+      "case": "lower",
+      "topic": "Exposure duration"
+    },
+    "mech_ventilation": {
+      "template": "Ventilation and engineering control: {answer}.",
+      "case": "sentence",
+      "topic": "Ventilation"
+    },
+    "mech_respiratory_protection": {
+      "template": "Respiratory or hearing protection: {answer}.",
+      "case": "sentence",
+      "topic": "Respiratory or hearing protection"
+    },
+
+    "mech_vehicle_detail": {
+      "template": "Vehicle movement and impact: {answer}.",
+      "case": "sentence",
+      "topic": "Vehicle movement"
+    },
+    "mech_other_description": {
+      "template": "Mechanism: {answer}.",
+      "case": "sentence",
+      "topic": "Mechanism"
+    },
+
+    "point_of_contact": {
+      "template": "Point of contact and direction of force: {answer}.",
+      "case": "lower",
+      "topic": "Point of contact"
+    },
+
+    "cond_difference_from_normal": {
+      "template": "Difference from a normal run of this task: {answer}.",
+      "case": "sentence",
+      "topic": "Difference from normal"
+    },
+    "cond_environment_factors": {
+      "template": "Conditions at the point of injury: {answer}.",
+      "case": "lower",
+      "topic": "Environmental conditions"
+    },
+    "cond_environment_detail": {
+      "template": "Detail: {answer}.",
+      "case": "sentence",
+      "topic": "Environmental detail"
+    },
+    "cond_time_factors": {
+      "template": "Timing: {answer}.",
+      "case": "sentence",
+      "topic": "Time into shift and task"
+    },
+    "cond_first_time": {
+      "template": "{answer}",
+      "case": "sentence",
+      "topic": "First time performing the task",
+      "valueTemplates": {
+        "yes": "This was the first time the {role} had performed this task.",
+        "no": "The {role} had performed this task before.",
+        "unknown": "Whether this was the first performance of the task was not determined at time of report."
+      }
+    },
+    "cond_known_hazard": {
+      "template": "{answer}",
+      "case": "sentence",
+      "topic": "Known hazard or prior action",
+      "valueTemplates": {
+        "yes": "A known hazard, prior near miss, open action or risk assessment covers this task.",
+        "no": "No known hazard, prior near miss, open action or risk assessment covers this task.",
+        "unknown": "Whether a known hazard or prior action covers this task was not determined at time of report."
+      }
+    },
+    "cond_known_hazard_detail": {
+      "template": "Detail: {answer}.",
+      "case": "sentence",
+      "topic": "Known hazard detail"
+    },
+    "cond_barriers_bypassed": {
+      "template": "{answer}",
+      "case": "sentence",
+      "topic": "Guards, interlocks and controls",
+      "valueTemplates": {
+        "yes": "A guard, interlock, barrier or control was bypassed, missing, defeated or ineffective.",
+        "no": "No guard, interlock, barrier or control was bypassed, missing, defeated or ineffective.",
+        "unknown": "The state of guards, interlocks and controls was not determined at time of report."
+      }
+    },
+    "cond_barriers_detail": {
+      "template": "Detail: {answer}.",
+      "case": "sentence",
+      "topic": "Control detail"
+    },
+    "cond_stop_work": {
+      "template": "Stop-work opportunity: {answer}.",
+      "case": "sentence",
+      "topic": "Stop-work opportunity"
+    },
+
+    "resp_first_aid": {
+      "template": "First aid at the scene: {answer}.",
+      "case": "sentence",
+      "topic": "First aid given"
+    },
+    "resp_provider_role": {
+      "template": "{answer}",
+      "case": "sentence",
+      "topic": "Who gave first aid",
+      "valueTemplates": {
+        "self": "This was self-administered.",
+        "coworker": "This was given by a coworker.",
+        "first_aid_responder": "This was given by a trained first aid responder.",
+        "emergency_response_team": "This was given by the site emergency response team.",
+        "onsite_medical": "This was given by onsite medical staff.",
+        "supervisor": "This was given by the supervisor.",
+        "external_ems": "This was given by external emergency medical services.",
+        "none": "No first aid was given at the scene."
+      }
+    },
+    "resp_notification": {
+      "template": "Notification: {answer}.",
+      "case": "sentence",
+      "topic": "Notification path"
+    },
+    "resp_delay_reason": {
+      "template": "Reason for the delay in reporting: {answer}.",
+      "case": "lower",
+      "topic": "Reason for reporting delay"
+    },
+    "resp_scene": {
+      "template": "Scene and equipment: {answer}.",
+      "case": "sentence",
+      "topic": "Scene control"
+    },
+    "resp_work_status": {
+      "template": "{answer}",
+      "case": "sentence",
+      "topic": "Work status afterwards",
+      "valueTemplates": {
+        "stopped": "Work at the location stopped.",
+        "modified": "Work at the location continued in a modified way.",
+        "continued": "Work at the location continued unchanged."
+      }
+    },
+    "resp_evaluation": {
+      "template": "{answer}",
+      "case": "sentence",
+      "topic": "Evaluation path",
+      "valueTemplates": {
+        "none": "No medical evaluation was sought.",
+        "onsite_medical": "The {role} was sent to onsite medical for evaluation.",
+        "offsite_clinic": "The {role} was sent to an offsite occupational clinic for evaluation.",
+        "emergency_room": "The {role} was sent to an emergency room for evaluation.",
+        "personal_physician": "The {role} was referred to a personal physician for evaluation.",
+        "pending": "A medical evaluation is planned but had not taken place at time of report."
+      }
+    }
+  },
+
+  "narrative": {
+    "lead": {
+      "task": "",
+      "sequence": "",
+      "mechanism": "",
+      "conditions": "",
+      "response": ""
+    },
+    "fallbackLead": "",
+    "mechanismLead": {
+      "struck_by": "The {role} was struck by a moving object.",
+      "struck_against": "The {role} struck against a stationary object.",
+      "caught_in_between": "The {role} was caught between two surfaces.",
+      "overexertion": "The injury arose from overexertion during manual handling.",
+      "fall_same_level": "The {role} fell on the same level.",
+      "fall_elevation": "The {role} fell from elevation.",
+      "repetitive_motion": "The condition arose from repetitive motion or sustained posture.",
+      "contact_temperature": "The {role} contacted a temperature extreme.",
+      "contact_chemical": "The {role} contacted a chemical or harmful substance.",
+      "contact_electrical": "The {role} contacted an electrical source.",
+      "exposure_inhalation": "The condition arose from an airborne or environmental exposure.",
+      "motor_vehicle": "The event involved a vehicle or powered industrial truck.",
+      "other": "The mechanism is described below."
+    }
+  }
+}

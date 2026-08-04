@@ -1,0 +1,27 @@
+{
+  "_comment": "Completeness scoring. categoryWeights are relative importance and need not sum to anything; they are normalized at runtime. They are set from the observed deficiency rates in the 656-record analysis, so the meter pushes hardest on what is most often missing.",
+
+  "categoryWeights": {
+    "rootCause": 3.0,
+    "equipment": 2.5,
+    "immediateActions": 2.5,
+    "procedure": 2.0,
+    "sequence": 3.0,
+    "activity": 2.0
+  },
+
+  "_comment_credit": "How much a question contributes to its categories depending on how it was answered. 'unresolved' is an escape hatch with a stated reason - deliberately worth something but well short of an answer, so the meter never reads green on justifications alone.",
+
+  "stateCredit": {
+    "satisfied": 1.0,
+    "thin": 0.5,
+    "unresolved": 0.15,
+    "missing": 0.0
+  },
+
+  "bands": [
+    { "min": 0, "label": "Insufficient", "tone": "low" },
+    { "min": 45, "label": "Adequate", "tone": "mid" },
+    { "min": 75, "label": "Investigation-ready", "tone": "high" }
+  ]
+}
