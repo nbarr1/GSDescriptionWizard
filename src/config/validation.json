@@ -1,0 +1,171 @@
+{
+  "_comment": "Thresholds and word lists for the pushback engine. Everything here is editable without touching code - see docs/EHS_CONTENT_GUIDE.md. Matching is on normalized whole tokens, never raw substrings, so 'notably' will not trip the 'not' entry.",
+
+  "vagueTokens": [
+    "unknown",
+    "unk",
+    "na",
+    "none",
+    "nil",
+    "pending",
+    "tbd",
+    "tba",
+    "normal",
+    "nothing",
+    "routine",
+    "usual",
+    "standard",
+    "misc",
+    "miscellaneous",
+    "other",
+    "various",
+    "general",
+    "regular",
+    "typical",
+    "n_a",
+    "unspecified",
+    "undetermined",
+    "unclear",
+    "idk",
+    "test",
+    "asdf",
+    "xxx",
+    "tbc"
+  ],
+
+  "vaguePhrases": [
+    "not specified",
+    "no comment",
+    "see above",
+    "same as above",
+    "as above",
+    "see attached",
+    "see report",
+    "refer to above",
+    "no further details",
+    "no details",
+    "not applicable",
+    "not known",
+    "do not know",
+    "dont know",
+    "not sure",
+    "no information",
+    "nothing to add",
+    "nothing further",
+    "under investigation",
+    "to be determined",
+    "to be confirmed",
+    "will follow",
+    "details to follow",
+    "not available",
+    "no change",
+    "business as usual",
+    "as normal",
+    "as usual"
+  ],
+
+  "vagueDensityThreshold": 0.6,
+
+  "circularityThreshold": 0.7,
+  "repetitionThreshold": 0.85,
+  "maxChallenges": 2,
+  "defaultMinLength": 15,
+  "defaultMaxLength": 2000,
+
+  "lexicons": {
+    "_comment_lexicons": "Named word lists referenced by a question's signal requirements. Add words freely; matching is on word stems so 'lifted' matches 'lift'.",
+
+    "motionVerbs": [
+      "slip", "slipped", "trip", "tripped", "fall", "fell", "falling",
+      "twist", "twisted", "turn", "turned", "rotate", "rotated",
+      "pull", "pulled", "push", "pushed", "lift", "lifted", "lower", "lowered",
+      "reach", "reached", "bend", "bent", "lean", "leaned",
+      "strike", "struck", "hit", "contact", "contacted", "catch", "caught",
+      "pinch", "pinched", "crush", "crushed", "drop", "dropped",
+      "slide", "slid", "swing", "swung", "jerk", "jerked", "snap", "snapped",
+      "shift", "shifted", "move", "moved", "travel", "travelled", "traveled",
+      "release", "released", "give", "gave", "collapse", "collapsed",
+      "spray", "sprayed", "splash", "splashed", "spill", "spilled",
+      "grasp", "grasped", "grip", "gripped", "carry", "carried",
+      "step", "stepped", "stumble", "stumbled", "lose", "lost",
+      "extend", "extended", "compress", "compressed", "press", "pressed",
+      "strain", "strained", "wrench", "wrenched", "throw", "threw",
+      "kick", "kicked", "roll", "rolled", "tip", "tipped", "topple", "toppled",
+      "enter", "entered", "withdraw", "withdrew", "brush", "brushed",
+      "scrape", "scraped", "impact", "impacted", "recoil", "recoiled",
+      "descend", "descended", "ascend", "ascended", "walk", "walking"
+    ],
+
+    "forceWords": [
+      "force", "weight", "heavy", "load", "pressure", "torque", "tension",
+      "resistance", "resisted", "seized", "stuck", "jammed", "stiff",
+      "sudden", "suddenly", "hard", "strain", "effort", "exertion",
+      "momentum", "impact", "energy", "recoil", "kickback"
+    ],
+
+    "taskVerbs": [
+      "clear", "clearing", "remove", "removing", "install", "installing",
+      "replace", "replacing", "change", "changing", "load", "loading",
+      "unload", "unloading", "move", "moving", "lift", "lifting",
+      "carry", "carrying", "push", "pushing", "pull", "pulling",
+      "operate", "operating", "run", "running", "adjust", "adjusting",
+      "inspect", "inspecting", "check", "checking", "measure", "measuring",
+      "clean", "cleaning", "wash", "washing", "weld", "welding",
+      "cut", "cutting", "assemble", "assembling", "disassemble",
+      "repair", "repairing", "service", "servicing", "maintain", "maintaining",
+      "troubleshoot", "troubleshooting", "diagnose", "diagnosing",
+      "set", "setting", "stack", "stacking", "pack", "packing",
+      "open", "opening", "close", "closing", "connect", "connecting",
+      "disconnect", "disconnecting", "fill", "filling", "drain", "draining",
+      "transfer", "transferring", "pour", "pouring", "decant", "decanting",
+      "walk", "walking", "climb", "climbing", "reach", "reaching",
+      "hold", "holding", "grind", "grinding", "drill", "drilling",
+      "torque", "sort", "sorting", "label", "labeling", "labelling",
+      "test", "testing", "calibrate", "calibrating", "position", "positioning",
+      "feed", "feeding", "start", "starting", "stop", "stopping",
+      "handle", "handling", "attach", "attaching", "release", "releasing",
+      "apply", "applying", "mix", "mixing", "seat", "seating", "press", "pressing"
+    ],
+
+    "noProcedureDeclarations": [
+      "no written procedure",
+      "no procedure exists",
+      "no procedure",
+      "no work instruction",
+      "no standard work",
+      "no job aid",
+      "not covered by a procedure",
+      "no documented method",
+      "none exists",
+      "no sop"
+    ],
+
+    "bodyLocationWords": [
+      "left", "right", "upper", "lower", "inner", "outer", "front", "back",
+      "palm", "dorsal", "medial", "lateral", "anterior", "posterior",
+      "base", "tip", "joint", "knuckle", "side", "top", "underside",
+      "above", "below", "across", "toward", "towards", "against"
+    ]
+  },
+
+  "unitSets": {
+    "weightUnits": ["lb", "lbs", "pound", "pounds", "kg", "kilo", "kilos", "kilogram", "kilograms", "oz", "ounce", "ounces", "ton", "tons", "tonne", "tonnes", "g", "gram", "grams"],
+    "lengthUnits": ["in", "inch", "inches", "ft", "foot", "feet", "cm", "centimeter", "centimeters", "centimetre", "centimetres", "m", "meter", "meters", "metre", "metres", "mm", "yard", "yards"],
+    "timeUnits": ["second", "seconds", "sec", "secs", "minute", "minutes", "min", "mins", "hour", "hours", "hr", "hrs", "day", "days", "week", "weeks", "month", "months", "year", "years", "shift", "shifts"],
+    "temperatureUnits": ["degree", "degrees", "fahrenheit", "celsius", "centigrade", "f", "c"],
+    "electricalUnits": ["volt", "volts", "v", "amp", "amps", "ampere", "amperes", "kv", "kilovolt", "kilovolts"]
+  },
+
+  "stopWords": [
+    "a", "an", "the", "and", "or", "but", "if", "then", "than", "that", "this",
+    "these", "those", "of", "to", "in", "on", "at", "by", "for", "with",
+    "from", "as", "is", "was", "were", "be", "been", "being", "are", "am",
+    "it", "its", "he", "she", "they", "them", "his", "her", "their",
+    "i", "we", "you", "me", "us", "my", "our", "your",
+    "had", "has", "have", "do", "did", "does", "will", "would", "can", "could",
+    "should", "may", "might", "must", "shall", "about", "into", "onto",
+    "over", "under", "up", "down", "out", "off", "there", "here", "when",
+    "while", "during", "after", "before", "again", "very", "just", "so",
+    "employee", "operator", "technician", "worker", "person", "associate"
+  ]
+}

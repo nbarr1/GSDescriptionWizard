@@ -1,0 +1,1617 @@
+{
+  "stages": [
+    {
+      "id": "framing",
+      "title": "Case framing",
+      "order": 0,
+      "intro": "A few facts so the wizard can ask the right questions. Most of these already exist on the I&I form - select the same value here so the questions that follow match what actually happened."
+    },
+    {
+      "id": "task",
+      "title": "Task and setting",
+      "order": 1,
+      "intro": "What was being done, under what method, with what equipment. Nearly three quarters of past descriptions never say what the person was actually doing."
+    },
+    {
+      "id": "sequence",
+      "title": "Sequence of events",
+      "order": 2,
+      "intro": "Three separate moments: just before, the moment itself, and immediately after. Answer them separately - a single blob will not do."
+    },
+    {
+      "id": "mechanism",
+      "title": "Mechanism",
+      "order": 3,
+      "intro": "The physical detail. Forces, motions, weights, heights, and the point of contact on the body. This is what makes a description useful to a reviewer and to a clinician."
+    },
+    {
+      "id": "conditions",
+      "title": "Contributing conditions",
+      "order": 4,
+      "intro": "You are not completing the root cause analysis here. You are recording what a reviewer will need to start one."
+    },
+    {
+      "id": "response",
+      "title": "Immediate response",
+      "order": 5,
+      "intro": "What was done at the scene, and who was told. Four out of five past descriptions leave this out entirely."
+    },
+    {
+      "id": "crosscheck",
+      "title": "Form cross-check",
+      "order": 6,
+      "intro": "These live in structured fields on the I&I form, not in the description. Confirm each one is entered. Nothing on this screen enters the description text."
+    },
+    {
+      "id": "review",
+      "title": "Review and copy",
+      "order": 7,
+      "intro": "The composed description, with a completeness check against the six things reviewers most often find missing."
+    }
+  ],
+
+  "questions": [
+    {
+      "id": "onset_pattern",
+      "stage": "framing",
+      "kind": "select",
+      "prompt": "Which pattern best describes how this case arose?",
+      "help": "This is the single most important choice in the wizard. It changes which questions you are asked. A gradual-onset strain and a struck-by laceration need completely different accounts.",
+      "why": "Past strain and sprain descriptions averaged 45 to 132 characters, against 404 for recordable cases. The main reason is that the acute-event story does not fit them, so people write nothing. Choosing the right pattern here gets you a question set that does fit.",
+      "optionsRef": "onsetPattern",
+      "gapCategories": [],
+      "validation": { "emptyTier": "block" }
+    },
+    {
+      "id": "injury_or_illness",
+      "stage": "framing",
+      "kind": "select",
+      "prompt": "Injury or illness?",
+      "help": "Already on the form - select the same value here so the wizard can tailor its questions.",
+      "optionsRef": "injuryOrIllness",
+      "mirrorsFormField": true,
+      "validation": { "emptyTier": "block" }
+    },
+    {
+      "id": "accident_type",
+      "stage": "framing",
+      "kind": "select",
+      "prompt": "Accident type",
+      "help": "Already on the form - select the same value here. It decides which mechanism questions you get.",
+      "why": "Each accident type has its own physical parameters. A fall needs a height and a surface; a lift needs a weight and a reach. Asking every question of every case is how you get abandoned forms.",
+      "optionsRef": "accidentType",
+      "mirrorsFormField": true,
+      "validation": { "emptyTier": "block" }
+    },
+    {
+      "id": "principal_body_part",
+      "stage": "framing",
+      "kind": "select",
+      "prompt": "Principal body part",
+      "help": "Already on the form - select the same value here.",
+      "optionsRef": "principalBodyPart",
+      "mirrorsFormField": true,
+      "validation": { "emptyTier": "block" }
+    },
+    {
+      "id": "employee_role",
+      "stage": "framing",
+      "kind": "select",
+      "prompt": "What is the role of the person involved?",
+      "help": "Pick the closest occupation. The description will refer to this role rather than to a person, for example the maintenance technician.",
+      "why": "The form states plainly that no names or personal details go in this field, because the description is surfaced in emails and generic reports. Using the role keeps the text useful without identifying anyone.",
+      "optionsRef": "employeeRole",
+      "mirrorsFormField": true,
+      "validation": { "emptyTier": "block" }
+    },
+    {
+      "id": "equipment_involved",
+      "stage": "framing",
+      "kind": "boolean",
+      "prompt": "Was equipment, a tool, or a material involved?",
+      "help": "Yes if anything was being used, handled, operated, serviced, or was in motion nearby. This includes hand tools and raw material.",
+      "why": "Equipment detail is missing from 87.3% of past descriptions. If you answer yes, you get a short set of questions about what it was and what state it was in.",
+      "gapCategories": ["equipment"],
+      "validation": { "emptyTier": "block" }
+    },
+    {
+      "id": "discovery_mode",
+      "stage": "framing",
+      "kind": "select",
+      "prompt": "How did this case come to light?",
+      "help": "Whether anyone saw it matters to how the account should be read.",
+      "optionsRef": "discoveryMode",
+      "validation": { "emptyTier": "block" }
+    },
+
+    {
+      "id": "task_performed",
+      "stage": "task",
+      "kind": "textarea",
+      "prompt": "What specific task was being performed?",
+      "help": "Operational terms, not a job title. What was the person actually doing with their hands, in the seconds and minutes around this.",
+      "why": "73.5% of past descriptions never state the activity. Without it, a reviewer cannot tell whether this was routine work, a recovery from a fault, or something nobody should have been doing at all.",
+      "placeholder": "Example: removing a jammed carton from the infeed conveyor at station 4",
+      "examples": [
+        "Removing a jammed carton from the infeed conveyor at station 4",
+        "Changing the cutting blade on the manual guillotine during a size changeover",
+        "Loading 40 pound resin bags from a pallet onto the mixer platform",
+        "Walking from the tool crib back to the assembly line carrying a torque wrench"
+      ],
+      "gapCategories": ["activity"],
+      "weight": 3,
+      "validation": {
+        "minLength": 25,
+        "emptyTier": "block",
+        "thinTier": "challenge",
+        "signals": [
+          {
+            "type": "lexicon",
+            "set": "taskVerbs",
+            "minMatches": 1,
+            "message": "That names a thing but not an action. What was the person doing to it?",
+            "example": "Instead of conveyor jam, write clearing a jammed carton from the conveyor infeed guard opening."
+          }
+        ],
+        "circularityAgainst": ["accident_type", "principal_body_part"]
+      },
+      "escapeHatches": false
+    },
+    {
+      "id": "task_purpose",
+      "stage": "task",
+      "kind": "textarea",
+      "prompt": "Why was this task being done at that moment?",
+      "help": "Scheduled work, a fault, a customer escalation, end of shift, a request from someone else. The reason often explains the shortcut.",
+      "why": "The reason a task was happening is frequently where the cause sits. A jam being cleared under production pressure is a different case from the same jam cleared during planned downtime.",
+      "placeholder": "Example: the line had stopped on a fault alarm and the shift was behind on the build plan",
+      "examples": [
+        "The line had stopped on a fault alarm and the shift was two hours behind the build plan",
+        "Scheduled preventive maintenance on the weekly plan",
+        "A quality hold required re-inspecting the batch before it shipped that evening"
+      ],
+      "gapCategories": ["rootCause", "activity"],
+      "weight": 2,
+      "validation": { "minLength": 20, "emptyTier": "challenge", "thinTier": "warn" },
+      "escapeHatches": true
+    },
+    {
+      "id": "task_stage",
+      "stage": "task",
+      "kind": "select",
+      "prompt": "What stage of the task was it?",
+      "help": "Injuries cluster heavily in setup, teardown and troubleshooting rather than in steady-state running.",
+      "optionsRef": "taskStage",
+      "gapCategories": ["activity"],
+      "validation": { "emptyTier": "challenge" }
+    },
+    {
+      "id": "procedure_reference",
+      "stage": "task",
+      "kind": "text",
+      "prompt": "What procedure, work instruction, job aid or standard work covered this task?",
+      "help": "Give the identifier if you know it. If there is genuinely no written method for this task, say so plainly - that is a real and useful finding.",
+      "why": "77.6% of past descriptions never mention a procedure. Whether a written method existed, and whether it was followed, is usually the first question a reviewer asks.",
+      "placeholder": "Example: SW-114 Conveyor Jam Clearing, or: no written procedure exists for this task",
+      "examples": [
+        "SW-114 Conveyor Jam Clearing rev C",
+        "WI-2207 blade changeover",
+        "No written procedure exists for this task"
+      ],
+      "gapCategories": ["procedure"],
+      "weight": 3,
+      "validation": {
+        "minLength": 6,
+        "emptyTier": "block",
+        "thinTier": "challenge",
+        "signals": [
+          {
+            "type": "anyOf",
+            "message": "Give either a document identifier or an explicit statement that no written procedure exists.",
+            "example": "SW-114 Conveyor Jam Clearing rev C - or - no written procedure exists for this task",
+            "requirements": [
+              {
+                "type": "pattern",
+                "pattern": "[A-Za-z]{2,}[-\\s]?\\d{2,}",
+                "message": "Looks like a document identifier."
+              },
+              {
+                "type": "lexicon",
+                "set": "noProcedureDeclarations",
+                "minMatches": 1,
+                "message": "Explicit no-procedure statement."
+              }
+            ]
+          }
+        ]
+      },
+      "escapeHatches": true
+    },
+    {
+      "id": "procedure_followed",
+      "stage": "task",
+      "kind": "select",
+      "prompt": "Was the task being performed as written?",
+      "optionsRef": "procedureFollowed",
+      "gapCategories": ["procedure", "rootCause"],
+      "weight": 2,
+      "validation": { "emptyTier": "block" }
+    },
+    {
+      "id": "procedure_deviation",
+      "stage": "task",
+      "kind": "textarea",
+      "prompt": "What differed from the written method, and why?",
+      "help": "State the difference plainly and the reason it happened. This is not about blame - a method people cannot follow is a finding about the method.",
+      "why": "A recorded deviation with its reason is the most actionable single sentence a description can contain.",
+      "placeholder": "Example: the guard interlock was bypassed with a spare key because clearing the jam through the access door takes about fifteen minutes",
+      "examples": [
+        "The guard interlock was bypassed with a spare key because clearing the jam through the access door takes about fifteen minutes and the line was down",
+        "The procedure calls for a two-person lift but only one person was on the shift at that hour",
+        "The specified lifting aid was in use on the other line so the load was moved by hand"
+      ],
+      "showIf": { "field": "procedure_followed", "equals": "differed" },
+      "gapCategories": ["procedure", "rootCause"],
+      "weight": 3,
+      "validation": { "minLength": 30, "emptyTier": "block", "thinTier": "challenge" },
+      "escapeHatches": true
+    },
+    {
+      "id": "equipment_identifier",
+      "stage": "task",
+      "kind": "text",
+      "prompt": "What was the equipment, tool or material?",
+      "help": "Asset number or line and station if you have it, otherwise the type. Avoid brand names where a generic type will do.",
+      "why": "Equipment detail is the second largest gap in past descriptions at 87.3%. A reviewer cannot check whether other units share the hazard if they cannot tell what unit this was.",
+      "placeholder": "Example: infeed conveyor CV-04 at station 4",
+      "examples": [
+        "Infeed conveyor CV-04 at station 4",
+        "Manual guillotine shear, asset 11872",
+        "Utility knife with a retractable blade",
+        "Resin bags, 40 pound, on a half pallet"
+      ],
+      "showIf": { "field": "equipment_involved", "isTrue": true },
+      "gapCategories": ["equipment"],
+      "weight": 3,
+      "validation": { "minLength": 8, "emptyTier": "block", "thinTier": "challenge" },
+      "escapeHatches": true
+    },
+    {
+      "id": "equipment_state",
+      "stage": "task",
+      "kind": "multiselect",
+      "prompt": "What state was it in at the time?",
+      "help": "Select every state that applied at the moment of the event.",
+      "optionsRef": "equipmentState",
+      "showIf": { "field": "equipment_involved", "isTrue": true },
+      "gapCategories": ["equipment"],
+      "weight": 2,
+      "validation": { "emptyTier": "challenge" }
+    },
+    {
+      "id": "equipment_condition",
+      "stage": "task",
+      "kind": "textarea",
+      "prompt": "What condition was it in?",
+      "help": "Anything worn, damaged, modified, overdue for service, or behaving abnormally. If it was in normal working order, say that.",
+      "placeholder": "Example: the blade was due for replacement at the end of the week and had been noted as dull in the shift log",
+      "examples": [
+        "The blade was due for replacement at the end of the week and had been noted as dull in the shift log twice",
+        "Normal working order with no open maintenance items",
+        "The guard latch had been sticking for about a month and was on the maintenance backlog"
+      ],
+      "showIf": { "field": "equipment_involved", "isTrue": true },
+      "gapCategories": ["equipment", "rootCause"],
+      "weight": 2,
+      "validation": { "minLength": 20, "emptyTier": "challenge", "thinTier": "warn" },
+      "escapeHatches": true
+    },
+    {
+      "id": "object_handled",
+      "stage": "task",
+      "kind": "boolean",
+      "prompt": "Was an object being lifted, carried, pushed, pulled or otherwise handled?",
+      "help": "Yes for anything held or moved by hand, including tools and parts.",
+      "gapCategories": ["equipment"],
+      "validation": { "emptyTier": "challenge" }
+    },
+    {
+      "id": "object_weight",
+      "stage": "task",
+      "kind": "text",
+      "prompt": "Approximately how heavy was it?",
+      "help": "A number and a unit. An estimate is fine - say approximately.",
+      "placeholder": "Example: approximately 40 pounds",
+      "examples": ["Approximately 40 pounds", "About 18 kg", "Roughly 5 to 7 pounds"],
+      "showIf": { "field": "object_handled", "isTrue": true },
+      "gapCategories": ["equipment", "sequence"],
+      "weight": 2,
+      "validation": {
+        "minLength": 4,
+        "emptyTier": "challenge",
+        "thinTier": "challenge",
+        "signals": [
+          {
+            "type": "numeral",
+            "message": "Give a number, even a rough one. Heavy means different things to different reviewers.",
+            "example": "Approximately 40 pounds"
+          },
+          {
+            "type": "unit",
+            "set": "weightUnits",
+            "message": "Add the unit so the number can be read correctly.",
+            "example": "Approximately 40 pounds"
+          }
+        ]
+      },
+      "escapeHatches": true
+    },
+    {
+      "id": "object_dimensions",
+      "stage": "task",
+      "kind": "text",
+      "prompt": "How big and what shape was it?",
+      "help": "Rough dimensions, and anything about the shape that made it awkward.",
+      "placeholder": "Example: about 30 by 18 by 6 inches, flexible and shifting as it was lifted",
+      "examples": [
+        "About 30 by 18 by 6 inches, flexible and shifting as it was lifted",
+        "A 4 foot length of 2 inch bar stock",
+        "A carton roughly 24 inches square with no hand holds"
+      ],
+      "showIf": { "field": "object_handled", "isTrue": true },
+      "gapCategories": ["equipment"],
+      "validation": { "minLength": 10, "emptyTier": "warn", "thinTier": "warn" },
+      "escapeHatches": true
+    },
+    {
+      "id": "grip_method",
+      "stage": "task",
+      "kind": "textarea",
+      "prompt": "How was it being held or gripped?",
+      "help": "One hand or two, where on the object, whether it had handles, whether gloves affected the grip.",
+      "placeholder": "Example: gripped by the top seam with both hands, no hand holds on the bag, wearing cut resistant gloves",
+      "examples": [
+        "Gripped by the top seam with both hands, no hand holds on the bag, wearing cut resistant gloves",
+        "One hand on the tool handle and the other steadying the workpiece about 6 inches from the blade",
+        "Carried against the chest because the box had no hand holds"
+      ],
+      "showIf": { "field": "object_handled", "isTrue": true },
+      "gapCategories": ["equipment", "sequence"],
+      "weight": 2,
+      "validation": { "minLength": 20, "emptyTier": "challenge", "thinTier": "warn" },
+      "escapeHatches": true
+    },
+    {
+      "id": "ppe_in_use",
+      "stage": "task",
+      "kind": "textarea",
+      "prompt": "What PPE was in use at the time?",
+      "help": "List what was actually being worn. If none was being worn, say so.",
+      "placeholder": "Example: safety glasses and cut level A4 gloves, no sleeve protection",
+      "examples": [
+        "Safety glasses and cut level A4 gloves, no sleeve protection",
+        "Safety glasses, steel toe boots and hearing protection",
+        "No PPE was being worn for this task"
+      ],
+      "gapCategories": ["procedure"],
+      "validation": { "minLength": 10, "emptyTier": "challenge", "thinTier": "warn" },
+      "escapeHatches": true
+    },
+    {
+      "id": "ppe_specified",
+      "stage": "task",
+      "kind": "select",
+      "prompt": "Was that the PPE specified for this task?",
+      "optionsRef": "ppeSpecified",
+      "gapCategories": ["procedure"],
+      "validation": { "emptyTier": "challenge" }
+    },
+
+    {
+      "id": "sequence_before",
+      "stage": "sequence",
+      "kind": "textarea",
+      "prompt": "Immediately before: what was happening in the seconds or minutes prior?",
+      "help": "Body position, where the person was standing relative to the equipment, and what each hand was doing.",
+      "why": "Basic sequence context is missing from 68.6% of past descriptions. Where someone was standing and what their hands were doing is usually what explains the injury.",
+      "placeholder": "Example: standing on the operator side of the conveyor, leaning over the side rail with the right arm extended into the guard opening and the left hand on the rail",
+      "examples": [
+        "Standing on the operator side of the conveyor, leaning over the side rail with the right arm extended into the guard opening and the left hand braced on the rail",
+        "Squatting beside the pallet with the load at floor level, back turned toward the mixer platform",
+        "Walking at normal pace along the main aisle carrying a wrench in the right hand and looking ahead"
+      ],
+      "showIf": { "field": "onset_pattern", "in": ["acute", "aggravation", "discovered"] },
+      "gapCategories": ["sequence"],
+      "weight": 3,
+      "validation": {
+        "minLength": 40,
+        "emptyTier": "block",
+        "thinTier": "challenge",
+        "circularityAgainst": ["task_performed", "sequence_moment"]
+      },
+      "escapeHatches": false
+    },
+    {
+      "id": "sequence_moment",
+      "stage": "sequence",
+      "kind": "textarea",
+      "prompt": "The moment: what happened, in order?",
+      "help": "Step by step. What moved first, what happened next, and where the injury occurred in that order. Write it as a sequence, not as a conclusion.",
+      "why": "This is the sentence reviewers most need and least often get. Back injury from lifting is a conclusion. It does not tell anyone what happened.",
+      "placeholder": "Example: the carton released suddenly, the conveyor belt restarted under its own control logic, and the right hand was drawn against the fixed guard edge",
+      "examples": [
+        "The carton released suddenly, the conveyor restarted under its own control logic, and the right hand was pulled against the fixed edge of the guard opening",
+        "The load shifted toward the left as it cleared the pallet, the torso twisted to the left to keep hold of it, and a sharp pain was felt across the lower back",
+        "The right foot contacted a patch of hydraulic fluid, the foot slid forward, and the fall was taken onto the right hip and the outstretched right hand"
+      ],
+      "showIf": { "field": "onset_pattern", "in": ["acute", "aggravation", "discovered"] },
+      "gapCategories": ["sequence"],
+      "weight": 4,
+      "validation": {
+        "minLength": 50,
+        "emptyTier": "block",
+        "thinTier": "challenge",
+        "signals": [
+          {
+            "type": "lexicon",
+            "set": "motionVerbs",
+            "minMatches": 1,
+            "message": "That tells us the outcome. What was the motion? Describe what moved and in what direction.",
+            "example": "The load shifted toward the left as it cleared the pallet and the torso twisted to the left to keep hold of it."
+          }
+        ],
+        "circularityAgainst": ["accident_type", "principal_body_part", "task_performed"]
+      },
+      "escapeHatches": false
+    },
+    {
+      "id": "sequence_after",
+      "stage": "sequence",
+      "kind": "textarea",
+      "prompt": "Immediately after: what did the person do, and what did the equipment do?",
+      "help": "The first few seconds afterwards. Did the person step back, call out, keep hold of the load. Did the machine keep running, stop, or trip.",
+      "why": "What happened straight afterwards tells a reviewer how the hazard behaves and whether anyone else was exposed to it.",
+      "placeholder": "Example: the hand was withdrawn from the guard opening, the conveyor continued to run, and the operator called the team lead from the station intercom",
+      "examples": [
+        "The hand was withdrawn from the guard opening, the conveyor continued running, and the team lead was called from the station intercom",
+        "The load was set down onto the pallet, the employee remained standing and held the lower back, and work at the station stopped",
+        "The fall was arrested at floor level, the employee stood up unaided, and the area was left as it was until the supervisor arrived"
+      ],
+      "showIf": { "field": "onset_pattern", "in": ["acute", "aggravation", "discovered"] },
+      "gapCategories": ["sequence", "immediateActions"],
+      "weight": 3,
+      "validation": {
+        "minLength": 35,
+        "emptyTier": "block",
+        "thinTier": "challenge",
+        "circularityAgainst": ["sequence_moment"]
+      },
+      "escapeHatches": false
+    },
+
+    {
+      "id": "gradual_task_frequency",
+      "stage": "sequence",
+      "kind": "text",
+      "prompt": "How often is this task performed?",
+      "help": "Times per shift, per day or per week. A number matters more than a word here.",
+      "placeholder": "Example: approximately 300 times per shift",
+      "examples": ["Approximately 300 times per shift", "About 4 hours of every shift", "Twice a week"],
+      "showIf": { "field": "onset_pattern", "equals": "gradual" },
+      "gapCategories": ["activity", "sequence"],
+      "weight": 3,
+      "validation": {
+        "minLength": 6,
+        "emptyTier": "block",
+        "thinTier": "challenge",
+        "signals": [
+          {
+            "type": "numeral",
+            "message": "Give a number. Frequently cannot be compared against anything.",
+            "example": "Approximately 300 times per shift"
+          }
+        ]
+      },
+      "escapeHatches": true
+    },
+    {
+      "id": "gradual_duration_at_task",
+      "stage": "sequence",
+      "kind": "text",
+      "prompt": "How long has this person been doing this task?",
+      "help": "Weeks, months or years on this specific task - not their total service.",
+      "placeholder": "Example: about 7 months on this station",
+      "examples": ["About 7 months on this station", "Roughly 3 weeks since the line rebalance", "Over 4 years"],
+      "showIf": { "field": "onset_pattern", "equals": "gradual" },
+      "gapCategories": ["activity"],
+      "weight": 2,
+      "validation": { "minLength": 5, "emptyTier": "block", "thinTier": "challenge" },
+      "escapeHatches": true
+    },
+    {
+      "id": "gradual_cycle_description",
+      "stage": "sequence",
+      "kind": "textarea",
+      "prompt": "Describe one cycle of the task.",
+      "help": "Walk through a single repetition from start to finish, including the motions and the posture held.",
+      "why": "For a cumulative case, one cycle described well is worth more than any amount of general description. It is the unit the exposure is actually made of.",
+      "placeholder": "Example: reach forward about 20 inches to the bin, grasp the part, rotate the wrist to seat it into the fixture, press down with the heel of the hand, then release and return",
+      "examples": [
+        "Reach forward about 20 inches into the bin, grasp the part, rotate the right wrist about 90 degrees to seat it in the fixture, press down with the heel of the hand, release and return",
+        "Lift a tray from waist height to a shelf at shoulder height with both arms extended, hold it steady while the label is applied, then lower it back"
+      ],
+      "showIf": { "field": "onset_pattern", "equals": "gradual" },
+      "gapCategories": ["sequence", "activity"],
+      "weight": 4,
+      "validation": {
+        "minLength": 50,
+        "emptyTier": "block",
+        "thinTier": "challenge",
+        "signals": [
+          {
+            "type": "lexicon",
+            "set": "motionVerbs",
+            "minMatches": 1,
+            "message": "Describe the motions in the cycle - what the arms, hands and back actually do.",
+            "example": "Reach forward about 20 inches, grasp the part, rotate the wrist to seat it, press down with the heel of the hand."
+          }
+        ]
+      },
+      "escapeHatches": false
+    },
+    {
+      "id": "gradual_force_posture",
+      "stage": "sequence",
+      "kind": "textarea",
+      "prompt": "What force and what posture does the task require?",
+      "help": "Weights or push and pull forces, plus any awkward posture held - overhead, bent, twisted, kneeling, or a static hold.",
+      "placeholder": "Example: about 6 pounds of downward force per part with the right wrist bent back and the elbow above shoulder height",
+      "examples": [
+        "About 6 pounds of downward force per part, with the right wrist bent back and the elbow raised near shoulder height",
+        "Roughly 25 pounds of pull to seat the connector, arms extended forward and back bent about 30 degrees"
+      ],
+      "showIf": { "field": "onset_pattern", "equals": "gradual" },
+      "gapCategories": ["sequence", "rootCause"],
+      "weight": 3,
+      "validation": { "minLength": 30, "emptyTier": "block", "thinTier": "challenge" },
+      "escapeHatches": true
+    },
+    {
+      "id": "gradual_symptom_onset",
+      "stage": "sequence",
+      "kind": "textarea",
+      "prompt": "When did symptoms first appear, and what were they?",
+      "help": "Roughly when they started and what the person first noticed. Approximate timing is fine.",
+      "placeholder": "Example: aching in the right wrist first noticed about six weeks ago, initially only at the end of a shift",
+      "examples": [
+        "Aching in the right wrist first noticed about six weeks ago, at first only towards the end of a shift",
+        "Tightness across the right shoulder starting roughly two months ago, noticed on waking"
+      ],
+      "showIf": { "field": "onset_pattern", "equals": "gradual" },
+      "gapCategories": ["sequence"],
+      "weight": 3,
+      "validation": { "minLength": 30, "emptyTier": "block", "thinTier": "challenge" },
+      "escapeHatches": false
+    },
+    {
+      "id": "gradual_symptom_progression",
+      "stage": "sequence",
+      "kind": "textarea",
+      "prompt": "How have the symptoms changed since then?",
+      "help": "Better, worse, or the same. Whether they now persist outside work, and what makes them worse.",
+      "placeholder": "Example: now present through most of the shift and continuing into the evening, worse during the first hour after break",
+      "examples": [
+        "Now present through most of the shift and continuing into the evening, and worse during the first hour after each break",
+        "Unchanged in intensity but now affecting grip strength when lifting trays"
+      ],
+      "showIf": { "field": "onset_pattern", "equals": "gradual" },
+      "gapCategories": ["sequence"],
+      "weight": 2,
+      "validation": { "minLength": 25, "emptyTier": "challenge", "thinTier": "warn" },
+      "escapeHatches": true
+    },
+    {
+      "id": "gradual_recent_change",
+      "stage": "sequence",
+      "kind": "textarea",
+      "prompt": "What has changed in this work recently?",
+      "help": "Rate, method, tooling, materials, staffing, overtime, station layout. If nothing changed, say so - that is also a finding.",
+      "why": "For cumulative cases the cause is usually a change in exposure, not the task itself. This question is the closest a description gets to a cause.",
+      "placeholder": "Example: the line rate went from 220 to 300 units per shift about a month ago after the second station was removed",
+      "examples": [
+        "The line rate increased from 220 to 300 units per shift about a month ago when the second station was removed",
+        "The fixture was replaced six weeks ago and the new one sits about 4 inches further forward",
+        "Nothing about the task has changed in the last year"
+      ],
+      "showIf": { "field": "onset_pattern", "equals": "gradual" },
+      "gapCategories": ["rootCause"],
+      "weight": 4,
+      "validation": { "minLength": 25, "emptyTier": "block", "thinTier": "challenge" },
+      "escapeHatches": true
+    },
+
+    {
+      "id": "prior_condition_source",
+      "stage": "sequence",
+      "kind": "select",
+      "prompt": "What was the prior condition related to?",
+      "optionsRef": "priorConditionSource",
+      "showIf": { "field": "onset_pattern", "equals": "aggravation" },
+      "gapCategories": ["rootCause"],
+      "validation": { "emptyTier": "challenge" }
+    },
+    {
+      "id": "prior_condition_change",
+      "stage": "sequence",
+      "kind": "textarea",
+      "prompt": "What specifically changed about the condition, and what work activity coincided with the change?",
+      "help": "Describe the difference in symptoms or function, and the task that was being done when it changed.",
+      "why": "For an aggravation, the whole case turns on what got worse and what work was being done when it did. Without both, the record cannot support a recordability decision either way.",
+      "placeholder": "Example: the prior lower back symptoms had been intermittent for two years, and after lifting the resin bag the pain became constant and radiated into the right leg",
+      "examples": [
+        "The prior lower back symptoms had been intermittent for about two years. After lifting the resin bag the pain became constant and began radiating into the right leg",
+        "The previously repaired right shoulder had full range of motion until the pull on the jammed lever, after which the arm could not be raised above shoulder height"
+      ],
+      "showIf": { "field": "onset_pattern", "equals": "aggravation" },
+      "gapCategories": ["rootCause", "sequence"],
+      "weight": 3,
+      "validation": { "minLength": 40, "emptyTier": "block", "thinTier": "challenge" },
+      "escapeHatches": false
+    },
+
+    {
+      "id": "discovered_noticed",
+      "stage": "sequence",
+      "kind": "textarea",
+      "prompt": "How and when was the condition noticed?",
+      "help": "What was first observed, by whom in role terms, and roughly when.",
+      "placeholder": "Example: a rash across both forearms was noticed by the employee at the end of the shift while washing up",
+      "examples": [
+        "A rash across both forearms was noticed at the end of the shift while washing up",
+        "A hearing shift was identified at the annual audiometric test",
+        "The area monitor alarmed during the second half of the shift and the exposure was identified afterwards"
+      ],
+      "showIf": { "field": "onset_pattern", "equals": "discovered" },
+      "gapCategories": ["sequence"],
+      "weight": 3,
+      "validation": { "minLength": 30, "emptyTier": "block", "thinTier": "challenge" },
+      "escapeHatches": false
+    },
+    {
+      "id": "discovered_exposure_window",
+      "stage": "sequence",
+      "kind": "textarea",
+      "prompt": "Over what period could the exposure have occurred, and doing what?",
+      "help": "The window of work that could plausibly account for it, and the tasks performed in that window.",
+      "placeholder": "Example: the two shifts before, both spent decanting solvent at the parts washer without sleeve protection",
+      "examples": [
+        "The two shifts before, both spent decanting solvent at the parts washer without sleeve protection",
+        "The last four months on the press line, where hearing protection is required but not consistently worn"
+      ],
+      "showIf": { "field": "onset_pattern", "equals": "discovered" },
+      "gapCategories": ["sequence", "activity"],
+      "weight": 3,
+      "validation": { "minLength": 30, "emptyTier": "block", "thinTier": "challenge" },
+      "escapeHatches": true
+    },
+
+    {
+      "id": "mech_struck_moving",
+      "stage": "mechanism",
+      "kind": "textarea",
+      "prompt": "What was moving, and what was it that moved against?",
+      "help": "Name both. In a struck-by the object moves; in a struck-against the person moves. Say which.",
+      "placeholder": "Example: a 6 foot length of steel bar stock slid off the top of the rack and fell onto the left shoulder",
+      "examples": [
+        "A 6 foot length of steel bar stock slid off the top of the rack and fell onto the left shoulder",
+        "The employee straightened up quickly and the top of the head struck the fixed underside of the conveyor frame"
+      ],
+      "showIf": { "field": "accident_type", "in": ["struck_by", "struck_against"] },
+      "gapCategories": ["sequence", "equipment"],
+      "weight": 3,
+      "validation": { "minLength": 35, "emptyTier": "block", "thinTier": "challenge" },
+      "escapeHatches": false
+    },
+    {
+      "id": "mech_struck_direction",
+      "stage": "mechanism",
+      "kind": "text",
+      "prompt": "From what direction, and from what height or distance?",
+      "placeholder": "Example: from above and behind, falling about 7 feet from the top rack level",
+      "examples": [
+        "From above and behind, falling about 7 feet from the top rack level",
+        "Upward, over a distance of about 12 inches as the employee stood up"
+      ],
+      "showIf": { "field": "accident_type", "in": ["struck_by", "struck_against"] },
+      "gapCategories": ["sequence"],
+      "weight": 2,
+      "validation": {
+        "minLength": 12,
+        "emptyTier": "challenge",
+        "thinTier": "challenge",
+        "signals": [
+          {
+            "type": "numeral",
+            "message": "Add a rough height or distance. It changes the energy involved by an order of magnitude.",
+            "example": "From above, falling about 7 feet from the top rack level"
+          }
+        ]
+      },
+      "escapeHatches": true
+    },
+    {
+      "id": "mech_struck_force",
+      "stage": "mechanism",
+      "kind": "text",
+      "prompt": "How heavy or how fast was the object?",
+      "help": "An approximate weight, or a speed if it was powered or thrown.",
+      "placeholder": "Example: approximately 30 pounds, falling freely",
+      "examples": ["Approximately 30 pounds, falling freely", "A light plastic cover, but driven by the machine at speed"],
+      "showIf": { "field": "accident_type", "in": ["struck_by", "struck_against"] },
+      "gapCategories": ["equipment"],
+      "weight": 2,
+      "validation": { "minLength": 8, "emptyTier": "challenge", "thinTier": "warn" },
+      "escapeHatches": true
+    },
+
+    {
+      "id": "mech_caught_surfaces",
+      "stage": "mechanism",
+      "kind": "textarea",
+      "prompt": "What were the two surfaces the body part was caught between?",
+      "help": "Name both surfaces specifically, including which one moved.",
+      "placeholder": "Example: between the moving conveyor belt and the fixed steel edge of the guard opening",
+      "examples": [
+        "Between the moving conveyor belt and the fixed steel edge of the guard opening",
+        "Between the descending press ram and the fixed lower die",
+        "Between the pallet being set down and the rack upright"
+      ],
+      "showIf": { "field": "accident_type", "equals": "caught_in_between" },
+      "gapCategories": ["sequence", "equipment"],
+      "weight": 4,
+      "validation": { "minLength": 30, "emptyTier": "block", "thinTier": "challenge" },
+      "escapeHatches": false
+    },
+    {
+      "id": "mech_caught_entry",
+      "stage": "mechanism",
+      "kind": "textarea",
+      "prompt": "How did the body part come to be in that zone?",
+      "help": "Reaching in, guard removed, hand following material, pulled in by the motion. Be specific about the opening or access point.",
+      "why": "How the body part got into the danger zone is usually where the control failed. This is the most useful sentence in a caught-in case.",
+      "placeholder": "Example: the right hand was reaching through a 5 inch gap in the guard to free the jammed carton without stopping the belt",
+      "examples": [
+        "The right hand was reaching through a 5 inch gap in the guard to free the jammed carton without stopping the belt",
+        "The guard had been removed for the changeover and not refitted before the machine was cycled",
+        "The fingers followed the sheet into the nip as it was fed in"
+      ],
+      "showIf": { "field": "accident_type", "equals": "caught_in_between" },
+      "gapCategories": ["sequence", "rootCause"],
+      "weight": 4,
+      "validation": { "minLength": 35, "emptyTier": "block", "thinTier": "challenge" },
+      "escapeHatches": false
+    },
+    {
+      "id": "mech_caught_release",
+      "stage": "mechanism",
+      "kind": "textarea",
+      "prompt": "What released it?",
+      "help": "Whether the person pulled free, another person stopped the machine, an e-stop was hit, or the cycle completed.",
+      "placeholder": "Example: the belt was stopped by a coworker at the station e-stop after about three seconds",
+      "examples": [
+        "The belt was stopped by a coworker at the station e-stop after about three seconds",
+        "The hand was pulled free unaided as the carton cleared",
+        "The press completed its cycle and the ram returned to the top of stroke"
+      ],
+      "showIf": { "field": "accident_type", "equals": "caught_in_between" },
+      "gapCategories": ["sequence", "immediateActions"],
+      "weight": 3,
+      "validation": { "minLength": 20, "emptyTier": "block", "thinTier": "challenge" },
+      "escapeHatches": true
+    },
+
+    {
+      "id": "mech_exert_weight",
+      "stage": "mechanism",
+      "kind": "text",
+      "prompt": "What was the weight or the force involved?",
+      "help": "For a lift, the weight. For a push or pull, roughly how hard, or what resisted.",
+      "placeholder": "Example: approximately 55 pounds",
+      "examples": ["Approximately 55 pounds", "About 25 kg", "A hard pull on a lever that had seized"],
+      "showIf": { "field": "accident_type", "equals": "overexertion" },
+      "gapCategories": ["sequence", "equipment"],
+      "weight": 4,
+      "validation": {
+        "minLength": 5,
+        "emptyTier": "block",
+        "thinTier": "challenge",
+        "signals": [
+          {
+            "type": "anyOf",
+            "message": "Give a number and a unit, or describe the resistance if there was no discrete weight.",
+            "example": "Approximately 55 pounds",
+            "requirements": [
+              { "type": "numeral", "message": "A number." },
+              { "type": "lexicon", "set": "forceWords", "minMatches": 1, "message": "A force description." }
+            ]
+          }
+        ]
+      },
+      "escapeHatches": true
+    },
+    {
+      "id": "mech_exert_heights",
+      "stage": "mechanism",
+      "kind": "text",
+      "prompt": "Between what heights did the load move?",
+      "help": "Start and end height. Floor level, knee, waist, shoulder, overhead - or inches.",
+      "placeholder": "Example: from floor level to about waist height",
+      "examples": ["From floor level to about waist height", "From a shelf at shoulder height down to a cart at about 30 inches"],
+      "showIf": { "field": "accident_type", "equals": "overexertion" },
+      "gapCategories": ["sequence"],
+      "weight": 3,
+      "validation": { "minLength": 12, "emptyTier": "block", "thinTier": "challenge" },
+      "escapeHatches": true
+    },
+    {
+      "id": "mech_exert_posture",
+      "stage": "mechanism",
+      "kind": "textarea",
+      "prompt": "What was the body doing - reach, twist, bend?",
+      "help": "How far the arms were extended from the body, and whether the back was bent or twisted during the movement.",
+      "why": "A 55 pound lift held close and square is a different exposure from the same weight at arm reach with a twist. The posture is the mechanism.",
+      "placeholder": "Example: the load was lifted at about 18 inches in front of the body with the back bent forward, then the torso twisted to the left to place it",
+      "examples": [
+        "The load was lifted at about 18 inches in front of the body with the back bent forward, then the torso twisted to the left to place it on the platform",
+        "Reaching over the side of the bin at full arm extension with both feet fixed"
+      ],
+      "showIf": { "field": "accident_type", "equals": "overexertion" },
+      "gapCategories": ["sequence"],
+      "weight": 4,
+      "validation": { "minLength": 35, "emptyTier": "block", "thinTier": "challenge" },
+      "escapeHatches": false
+    },
+    {
+      "id": "mech_exert_assist",
+      "stage": "mechanism",
+      "kind": "textarea",
+      "prompt": "What lifting aid or assist device was available, and was it used?",
+      "help": "Hoist, cart, table, vacuum lift, or none. If one was available and not used, say why.",
+      "why": "Whether a control existed and went unused is a different corrective action from no control existing at all.",
+      "placeholder": "Example: a scissor lift table is available at the station but was at the far end of the line, so the bag was lifted by hand",
+      "examples": [
+        "A scissor lift table is available at the station but was at the far end of the line, so the bag was lifted by hand",
+        "No lifting aid exists for this transfer",
+        "The vacuum lift was used for the first four bags and then stopped holding vacuum"
+      ],
+      "showIf": { "field": "accident_type", "equals": "overexertion" },
+      "gapCategories": ["rootCause", "equipment"],
+      "weight": 3,
+      "validation": { "minLength": 20, "emptyTier": "block", "thinTier": "challenge" },
+      "escapeHatches": true
+    },
+    {
+      "id": "mech_exert_team",
+      "stage": "mechanism",
+      "kind": "select",
+      "prompt": "Was this a one-person or a team lift?",
+      "options": [
+        { "value": "one_person", "label": "One person" },
+        { "value": "two_person", "label": "Two person" },
+        { "value": "three_plus", "label": "Three or more" },
+        { "value": "not_a_lift", "label": "Not a lift - push, pull or carry" }
+      ],
+      "showIf": { "field": "accident_type", "equals": "overexertion" },
+      "gapCategories": ["procedure"],
+      "weight": 2,
+      "validation": { "emptyTier": "challenge" }
+    },
+    {
+      "id": "mech_exert_team_detail",
+      "stage": "mechanism",
+      "kind": "textarea",
+      "prompt": "How was the team lift coordinated, and what went wrong?",
+      "help": "Who called the lift, whether both people lifted together, and whether the load shifted between them.",
+      "placeholder": "Example: the lift was called by the other handler, the near end was raised about a second early, and the load tipped toward the injured employee",
+      "examples": [
+        "The lift was called by the other handler, the near end was raised about a second early, and the load tipped toward the injured employee",
+        "Both ends were raised together and the load remained level throughout"
+      ],
+      "showIf": { "field": "mech_exert_team", "in": ["two_person", "three_plus"] },
+      "gapCategories": ["sequence", "rootCause"],
+      "weight": 3,
+      "validation": { "minLength": 30, "emptyTier": "challenge", "thinTier": "challenge" },
+      "escapeHatches": true
+    },
+
+    {
+      "id": "mech_fall_surface",
+      "stage": "mechanism",
+      "kind": "textarea",
+      "prompt": "What was the walking surface, and what condition was it in?",
+      "help": "Material, and anything on it. Be specific about the substance if there was one.",
+      "placeholder": "Example: sealed concrete aisle floor with a patch of hydraulic fluid about 18 inches across, not marked or barriered",
+      "examples": [
+        "Sealed concrete aisle floor with a patch of hydraulic fluid about 18 inches across, not marked or barriered",
+        "Painted steel mezzanine decking, dry, with a raised weld seam across the walkway",
+        "Outdoor asphalt yard, wet from rain and with standing water near the dock"
+      ],
+      "showIf": { "field": "accident_type", "equals": "fall_same_level" },
+      "gapCategories": ["sequence", "rootCause"],
+      "weight": 4,
+      "validation": { "minLength": 30, "emptyTier": "block", "thinTier": "challenge" },
+      "escapeHatches": false
+    },
+    {
+      "id": "mech_fall_foot_contact",
+      "stage": "mechanism",
+      "kind": "textarea",
+      "prompt": "What did the foot contact, and what did the body do next?",
+      "help": "Slip, trip or misstep, which foot, and how the fall was taken - onto what part of the body.",
+      "placeholder": "Example: the right foot slid forward on the fluid, balance was lost backwards, and the fall was taken onto the right hip and the outstretched right hand",
+      "examples": [
+        "The right foot slid forward on the fluid, balance was lost backwards, and the fall was taken onto the right hip and the outstretched right hand",
+        "The left toe caught the raised weld seam, the body pitched forward, and both knees contacted the decking first"
+      ],
+      "showIf": { "field": "accident_type", "equals": "fall_same_level" },
+      "gapCategories": ["sequence"],
+      "weight": 4,
+      "validation": { "minLength": 35, "emptyTier": "block", "thinTier": "challenge" },
+      "escapeHatches": false
+    },
+    {
+      "id": "mech_fall_footwear",
+      "stage": "mechanism",
+      "kind": "text",
+      "prompt": "What footwear was being worn, and what condition was it in?",
+      "placeholder": "Example: site issued slip resistant safety boots, soles worn smooth at the heel",
+      "examples": [
+        "Site issued slip resistant safety boots, soles worn smooth at the heel",
+        "Steel toe boots in good condition with the tread intact"
+      ],
+      "showIf": { "field": "accident_type", "in": ["fall_same_level", "fall_elevation"] },
+      "gapCategories": ["procedure", "equipment"],
+      "weight": 2,
+      "validation": { "minLength": 12, "emptyTier": "challenge", "thinTier": "warn" },
+      "escapeHatches": true
+    },
+    {
+      "id": "mech_fall_carried",
+      "stage": "mechanism",
+      "kind": "text",
+      "prompt": "What was being carried or handled at the time?",
+      "help": "Anything in the hands, and whether it blocked the view of the floor.",
+      "placeholder": "Example: a stacked tote in both arms, obscuring the view of the floor ahead",
+      "examples": ["A stacked tote in both arms, obscuring the view of the floor ahead", "Nothing was being carried"],
+      "showIf": { "field": "accident_type", "in": ["fall_same_level", "fall_elevation"] },
+      "gapCategories": ["equipment", "sequence"],
+      "weight": 2,
+      "validation": { "minLength": 8, "emptyTier": "challenge", "thinTier": "warn" },
+      "escapeHatches": true
+    },
+
+    {
+      "id": "mech_fall_height",
+      "stage": "mechanism",
+      "kind": "text",
+      "prompt": "From what height did the fall occur?",
+      "help": "Approximate distance from the working surface to the landing surface.",
+      "placeholder": "Example: approximately 6 feet, from the third step of a stepladder to the concrete floor",
+      "examples": [
+        "Approximately 6 feet, from the third step of a stepladder to the concrete floor",
+        "About 4 feet from the mezzanine edge to the pallet stack below"
+      ],
+      "showIf": { "field": "accident_type", "equals": "fall_elevation" },
+      "gapCategories": ["sequence"],
+      "weight": 4,
+      "validation": {
+        "minLength": 8,
+        "emptyTier": "block",
+        "thinTier": "challenge",
+        "signals": [
+          {
+            "type": "numeral",
+            "message": "A height is needed. It drives both the injury expectation and the recordability review.",
+            "example": "Approximately 6 feet, from the third step of a stepladder to the concrete floor"
+          }
+        ]
+      },
+      "escapeHatches": true
+    },
+    {
+      "id": "mech_fall_working_surface",
+      "stage": "mechanism",
+      "kind": "textarea",
+      "prompt": "What was being worked from, and what was the landing surface?",
+      "help": "Ladder, platform, scaffold, vehicle, roof. Include whether it was set up correctly.",
+      "placeholder": "Example: an 8 foot fiberglass stepladder set on a slight slope with one leg on a cable tray, landing on sealed concrete",
+      "examples": [
+        "An 8 foot fiberglass stepladder set on a slight slope with one leg resting on a cable tray, landing on sealed concrete",
+        "A scissor lift platform at about 12 feet, landing on the platform deck itself"
+      ],
+      "showIf": { "field": "accident_type", "equals": "fall_elevation" },
+      "gapCategories": ["equipment", "rootCause"],
+      "weight": 4,
+      "validation": { "minLength": 30, "emptyTier": "block", "thinTier": "challenge" },
+      "escapeHatches": false
+    },
+    {
+      "id": "mech_fall_protection",
+      "stage": "mechanism",
+      "kind": "textarea",
+      "prompt": "What fall protection was required, available, and in use?",
+      "help": "All three. Required by the method, present at the location, and actually worn or connected.",
+      "why": "Required, available and in use are three separate facts and they are frequently three different answers. A reviewer needs all three.",
+      "placeholder": "Example: no fall protection is required at this height, none was available at the location, and none was in use",
+      "examples": [
+        "No fall protection is required below 6 feet on this site, none was available at the location, and none was in use",
+        "A harness and lanyard are required and were available on the lift, but the lanyard was not connected to the anchor point"
+      ],
+      "showIf": { "field": "accident_type", "equals": "fall_elevation" },
+      "gapCategories": ["procedure", "rootCause"],
+      "weight": 4,
+      "validation": { "minLength": 30, "emptyTier": "block", "thinTier": "challenge" },
+      "escapeHatches": false
+    },
+    {
+      "id": "mech_fall_initiator",
+      "stage": "mechanism",
+      "kind": "textarea",
+      "prompt": "What initiated the fall?",
+      "help": "Overreach, ladder shift, missed step, surface failure, loss of grip, contact from something else.",
+      "placeholder": "Example: the ladder shifted to the left as the employee reached out past the side rail to reach the valve",
+      "examples": [
+        "The ladder shifted to the left as the employee reached out past the side rail to reach the valve",
+        "The right foot missed the second step on the way down while carrying a part in one hand"
+      ],
+      "showIf": { "field": "accident_type", "equals": "fall_elevation" },
+      "gapCategories": ["sequence", "rootCause"],
+      "weight": 4,
+      "validation": { "minLength": 30, "emptyTier": "block", "thinTier": "challenge" },
+      "escapeHatches": false
+    },
+
+    {
+      "id": "mech_rep_motion",
+      "stage": "mechanism",
+      "kind": "textarea",
+      "prompt": "What is the motion, described precisely?",
+      "help": "Which joint, in what direction, through roughly what range.",
+      "placeholder": "Example: right wrist rotation of about 90 degrees with the wrist bent back, combined with a downward press using the heel of the hand",
+      "examples": [
+        "Right wrist rotation of about 90 degrees with the wrist bent back, combined with a downward press using the heel of the hand",
+        "Repeated overhead reach with the right arm raised above shoulder height and the elbow extended"
+      ],
+      "showIf": { "field": "accident_type", "equals": "repetitive_motion" },
+      "gapCategories": ["sequence"],
+      "weight": 4,
+      "validation": { "minLength": 35, "emptyTier": "block", "thinTier": "challenge" },
+      "escapeHatches": false
+    },
+    {
+      "id": "mech_rep_counts",
+      "stage": "mechanism",
+      "kind": "text",
+      "prompt": "How many repetitions per cycle, and how many cycles per shift?",
+      "help": "Numbers, even approximate ones. This is the exposure.",
+      "placeholder": "Example: 4 repetitions per part, about 300 parts per shift",
+      "examples": ["4 repetitions per part, about 300 parts per shift", "Roughly 12 per minute for about 4 hours of the shift"],
+      "showIf": { "field": "accident_type", "equals": "repetitive_motion" },
+      "gapCategories": ["sequence", "activity"],
+      "weight": 4,
+      "validation": {
+        "minLength": 8,
+        "emptyTier": "block",
+        "thinTier": "challenge",
+        "signals": [
+          {
+            "type": "numeral",
+            "message": "Repetitive is not a quantity. Give approximate counts - they are the whole exposure.",
+            "example": "4 repetitions per part, about 300 parts per shift"
+          }
+        ]
+      },
+      "escapeHatches": true
+    },
+    {
+      "id": "mech_rep_force_posture",
+      "stage": "mechanism",
+      "kind": "textarea",
+      "prompt": "What force is applied, and what posture is held?",
+      "placeholder": "Example: about 6 pounds of press force per repetition with the elbow held near shoulder height throughout",
+      "examples": [
+        "About 6 pounds of press force per repetition with the elbow held near shoulder height throughout",
+        "Light force but a static pinch grip held for most of each 40 second cycle"
+      ],
+      "showIf": { "field": "accident_type", "equals": "repetitive_motion" },
+      "gapCategories": ["sequence"],
+      "weight": 3,
+      "validation": { "minLength": 25, "emptyTier": "block", "thinTier": "challenge" },
+      "escapeHatches": true
+    },
+
+    {
+      "id": "mech_energy_source",
+      "stage": "mechanism",
+      "kind": "textarea",
+      "prompt": "What was the substance or energy source, and where did it come from?",
+      "help": "Name the material or the energy, and the equipment or line it came from.",
+      "placeholder": "Example: heated caustic wash solution from the parts washer transfer line at the quick disconnect",
+      "examples": [
+        "Heated caustic wash solution from the parts washer transfer line at the quick disconnect fitting",
+        "The heated platen of the laminating press",
+        "A 480 volt supply at the disconnect switch inside the panel"
+      ],
+      "showIf": {
+        "field": "accident_type",
+        "in": ["contact_temperature", "contact_chemical", "contact_electrical"]
+      },
+      "gapCategories": ["equipment", "sequence"],
+      "weight": 4,
+      "validation": { "minLength": 25, "emptyTier": "block", "thinTier": "challenge" },
+      "escapeHatches": false
+    },
+    {
+      "id": "mech_energy_magnitude",
+      "stage": "mechanism",
+      "kind": "text",
+      "prompt": "What was the temperature, voltage or concentration?",
+      "help": "Approximate is fine. If it is not known, use the escape hatch rather than guessing.",
+      "placeholder": "Example: approximately 180 degrees Fahrenheit, roughly 4 percent caustic",
+      "examples": ["Approximately 180 degrees Fahrenheit, roughly 4 percent caustic", "480 volts, three phase"],
+      "showIf": {
+        "field": "accident_type",
+        "in": ["contact_temperature", "contact_chemical", "contact_electrical"]
+      },
+      "gapCategories": ["equipment"],
+      "weight": 3,
+      "validation": { "minLength": 6, "emptyTier": "challenge", "thinTier": "challenge" },
+      "escapeHatches": true
+    },
+    {
+      "id": "mech_contact_duration",
+      "stage": "mechanism",
+      "kind": "text",
+      "prompt": "How long was the contact, and over what area of the body?",
+      "placeholder": "Example: about 2 seconds before the arm was withdrawn, across the inner left forearm",
+      "examples": [
+        "About 2 seconds before the arm was withdrawn, across the inner left forearm",
+        "Momentary, to the fingertips of the right hand"
+      ],
+      "showIf": {
+        "field": "accident_type",
+        "in": ["contact_temperature", "contact_chemical", "contact_electrical"]
+      },
+      "gapCategories": ["sequence"],
+      "weight": 3,
+      "validation": { "minLength": 12, "emptyTier": "block", "thinTier": "challenge" },
+      "escapeHatches": true
+    },
+    {
+      "id": "mech_isolation_state",
+      "stage": "mechanism",
+      "kind": "textarea",
+      "prompt": "What was the isolation state of the source?",
+      "help": "Locked out, isolated, drained, depressurized, cooled - or live. Include whether isolation was required for this task.",
+      "why": "For energy contact cases the isolation state is the control that either held or did not. It is the first thing an investigator will look for.",
+      "placeholder": "Example: the transfer line was not drained or isolated, and the procedure does not require isolation for a hose swap",
+      "examples": [
+        "The transfer line was not drained or isolated, and the written method does not require isolation for a hose swap",
+        "The panel was locked out at the main disconnect but the control circuit remained live from a second source"
+      ],
+      "showIf": {
+        "field": "accident_type",
+        "in": ["contact_temperature", "contact_chemical", "contact_electrical"]
+      },
+      "gapCategories": ["procedure", "rootCause"],
+      "weight": 4,
+      "validation": { "minLength": 25, "emptyTier": "block", "thinTier": "challenge" },
+      "escapeHatches": false
+    },
+
+    {
+      "id": "mech_agent",
+      "stage": "mechanism",
+      "kind": "textarea",
+      "prompt": "What was the agent, and where was it coming from?",
+      "help": "The dust, fume, vapour, noise source or biological agent, and its source.",
+      "placeholder": "Example: welding fume from stainless steel MIG welding at the fabrication bench",
+      "examples": [
+        "Welding fume from stainless steel MIG welding at the fabrication bench",
+        "Solvent vapour from the open parts washer tank",
+        "Continuous noise from the press line at the adjacent station"
+      ],
+      "showIf": { "field": "accident_type", "equals": "exposure_inhalation" },
+      "gapCategories": ["equipment", "sequence"],
+      "weight": 4,
+      "validation": { "minLength": 25, "emptyTier": "block", "thinTier": "challenge" },
+      "escapeHatches": false
+    },
+    {
+      "id": "mech_exposure_duration",
+      "stage": "mechanism",
+      "kind": "text",
+      "prompt": "How long was the exposure?",
+      "placeholder": "Example: approximately 40 minutes of continuous welding",
+      "examples": ["Approximately 40 minutes of continuous welding", "Most of an 8 hour shift"],
+      "showIf": { "field": "accident_type", "equals": "exposure_inhalation" },
+      "gapCategories": ["sequence"],
+      "weight": 3,
+      "validation": { "minLength": 8, "emptyTier": "block", "thinTier": "challenge" },
+      "escapeHatches": true
+    },
+    {
+      "id": "mech_ventilation",
+      "stage": "mechanism",
+      "kind": "textarea",
+      "prompt": "What ventilation or engineering control was in place, and was it working?",
+      "placeholder": "Example: a local exhaust arm is fitted at the bench but was positioned about 3 feet from the weld and the fan was not switched on",
+      "examples": [
+        "A local exhaust arm is fitted at the bench but was positioned about 3 feet from the weld and the fan was not switched on",
+        "General room ventilation only, no local exhaust at this station"
+      ],
+      "showIf": { "field": "accident_type", "equals": "exposure_inhalation" },
+      "gapCategories": ["rootCause", "equipment"],
+      "weight": 4,
+      "validation": { "minLength": 25, "emptyTier": "block", "thinTier": "challenge" },
+      "escapeHatches": false
+    },
+    {
+      "id": "mech_respiratory_protection",
+      "stage": "mechanism",
+      "kind": "text",
+      "prompt": "What respiratory or hearing protection was worn?",
+      "help": "Type and whether it is the specified protection for this work. If none, say so.",
+      "placeholder": "Example: no respiratory protection was worn; a half mask with P100 cartridges is specified for this work",
+      "examples": [
+        "No respiratory protection was worn. A half mask with P100 cartridges is specified for this work",
+        "Foam ear plugs, which are the specified protection for this area"
+      ],
+      "showIf": { "field": "accident_type", "equals": "exposure_inhalation" },
+      "gapCategories": ["procedure"],
+      "weight": 3,
+      "validation": { "minLength": 12, "emptyTier": "block", "thinTier": "challenge" },
+      "escapeHatches": true
+    },
+
+    {
+      "id": "mech_vehicle_detail",
+      "stage": "mechanism",
+      "kind": "textarea",
+      "prompt": "Describe the vehicle movement and the point of impact.",
+      "help": "What vehicle, who was operating it in role terms, the direction and approximate speed, and what was struck.",
+      "placeholder": "Example: a sit down counterbalance forklift reversing at walking pace struck the left foot of a pedestrian at the aisle intersection",
+      "examples": [
+        "A sit down counterbalance forklift reversing at about walking pace struck the left foot of a pedestrian at the aisle intersection",
+        "The pallet truck rolled forward on the dock slope and pinned the right ankle against the dock plate"
+      ],
+      "showIf": { "field": "accident_type", "equals": "motor_vehicle" },
+      "gapCategories": ["sequence", "equipment"],
+      "weight": 4,
+      "validation": { "minLength": 40, "emptyTier": "block", "thinTier": "challenge" },
+      "escapeHatches": false
+    },
+
+    {
+      "id": "mech_other_description",
+      "stage": "mechanism",
+      "kind": "textarea",
+      "prompt": "Describe the physical mechanism in full.",
+      "help": "Because the accident type is other, this answer carries the whole mechanism. Cover what moved, what forces were involved, and how the body was loaded.",
+      "why": "Other means no branch of tailored questions applies, so the completeness bar for this single answer is higher than usual.",
+      "placeholder": "Example: describe what moved, in what direction, with what force, and how the body part came to be loaded or contacted",
+      "examples": [
+        "While seated at the inspection bench the chair gas cylinder collapsed suddenly, dropping the seat about 5 inches, and the lower back was compressed against the seat back"
+      ],
+      "showIf": { "field": "accident_type", "equals": "other" },
+      "gapCategories": ["sequence"],
+      "weight": 4,
+      "validation": { "minLength": 80, "emptyTier": "block", "thinTier": "challenge" },
+      "escapeHatches": false
+    },
+
+    {
+      "id": "point_of_contact",
+      "stage": "mechanism",
+      "kind": "textarea",
+      "prompt": "Where exactly on the body, and from what direction was the force applied?",
+      "help": "Be specific about side and location. Palm or back of the hand, which finger and which joint, inner or outer forearm, left or right.",
+      "why": "This is what makes a description medically and investigatively useful. Hand injury and a laceration across the base of the right index finger from a blade moving toward the body are not the same record.",
+      "placeholder": "Example: across the back of the right hand at the base of the index and middle fingers, force applied from the little finger side toward the thumb",
+      "examples": [
+        "Across the back of the right hand at the base of the index and middle fingers, with force applied from the little finger side toward the thumb",
+        "The outer left forearm, about 4 inches below the elbow, contacted from above",
+        "Across the lower back with the load pulling forward and to the left"
+      ],
+      "showIf": { "field": "onset_pattern", "in": ["acute", "aggravation", "discovered"] },
+      "gapCategories": ["sequence"],
+      "weight": 4,
+      "validation": {
+        "minLength": 25,
+        "emptyTier": "block",
+        "thinTier": "challenge",
+        "circularityAgainst": ["principal_body_part"]
+      },
+      "escapeHatches": false
+    },
+
+    {
+      "id": "cond_difference_from_normal",
+      "stage": "conditions",
+      "kind": "textarea",
+      "prompt": "What was different from a normal run of this task?",
+      "help": "Anything at all - a substitution, a rush, a missing part, a new person, a machine behaving oddly. If genuinely nothing was different, say that plainly.",
+      "why": "Root cause information is missing from 90.7% of past descriptions, the largest gap in the data. This one question closes more of that gap than any other. Nothing was different is a legitimate and useful answer.",
+      "placeholder": "Example: the jam happened three times that shift where it normally happens once a week, and the line had been running a new supplier carton since Monday",
+      "examples": [
+        "The jam occurred three times that shift where it normally happens about once a week, and the line had been running cartons from a new supplier since Monday",
+        "The regular operator was on leave and this was a first shift on the station for a covering employee",
+        "Nothing was different. This is the task as it is normally performed"
+      ],
+      "gapCategories": ["rootCause"],
+      "weight": 4,
+      "validation": {
+        "minLength": 25,
+        "emptyTier": "challenge",
+        "thinTier": "challenge",
+        "circularityAgainst": ["task_performed", "sequence_moment"]
+      },
+      "escapeHatches": true
+    },
+    {
+      "id": "cond_environment_factors",
+      "stage": "conditions",
+      "kind": "multiselect",
+      "prompt": "Which conditions applied at the point of injury?",
+      "help": "Select everything that applied. Select nothing notable if the environment played no part.",
+      "optionsRef": "environmentFactors",
+      "gapCategories": ["rootCause"],
+      "weight": 2,
+      "validation": { "emptyTier": "challenge" }
+    },
+    {
+      "id": "cond_environment_detail",
+      "stage": "conditions",
+      "kind": "textarea",
+      "prompt": "Describe those conditions.",
+      "help": "Only the ones you selected, in enough detail that someone who was not there can picture the spot.",
+      "placeholder": "Example: the aisle light above the station has been out for about two weeks and the area is lit by spill light from the next bay",
+      "examples": [
+        "The aisle light above the station has been out for about two weeks and the area is lit only by spill light from the next bay",
+        "The floor at the transfer point is routinely damp from the washer and there is no drain nearby"
+      ],
+      "showIf": {
+        "not": { "field": "cond_environment_factors", "equals": "none_notable" }
+      },
+      "gapCategories": ["rootCause"],
+      "weight": 2,
+      "validation": { "minLength": 20, "emptyTier": "challenge", "thinTier": "warn" },
+      "escapeHatches": true
+    },
+    {
+      "id": "cond_time_factors",
+      "stage": "conditions",
+      "kind": "textarea",
+      "prompt": "How far into the shift and into the task did this happen?",
+      "help": "Roughly how many hours into the shift, whether it was overtime, and how long the person had been on this task.",
+      "why": "Time into shift and overtime are among the few fatigue signals a description can carry, and they are almost never recorded.",
+      "placeholder": "Example: about 7 hours into a 12 hour shift, the third consecutive shift of overtime, and roughly 20 minutes into this task",
+      "examples": [
+        "About 7 hours into a 12 hour shift, the third consecutive day of overtime, and roughly 20 minutes into this task",
+        "Within the first 30 minutes of the shift, no overtime, and the first time on this task that day"
+      ],
+      "gapCategories": ["rootCause"],
+      "weight": 3,
+      "validation": { "minLength": 20, "emptyTier": "challenge", "thinTier": "challenge" },
+      "escapeHatches": true
+    },
+    {
+      "id": "cond_first_time",
+      "stage": "conditions",
+      "kind": "select",
+      "prompt": "Was this the first time this person had performed this task?",
+      "optionsRef": "yesNoUnknown",
+      "gapCategories": ["rootCause", "procedure"],
+      "weight": 2,
+      "validation": { "emptyTier": "challenge" }
+    },
+    {
+      "id": "cond_known_hazard",
+      "stage": "conditions",
+      "kind": "select",
+      "prompt": "Was there a known hazard, prior near miss, open corrective action, or risk assessment covering this task?",
+      "optionsRef": "yesNoUnknown",
+      "gapCategories": ["rootCause"],
+      "weight": 3,
+      "validation": { "emptyTier": "challenge" }
+    },
+    {
+      "id": "cond_known_hazard_detail",
+      "stage": "conditions",
+      "kind": "textarea",
+      "prompt": "What was already known, and what was open at the time?",
+      "help": "Reference the near miss, action or assessment if you can. This is the single strongest signal a description can carry.",
+      "why": "A description that records a prior near miss on the same hazard changes how the case is reviewed and how quickly it is acted on.",
+      "placeholder": "Example: a near miss was raised about four months ago for the same guard opening and the corrective action to fit a fixed shield is still open",
+      "examples": [
+        "A near miss was raised about four months ago for reaching into the same guard opening, and the corrective action to fit a fixed shield is still open",
+        "The task is covered by risk assessment RA-318, which identifies manual handling of the bags as a medium risk"
+      ],
+      "showIf": { "field": "cond_known_hazard", "equals": "yes" },
+      "gapCategories": ["rootCause"],
+      "weight": 4,
+      "validation": { "minLength": 25, "emptyTier": "block", "thinTier": "challenge" },
+      "escapeHatches": true
+    },
+    {
+      "id": "cond_barriers_bypassed",
+      "stage": "conditions",
+      "kind": "select",
+      "prompt": "Were any guards, interlocks, barriers or controls bypassed, missing, defeated or ineffective?",
+      "optionsRef": "yesNoUnknown",
+      "gapCategories": ["rootCause", "equipment"],
+      "weight": 3,
+      "validation": { "emptyTier": "challenge" }
+    },
+    {
+      "id": "cond_barriers_detail",
+      "stage": "conditions",
+      "kind": "textarea",
+      "prompt": "Which control, and in what way?",
+      "help": "Name the control and say whether it was missing, bypassed, defeated, or present but ineffective.",
+      "placeholder": "Example: the belt guard has a 5 inch service opening that allows a hand to reach the return roller while the belt is running",
+      "examples": [
+        "The belt guard has a 5 inch service opening that allows a hand to reach the return roller while the belt is running",
+        "The interlock on the access door had been bypassed with a spare key kept at the station"
+      ],
+      "showIf": { "field": "cond_barriers_bypassed", "equals": "yes" },
+      "gapCategories": ["rootCause", "equipment"],
+      "weight": 4,
+      "validation": { "minLength": 25, "emptyTier": "block", "thinTier": "challenge" },
+      "escapeHatches": true
+    },
+    {
+      "id": "cond_stop_work",
+      "stage": "conditions",
+      "kind": "textarea",
+      "prompt": "Was there a point where the work could have been stopped, and what made stopping hard?",
+      "help": "Not about blame. If a stop-work point existed and was not taken, the reason is the finding.",
+      "why": "Every site has stop-work authority. Where it is not used, the reason is usually structural - a rate target, a lack of cover, an approval that takes too long. That reason is what a corrective action has to change.",
+      "placeholder": "Example: the belt could have been stopped to clear the jam, but a stop at that point requires a restart sequence that takes about fifteen minutes and the line was already behind",
+      "examples": [
+        "The belt could have been stopped to clear the jam, but a full stop requires a restart sequence taking about fifteen minutes and the line was already behind the plan",
+        "There was no point at which stopping would have changed the outcome",
+        "The work was stopped as soon as the condition was noticed"
+      ],
+      "gapCategories": ["rootCause"],
+      "weight": 3,
+      "validation": { "minLength": 25, "emptyTier": "challenge", "thinTier": "challenge" },
+      "escapeHatches": true
+    },
+
+    {
+      "id": "resp_first_aid",
+      "stage": "response",
+      "kind": "textarea",
+      "prompt": "What first aid or treatment was given at the scene, and what was applied?",
+      "help": "Be specific about what was done. If nothing was given, say so plainly.",
+      "why": "Immediate action is missing from 82.0% of past descriptions. What was applied at the scene affects the clinical picture and, for first aid versus medical treatment, the recordability decision.",
+      "placeholder": "Example: the wound was irrigated at the eyewash station for about 15 minutes and a sterile dressing was applied",
+      "examples": [
+        "The wound was irrigated at the eyewash station for about 15 minutes and a sterile dressing was applied",
+        "A cold pack was applied to the lower back for about 20 minutes in the first aid room",
+        "No first aid was given at the scene"
+      ],
+      "gapCategories": ["immediateActions"],
+      "weight": 4,
+      "validation": { "minLength": 25, "emptyTier": "block", "thinTier": "challenge" },
+      "escapeHatches": false
+    },
+    {
+      "id": "resp_provider_role",
+      "stage": "response",
+      "kind": "select",
+      "prompt": "Who gave it?",
+      "help": "By role. Never enter a name.",
+      "optionsRef": "responderRole",
+      "gapCategories": ["immediateActions"],
+      "weight": 2,
+      "validation": { "emptyTier": "challenge" }
+    },
+    {
+      "id": "resp_notification",
+      "stage": "response",
+      "kind": "textarea",
+      "prompt": "Who was notified, and how long after the event?",
+      "help": "Roles and rough elapsed time. Supervisor, EHS, medical, control room.",
+      "placeholder": "Example: the team lead was told within about two minutes and EHS was notified about twenty minutes later",
+      "examples": [
+        "The team lead was told within about two minutes and EHS was notified roughly twenty minutes later",
+        "The supervisor was notified at the end of the shift, about five hours after the event"
+      ],
+      "gapCategories": ["immediateActions"],
+      "weight": 3,
+      "validation": { "minLength": 20, "emptyTier": "block", "thinTier": "challenge" },
+      "escapeHatches": false
+    },
+    {
+      "id": "resp_delay_reason",
+      "stage": "response",
+      "kind": "textarea",
+      "prompt": "Why was the report delayed?",
+      "help": "State it plainly. Symptoms were mild at first, the shift was busy, the person hoped it would settle. All of these are real and none of them is a problem to record.",
+      "why": "A delayed report with a stated reason is a stronger record than a delayed report with a silence where the reason should be. Reporting friction is itself a finding.",
+      "placeholder": "Example: the discomfort was mild at the time and was expected to settle overnight; it was worse the following morning",
+      "examples": [
+        "The discomfort was mild at the time and was expected to settle overnight. It was worse the following morning",
+        "The line was short staffed and the employee did not want to stop the run"
+      ],
+      "showIf": {
+        "any": [
+          { "field": "discovery_mode", "in": ["self_reported_delayed", "discovered_later"] },
+          { "field": "onset_pattern", "in": ["gradual", "discovered"] }
+        ]
+      },
+      "gapCategories": ["immediateActions", "rootCause"],
+      "weight": 3,
+      "validation": { "minLength": 20, "emptyTier": "challenge", "thinTier": "challenge" },
+      "escapeHatches": true
+    },
+    {
+      "id": "resp_scene",
+      "stage": "response",
+      "kind": "textarea",
+      "prompt": "Was the area secured, the equipment locked out, or the scene preserved?",
+      "help": "What was done to the equipment and the area afterwards. If nothing was done, say so.",
+      "placeholder": "Example: the conveyor was stopped and locked out and the station was barriered off until EHS attended",
+      "examples": [
+        "The conveyor was stopped and locked out and the station was barriered off until EHS attended",
+        "The spill was contained with absorbent and the aisle was coned",
+        "Nothing was secured and the line continued to run"
+      ],
+      "gapCategories": ["immediateActions"],
+      "weight": 3,
+      "validation": { "minLength": 20, "emptyTier": "challenge", "thinTier": "challenge" },
+      "escapeHatches": true
+    },
+    {
+      "id": "resp_work_status",
+      "stage": "response",
+      "kind": "select",
+      "prompt": "What happened to the work afterwards?",
+      "optionsRef": "workStatusAfter",
+      "gapCategories": ["immediateActions"],
+      "weight": 2,
+      "validation": { "emptyTier": "challenge" }
+    },
+    {
+      "id": "resp_evaluation",
+      "stage": "response",
+      "kind": "select",
+      "prompt": "Was the employee sent for evaluation, and to what kind of provider?",
+      "help": "Provider type only. The facility name and address belong in the structured fields on the form.",
+      "optionsRef": "evaluationPath",
+      "gapCategories": ["immediateActions"],
+      "weight": 2,
+      "validation": { "emptyTier": "challenge" }
+    }
+  ],
+
+  "formChecklist": [
+    { "id": "fc_dates", "label": "Case date, reported date and time, shift and shift start time", "formSection": "Case Details" },
+    { "id": "fc_person", "label": "Employee name, occupation, department, SSO, supervisor, contingent or temp status", "formSection": "Employee Details", "note": "None of this belongs in the description text." },
+    { "id": "fc_equipment", "label": "Equipment selected from the structured picker", "formSection": "Equipment" },
+    { "id": "fc_pse", "label": "PSE determination, Injury vs Illness, Site Case number, privacy case flag", "formSection": "Classification" },
+    { "id": "fc_osha", "label": "OSHA recordability and the recordability rationale", "formSection": "Classification" },
+    { "id": "fc_location", "label": "Place of accident or exposure, on-premises flag, incident location, workstation, GPS", "formSection": "Location" },
+    { "id": "fc_process_safety", "label": "Process safety incident flag, associated cases, related customers", "formSection": "Classification" },
+    { "id": "fc_lsr", "label": "Life Saving Rule or Rules selected", "formSection": "Classification" },
+    { "id": "fc_product_safety", "label": "Product safety related flag", "formSection": "Classification" },
+    { "id": "fc_severity", "label": "Case Severity level A to E", "formSection": "Classification" },
+    { "id": "fc_accident_type", "label": "Accident Type, Principal Body Part and Detailed Body Parts", "formSection": "Injury Details" },
+    { "id": "fc_object", "label": "Object or substance which directly injured or exposed the employee", "formSection": "Injury Details" },
+    { "id": "fc_risk_assessment", "label": "Risk Assessment reference", "formSection": "Risk" },
+    { "id": "fc_medical", "label": "Physician or treatment facility name and address, ER treatment, overnight hospitalization", "formSection": "Medical" },
+    { "id": "fc_attachments", "label": "Photographs and other attachments uploaded", "formSection": "Attachments" }
+  ]
+}
