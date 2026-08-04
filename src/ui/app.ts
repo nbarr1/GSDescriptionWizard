@@ -78,9 +78,13 @@ export function mountApp(root: HTMLElement): AppHandles {
   ]);
 
   const footer = el('footer', { class: 'app__footer' }, [
-    el('span', {
+    el('p', {
       text: `Version ${APP_VERSION}. Runs entirely on this device. Nothing is sent anywhere.`,
     }),
+    el('p', {
+      text: 'GE is a trademark of General Electric Company used under trademark license.',
+    }),
+    el('p', { text: '© 2025 GE Vernova and/or its affiliates. All rights reserved.' }),
   ]);
 
   mount(
