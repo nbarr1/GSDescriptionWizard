@@ -24,7 +24,7 @@ export const allowlistConfig = allowlistRaw as unknown as AllowlistConfig;
 export const scoringConfig = scoringRaw as unknown as ScoringConfig;
 
 /** Bumped by hand on release. Rendered in the footer and available to the version tag. */
-export const APP_VERSION = '1.1.0';
+export const APP_VERSION = '1.2.0';
 
 const questionById = new Map<string, Question>(questionsConfig.questions.map((q) => [q.id, q]));
 

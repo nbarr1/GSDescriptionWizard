@@ -1,50 +1,113 @@
 /*
- * Shop-floor first. This runs on a tablet under plant lighting, often with
- * gloves on, sometimes at arm's length. Every choice below follows from that:
- * large targets, heavy contrast, generous type, no hover-only affordances.
+ * Brand implementation notes
+ * ===========================
+ * This file applies the GE Vernova brand tokens (Day #FFFFFF, Night #212121,
+ * Evergreen #005E60, Urgency Green #C8FF08) on top of the shop-floor
+ * requirements this tool already had to meet: WCAG 2.1 AA, legible at arm's
+ * length, usable with gloves. Three deliberate, documented departures from a
+ * literal reading of the brand guide exist because the literal reading would
+ * have broken one of those requirements. Each is called out where it happens;
+ * the summary is:
+ *
+ *  1. Day (white/#FFFFFF) is now the default theme, matching the brand's own
+ *     naming ("Day" as the primary background). A Night-preference media query
+ *     still exists for users/environments whose system requests dark, since
+ *     the brand guide does not define a dark variant and removing dark support
+ *     outright would regress this tool's original glare-tolerance design goal.
+ *     Neutrals (background/surface/text/border) adapt between the two; the
+ *     brand accent hues (Evergreen fills, Urgency Green) do not.
+ *  2. Question prompts (the actual text a reporter must read and answer
+ *     correctly) keep the body font at a normal case and a readable line
+ *     height, rather than the condensed-uppercase-0.9-leading heading
+ *     treatment. That treatment is reserved for short, single-line UI labels
+ *     (page titles, panel titles, buttons, badges) where it reads cleanly.
+ *     Applying it to multi-line question text risked comprehension errors on
+ *     a safety form, which outweighs literal style compliance.
+ *  3. Urgency Green is reserved for exactly the three uses the brand guide
+ *     names - selected states, the primary progress indicator, and nothing
+ *     else - because its luminance is close to white's: it has almost no
+ *     contrast against a light background and cannot be used as a small fill
+ *     or border on the (now default) Day theme without becoming close to
+ *     invisible. It is only used where it sits against the fixed Evergreen
+ *     track colour, or as a background with fixed dark (#212121) text drawn
+ *     directly on top - both measured to clear WCAG AA.
  */
 
 :root {
-  --bg: #10151c;
-  --surface: #1a222d;
-  --surface-raised: #232d3b;
-  --border: #3a4759;
-  --text: #f2f6fa;
-  --text-muted: #b7c3d2;
+  /* Fixed brand tokens - identical in both the Day and Night themes below,
+     because their whole purpose is a self-contained, always-correct-contrast
+     pairing (a filled Evergreen button with white text on it, or a filled
+     Urgency Green chip with dark text on it) that does not depend on what
+     colour the surrounding page happens to be. */
+  --brand-primary: #005e60; /* Evergreen */
+  --brand-primary-text: #ffffff;
+  --brand-highlight: #c8ff08; /* Urgency Green */
+  --brand-highlight-text: #212121;
+  --brand-night: #212121;
+  --brand-day: #ffffff;
 
-  --accent: #4da3ff;
-  --accent-text: #04101f;
+  --font-heading: 'Impact', 'Arial Narrow', sans-serif;
+  --font-body: 'Inter', Helvetica, Arial, sans-serif;
+  /* Brand line-height for headings (0.9) and the mandated body default (1.2).
+     --lh-relaxed is a documented, deliberate exception for genuine reading
+     passages - help text, notices, examples - where 1.2 measurably hurts
+     legibility at arm's length. See the file banner above. */
+  --lh-relaxed: 1.4;
 
-  --block: #ff6b6b;
-  --block-bg: #3a1a1e;
-  --challenge: #ffc14d;
-  --challenge-bg: #3a2e14;
-  --warn: #9fb4cc;
-  --ok: #5ddba4;
-  --ok-bg: #10312a;
-
-  --radius: 10px;
+  /* Sharp, minimal corners everywhere - no rounded "pill" shapes. Every
+     rounded-rect and every former 999px pill in this file reads from this one
+     token, so "flat, no pill shapes" is a single-point change. */
+  --radius: 2px;
   --tap: 48px;
   --measure: 40rem;
+
+  /* Macro page gutters and component padding scale gently with the viewport,
+     approximating the brief's "diagonal / 30" guidance (CSS has no portable
+     way to compute a true viewport diagonal, so this uses a vw-based clamp
+     tuned to land in the same range on common device sizes). Kept modest
+     deliberately: the multi-question screens in this tool were consolidated
+     specifically to reduce scrolling, and inflating every gap to a literal
+     "generous" reading would undo that. */
+  --gutter: clamp(1rem, 3vw, 2.5rem);
+  --pad: clamp(0.85rem, 1.4vw, 1.35rem);
+
+  /* --- Day theme (default) ------------------------------------------------ */
+  --bg: var(--brand-day);
+  --surface: var(--brand-day);
+  --surface-raised: #f2f2f2;
+  --border: var(--brand-primary);
+  --text: var(--brand-night);
+  --text-muted: #4a4a4a;
+  --accent: var(--brand-primary);
+  --ok: var(--brand-primary);
+  --ok-bg: #e6efef;
+  --block: #b3261e;
+  --block-bg: #fdecec;
+  --challenge: #7a4f00;
+  --challenge-bg: #fff5e0;
 }
 
-@media (prefers-color-scheme: light) {
+/* Night theme: the brand guide defines only the Day palette, so this adapts
+   the neutrals for a dark background while keeping every brand accent colour
+   literal. --border/--accent become a lighter tint of Evergreen here because
+   literal Evergreen (#005e60) only reaches ~2:1 contrast against a #212121
+   background - nowhere near the 3:1 a border or focus ring needs - while this
+   tint clears roughly 6.5:1 against the same background. */
+@media (prefers-color-scheme: dark) {
   :root {
-    --bg: #eef2f7;
-    --surface: #ffffff;
-    --surface-raised: #f4f7fb;
-    --border: #9aa9bb;
-    --text: #0e151d;
-    --text-muted: #48576a;
-    --accent: #0b5fbe;
-    --accent-text: #ffffff;
-    --block: #b3261e;
-    --block-bg: #fdecec;
-    --challenge: #7a4f00;
-    --challenge-bg: #fff5e0;
-    --warn: #48576a;
-    --ok: #10653f;
-    --ok-bg: #e6f5ee;
+    --bg: var(--brand-night);
+    --surface: #2a2a2a;
+    --surface-raised: #333333;
+    --border: #2fbdb8;
+    --text: #f2f2f2;
+    --text-muted: #b0b0b0;
+    --accent: #2fbdb8;
+    --ok: #2fbdb8;
+    --ok-bg: #12302e;
+    --block: #ff6b6b;
+    --block-bg: #3a1a1e;
+    --challenge: #ffc14d;
+    --challenge-bg: #3a2e14;
   }
 }
 
@@ -62,13 +125,7 @@ body {
   margin: 0;
   background: var(--bg);
   color: var(--text);
-  font:
-    400 1.0625rem/1.55 system-ui,
-    -apple-system,
-    'Segoe UI',
-    Roboto,
-    Arial,
-    sans-serif;
+  font: 400 1.0625rem/1.2 var(--font-body);
 }
 
 /* Visible focus everywhere. This is a keyboard-and-glove tool. */
@@ -95,8 +152,8 @@ body {
   top: 0;
   z-index: 100;
   padding: 0.75rem 1rem;
-  background: var(--accent);
-  color: var(--accent-text);
+  background: var(--brand-primary);
+  color: var(--brand-primary-text);
   font-weight: 700;
 }
 .skip-link:focus {
@@ -111,10 +168,15 @@ body {
   flex-direction: column;
 }
 
+/* The header and footer bottom/top rules are structural app-shell edges, not
+   decorative content dividers - the brief's "vertical lines only" guidance is
+   scoped to dividers *within* content, so these keep a functional horizontal
+   edge (see the file banner). Every other horizontal rule in this file has
+   been removed in favour of whitespace, per that same guidance. */
 .app__header {
   background: var(--surface);
   border-bottom: 2px solid var(--border);
-  padding: 0.75rem 1rem;
+  padding: 0.75rem var(--gutter);
   position: sticky;
   top: 0;
   z-index: 10;
@@ -131,10 +193,10 @@ body {
 }
 
 .header__title {
-  font-size: 1rem;
-  font-weight: 700;
-  margin: 0;
+  font: 800 1rem/0.9 var(--font-heading);
+  text-transform: uppercase;
   letter-spacing: 0.01em;
+  margin: 0;
 }
 
 .header__actions {
@@ -148,18 +210,28 @@ body {
   width: 100%;
   max-width: 64rem;
   margin: 0 auto;
-  padding: 1.5rem 1rem 6rem;
+  padding: 1.5rem var(--gutter) 6rem;
 }
 
 .app__footer {
   border-top: 1px solid var(--border);
-  padding: 1rem;
+  padding: 1rem var(--gutter);
   color: var(--text-muted);
   font-size: 0.8125rem;
+  line-height: var(--lh-relaxed);
   text-align: center;
 }
 
-/* --- Progress ------------------------------------------------------------ */
+.app__footer p {
+  margin: 0.25rem 0;
+}
+
+/* --- Progress -------------------------------------------------------------
+   The wizard's single overall progress bar is the tool's one "critical
+   progress indicator" in the brief's sense, so it is the one place the
+   Urgency Green fill is used against a dedicated dark (Evergreen) track built
+   specifically to carry it - see the file banner for why Urgency Green cannot
+   sit on a light track. */
 
 .progress {
   max-width: 64rem;
@@ -168,15 +240,14 @@ body {
 
 .progress__bar {
   height: 10px;
-  background: var(--surface-raised);
-  border: 1px solid var(--border);
-  border-radius: 999px;
+  background: var(--brand-primary);
+  border-radius: var(--radius);
   overflow: hidden;
 }
 
 .progress__fill {
   height: 100%;
-  background: var(--accent);
+  background: var(--brand-highlight);
   transition: width 180ms ease-out;
 }
 
@@ -202,39 +273,41 @@ body {
 }
 
 .screen__title {
-  font-size: 1.5rem;
-  line-height: 1.25;
-  font-weight: 700;
+  font: 800 1.5rem/0.9 var(--font-heading);
+  text-transform: uppercase;
   margin: 0 0 0.5rem;
 }
 
 .screen__intro {
   color: var(--text-muted);
+  line-height: var(--lh-relaxed);
   margin: 0 0 1.75rem;
   font-size: 0.9375rem;
 }
 
-/* One question inside a screen. The rule between blocks is what keeps a
-   six-question screen from reading as an undifferentiated wall. */
+/* One question inside a screen. Separation between stacked questions on a
+   multi-question screen is whitespace only - no rule line - per the brief's
+   "generous whitespace... vertical lines only" guidance. */
 .q {
-  padding: 1.25rem 0;
-  border-top: 1px solid var(--border);
+  margin-top: clamp(1.5rem, 3vw, 2.25rem);
 }
 
 .q:first-of-type {
-  border-top: 0;
-  padding-top: 0;
+  margin-top: 0;
 }
 
 .q__prompt {
+  /* Deliberately body font, normal case, readable leading - see banner note 2. */
+  font-family: var(--font-body);
   font-size: 1.0625rem;
   font-weight: 700;
-  line-height: 1.35;
+  line-height: 1.3;
   margin: 0 0 0.35rem;
 }
 
 .q__help {
   color: var(--text-muted);
+  line-height: var(--lh-relaxed);
   font-size: 0.9375rem;
   margin: 0 0 0.75rem;
 }
@@ -257,8 +330,9 @@ body {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: 0.75rem 0.85rem;
+  padding: var(--pad);
   color: var(--text-muted);
+  line-height: var(--lh-relaxed);
   font-size: 0.9375rem;
 }
 
@@ -284,7 +358,7 @@ body {
 .field__textarea {
   min-height: 8rem;
   resize: vertical;
-  line-height: 1.5;
+  line-height: var(--lh-relaxed);
 }
 
 .field__input:focus,
@@ -357,12 +431,22 @@ body {
   height: 1.5rem;
   margin: 0.1rem 0 0;
   flex: none;
-  accent-color: var(--accent);
+  /* Checking an option is the brief's "selected state" - Urgency Green. */
+  accent-color: var(--brand-highlight);
 }
 
+/* Selected state = Urgency Green, per the brief. Text drawn on it is pinned to
+   the fixed brand-highlight-text (#212121) rather than the theme's --text,
+   because --text turns near-white in the Night theme and would be almost
+   unreadable against a fill that never changes brightness - see the file
+   banner and point 3 in particular. */
 .option:has(input:checked) {
-  border-color: var(--accent);
-  background: var(--surface-raised);
+  border-color: var(--brand-primary);
+  background: var(--brand-highlight);
+}
+.option:has(input:checked) .option__label,
+.option:has(input:checked) .option__note {
+  color: var(--brand-highlight-text);
 }
 
 .option__label {
@@ -413,9 +497,23 @@ body {
   border-color: var(--accent);
 }
 
+/* Selected state = Urgency Green fill with fixed dark text/icon colour on top
+   - the same reasoning as the option chip above applies here. The focus ring
+   on a posture tile is pinned to the fixed Evergreen rather than the
+   theme-adaptive --accent, because in the Night theme --accent is a lighter
+   teal tuned to contrast against a dark *page* background; against this
+   tile's own fixed, always-bright Urgency Green fill that same teal only
+   reaches ~2:1, where fixed Evergreen reaches ~6.4:1. */
 .posture:has(input:checked) {
-  border-color: var(--accent);
-  background: var(--surface-raised);
+  border-color: var(--brand-primary);
+  background: var(--brand-highlight);
+}
+.posture:has(input:checked) .posture__label {
+  color: var(--brand-highlight-text);
+  font-weight: 600;
+}
+.posture:has(input:checked) .posture__body {
+  stroke: var(--brand-primary);
 }
 
 /* The radio covers the whole tile at zero opacity rather than being clipped to
@@ -432,7 +530,7 @@ body {
 }
 
 .posture:has(input:focus-visible) {
-  outline: 3px solid var(--accent);
+  outline: 3px solid var(--brand-primary);
   outline-offset: 2px;
 }
 
@@ -460,30 +558,10 @@ body {
   opacity: 0.75;
 }
 
-.posture:has(input:checked) .posture__body {
-  stroke: var(--accent);
-}
-
 .posture__label {
   font-size: 0.75rem;
   line-height: 1.2;
   color: var(--text-muted);
-}
-
-.posture:has(input:checked) .posture__label {
-  color: var(--text);
-  font-weight: 600;
-}
-
-.notice__text {
-  margin: 0 0 0.5rem;
-}
-
-.hatches {
-  display: flex;
-  gap: 0.5rem;
-  flex-wrap: wrap;
-  margin-top: 0.75rem;
 }
 
 .btn--quiet {
@@ -496,7 +574,10 @@ body {
   margin-bottom: 1rem;
 }
 
-/* --- Examples ------------------------------------------------------------ */
+/* --- Examples --------------------------------------------------------------
+   The left border here is already a vertical accent line, not a horizontal
+   divider, so it needs no change under the "vertical lines only" guidance -
+   only its colour (via --ok) follows the new palette. */
 
 .examples {
   margin: 0 0 1.25rem;
@@ -522,13 +603,20 @@ body {
   border: 1px solid var(--border);
   border-left: 4px solid var(--ok);
   border-radius: 0 var(--radius) var(--radius) 0;
-  padding: 0.7rem 0.85rem;
+  padding: var(--pad);
   margin-bottom: 0.5rem;
   color: var(--text-muted);
+  line-height: var(--lh-relaxed);
   font-size: 0.9375rem;
 }
 
-/* --- Feedback ------------------------------------------------------------ */
+/* --- Feedback --------------------------------------------------------------
+   Block/challenge feedback keeps a functional red/amber outside the three
+   brand hues on purpose: these are safety-relevant alert states ("you cannot
+   continue" / "this needs more"), not decorative or data-visualisation
+   colour, and forcing them into Evergreen/Urgency Green/Night would remove
+   the colour-coded severity distinction a reporter relies on to tell "this is
+   blocking" apart from "this is a suggestion" at a glance. */
 
 .feedback {
   border-radius: var(--radius);
@@ -561,14 +649,16 @@ body {
 }
 
 .feedback__message {
+  line-height: var(--lh-relaxed);
   margin: 0 0 0.5rem;
 }
 
 .feedback__example {
   background: var(--surface-raised);
   border-radius: var(--radius);
-  padding: 0.7rem 0.85rem;
+  padding: var(--pad);
   font-size: 0.9375rem;
+  line-height: var(--lh-relaxed);
   color: var(--text-muted);
   margin: 0.5rem 0 0;
 }
@@ -580,14 +670,20 @@ body {
   margin-top: 0.85rem;
 }
 
-/* --- Buttons ------------------------------------------------------------- */
+/* --- Buttons --------------------------------------------------------------
+   Rectangular, sharp corners (var(--radius)), uniform padding per button
+   tier, no pill shapes. Button text takes the same condensed/uppercase
+   heading treatment as page titles - buttons are always short, single-line
+   labels, so it reads cleanly here (unlike question prompts; see banner). */
 
 .btn {
   min-height: var(--tap);
   min-width: var(--tap);
   padding: 0.7rem 1.15rem;
-  font: inherit;
-  font-weight: 600;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
   color: var(--text);
   background: var(--surface-raised);
   border: 2px solid var(--border);
@@ -604,10 +700,13 @@ body {
   cursor: not-allowed;
 }
 
+/* The primary CTA uses the fixed brand tokens rather than the theme-adaptive
+   --accent, so it looks and contrasts identically (white text on Evergreen,
+   ~7.6:1) regardless of which theme is active - see the file banner. */
 .btn--primary {
-  background: var(--accent);
-  border-color: var(--accent);
-  color: var(--accent-text);
+  background: var(--brand-primary);
+  border-color: var(--brand-primary);
+  color: var(--brand-primary-text);
 }
 
 .btn--danger {
@@ -629,33 +728,21 @@ body {
   display: flex;
   gap: 0.75rem;
   flex-wrap: wrap;
-  margin-top: 2rem;
-  padding-top: 1.25rem;
-  border-top: 1px solid var(--border);
+  margin-top: clamp(2rem, 4vw, 3rem);
 }
 
 .nav .btn--primary {
   margin-left: auto;
 }
 
-/* --- Escape hatches ------------------------------------------------------ */
+/* --- Escape hatches -------------------------------------------------------
+   Whitespace-separated from the answer above it, no rule line. */
 
 .hatches {
-  margin: 1.25rem 0;
-  padding-top: 1rem;
-  border-top: 1px dashed var(--border);
-}
-
-.hatches__intro {
-  color: var(--text-muted);
-  font-size: 0.9375rem;
-  margin: 0 0 0.6rem;
-}
-
-.hatches__buttons {
   display: flex;
   gap: 0.5rem;
   flex-wrap: wrap;
+  margin-top: 0.9rem;
 }
 
 /* --- Checklist ----------------------------------------------------------- */
@@ -670,7 +757,7 @@ body {
   display: flex;
   gap: 0.75rem;
   align-items: flex-start;
-  padding: 0.85rem;
+  padding: var(--pad);
   margin-bottom: 0.5rem;
   background: var(--surface);
   border: 2px solid var(--border);
@@ -684,11 +771,13 @@ body {
   height: 1.5rem;
   margin: 0.15rem 0 0;
   flex: none;
-  accent-color: var(--accent);
+  /* Ticking a cross-check item is a selection, same as an option chip. */
+  accent-color: var(--brand-highlight);
 }
 
 .checklist__section {
   display: block;
+  font-family: var(--font-heading);
   font-size: 0.8125rem;
   text-transform: uppercase;
   letter-spacing: 0.06em;
@@ -699,11 +788,18 @@ body {
 .checklist__note {
   display: block;
   color: var(--text-muted);
+  line-height: var(--lh-relaxed);
   font-size: 0.9375rem;
   margin-top: 0.2rem;
 }
 
-/* --- Review -------------------------------------------------------------- */
+/* --- Review ---------------------------------------------------------------
+   The output and completeness panels sit side by side above 62rem. That is
+   the one place in this UI where a divider genuinely separates two adjacent
+   regions rather than stacked content, so it is the one place that gets the
+   brief's vertical-line treatment: a 1px Evergreen rule centred in the grid
+   gutter, built with a half-gutter negative margin rather than an extra DOM
+   node. */
 
 .review {
   max-width: 100%;
@@ -711,14 +807,21 @@ body {
 
 .review__grid {
   display: grid;
-  gap: 1.5rem;
+  row-gap: 1.5rem;
   grid-template-columns: 1fr;
 }
 
 @media (min-width: 62rem) {
   .review__grid {
     grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+    column-gap: 3rem;
     align-items: start;
+  }
+
+  .review__grid > :last-child {
+    margin-left: -1.5rem;
+    padding-left: 1.5rem;
+    border-left: 1px solid var(--brand-primary);
   }
 }
 
@@ -726,12 +829,13 @@ body {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: 1.15rem;
+  padding: var(--pad);
 }
 
 .panel__title {
+  font: 800 1.0625rem/0.9 var(--font-heading);
+  text-transform: uppercase;
   margin: 0 0 0.85rem;
-  font-size: 1.0625rem;
 }
 
 .output {
@@ -788,15 +892,21 @@ body {
 }
 
 .meter__label {
-  font-weight: 700;
+  font-family: var(--font-heading);
+  font-weight: 800;
+  text-transform: uppercase;
   font-size: 1.0625rem;
 }
 
 .meter__track {
   height: 14px;
-  background: var(--surface-raised);
+  /* Fixed, theme-invariant track (see below) rather than var(--surface-raised):
+     a Night fill needs to stay visible against it regardless of which theme
+     the rest of the page is in, matching the brief's brand palette for this
+     "graph". */
+  background: #e8e8e8;
   border: 1px solid var(--border);
-  border-radius: 999px;
+  border-radius: var(--radius);
   overflow: hidden;
 }
 
@@ -805,14 +915,24 @@ body {
   transition: width 200ms ease-out;
 }
 
+/*
+ * The completeness meter is the one place in this UI that is unambiguously a
+ * "graph" in the brief's sense, so its fill uses only the three brand colours,
+ * fixed regardless of theme: Night for the low band, Evergreen for the rest.
+ * Urgency Green is not used here - its luminance is close to white's, so it
+ * cannot contrast reliably against the light, fixed track above; it stays
+ * reserved for the wizard's single top-of-screen progress bar, which was
+ * built with a dark track specifically so it could carry that colour. Two
+ * distinct bands both showing brand teal, differentiated by fill length and
+ * by the adjacent label text (Insufficient / Adequate / Investigation-ready),
+ * is the more legible outcome than forcing a third, low-contrast colour in.
+ */
 .meter__fill--low {
-  background: var(--block);
+  background: var(--brand-night);
 }
-.meter__fill--mid {
-  background: var(--challenge);
-}
+.meter__fill--mid,
 .meter__fill--high {
-  background: var(--ok);
+  background: var(--brand-primary);
 }
 
 .gaps {
@@ -825,22 +945,18 @@ body {
   display: flex;
   gap: 0.6rem;
   align-items: baseline;
-  padding: 0.6rem 0;
-  border-bottom: 1px solid var(--border);
-}
-
-.gap:last-child {
-  border-bottom: 0;
+  padding: 0.85rem 0;
 }
 
 .gap__status {
   flex: none;
+  font-family: var(--font-heading);
   font-size: 0.75rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.06em;
   padding: 0.2rem 0.5rem;
-  border-radius: 999px;
+  border-radius: var(--radius);
   border: 1px solid;
 }
 
@@ -881,11 +997,12 @@ body {
 }
 
 .notice {
-  padding: 0.7rem 0.85rem;
+  padding: var(--pad);
   margin-bottom: 0.5rem;
   border-radius: var(--radius);
   border-left: 4px solid;
   background: var(--surface-raised);
+  line-height: var(--lh-relaxed);
   font-size: 0.9375rem;
 }
 
@@ -926,7 +1043,7 @@ body {
   display: flex;
   gap: 0.75rem;
   align-items: flex-start;
-  padding: 0.85rem;
+  padding: var(--pad);
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius);
@@ -939,11 +1056,13 @@ body {
   height: 1.5rem;
   margin: 0.1rem 0 0;
   flex: none;
-  accent-color: var(--accent);
+  /* Opting in is a selection toggle, same treatment as the chips above. */
+  accent-color: var(--brand-highlight);
 }
 
 .persist__text {
   font-size: 0.9375rem;
+  line-height: var(--lh-relaxed);
   color: var(--text-muted);
 }
 

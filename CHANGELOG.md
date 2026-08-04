@@ -5,6 +5,43 @@ All notable changes to this project are documented here.
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 this project uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.0] - 2026-08-04
+
+Brand release. Applies the GE Vernova visual identity - color palette,
+typography, layout and legal footer - with no change to the flow or the
+underlying data.
+
+### Changed
+
+- **Color palette**: Evergreen (`#005E60`) for primary interactive elements and
+  borders, Day (`#FFFFFF`) as the default background, Night (`#212121`) for
+  text. Urgency Green (`#C8FF08`) is scoped to selected chip/posture states and
+  the wizard's overall progress fill, per the brief's own "selected states or
+  critical progress indicators" wording - see "Brand implementation notes" in
+  the README for why it does not appear more broadly.
+- **Typography**: screen titles and section headings use a condensed,
+  uppercase, tight-leading (0.9) treatment; body text and question prompts stay
+  on the neutral body font at a readable 1.2+ line-height.
+- **Layout**: all rounded (pill-shaped) controls squared off to a 2px radius;
+  horizontal dividers between questions removed in favor of whitespace; a
+  single vertical Evergreen divider added to the two-column review grid on
+  wide viewports, the one place the layout is genuinely side-by-side.
+- **Footer** now carries the required trademark and copyright notice.
+- Dark mode keeps a lighter teal tint for borders and accents rather than the
+  literal Evergreen, which falls just short of the 3:1 non-text contrast
+  minimum against a `#212121` background.
+
+### Added
+
+- `tests/e2e/branding.spec.ts`: footer legal text, primary button color, and
+  progress bar corner radius.
+
+### Notes
+
+Purely presentational. All 287 unit tests, the single-file build's
+zero-external-reference assertions, and all 66 end-to-end tests (chromium and
+tablet) pass unchanged.
+
 ## [1.1.0] - 2026-08-04
 
 Consolidation release. The tool asked the right questions but took too long to

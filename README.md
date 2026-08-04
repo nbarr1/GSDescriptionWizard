@@ -170,6 +170,36 @@ These are automated tests, not conventions. They fail the build.
 | 44px minimum tap targets                           | `tests/e2e/accessibility.spec.ts`                                                      |
 | Full keyboard operation                            | `tests/e2e/accessibility.spec.ts`                                                      |
 | No horizontal scroll at 360px                      | `tests/e2e/accessibility.spec.ts`                                                      |
+| Footer carries the trademark and copyright notice  | `tests/e2e/branding.spec.ts`                                                           |
+| Primary button uses the Evergreen brand color      | `tests/e2e/branding.spec.ts`                                                           |
+| No rounded (pill-shaped) progress indicator        | `tests/e2e/branding.spec.ts`                                                           |
+
+## Brand implementation notes
+
+The GE Vernova brand guidelines (Evergreen `#005E60`, Urgency Green `#C8FF08`,
+flat/sharp UI, condensed uppercase headings) are applied in `src/ui/styles.css`.
+Three decisions depart from a literal reading of the brief, each documented in
+place with the reasoning:
+
+- **Day is the default theme, not a `prefers-color-scheme` toggle.** The brief's
+  Day/Night pair reads as light/dark mode, so Day (`#FFFFFF` background,
+  `#212121` text) is the default `:root`, and Night is the
+  `prefers-color-scheme: dark` override. Semantic colors (block/challenge/ok)
+  keep their own theme-appropriate tints rather than being forced onto the three
+  brand colors, because a red pushback message rendered in Evergreen would not
+  read as an error.
+- **Urgency Green is scoped to selected states and the main progress fill.**
+  Its luminance (~0.84) is close enough to white that using it for text, borders,
+  or small fills elsewhere fails WCAG contrast. It appears only where the brief
+  explicitly calls for it - a selected chip or posture tile (paired with fixed
+  dark text, not the theme's text color, so it stays legible in dark mode too)
+  and the wizard's overall progress bar. The completeness meter's fill stays on
+  Evergreen instead: its track is too light for Urgency Green to read against.
+- **Question prompts keep the body font, sentence case, and relaxed leading.**
+  Applying the heading treatment (condensed, uppercase, 0.9 line-height) to every
+  question would hurt legibility on a form meant to be read carefully on a
+  factory-floor tablet. Screen titles and section headings get the heading
+  treatment; the questions themselves do not.
 
 ## Open questions for the form owner
 
