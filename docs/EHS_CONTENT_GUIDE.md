@@ -31,14 +31,41 @@ lexicon name that does not exist - it is `motionVerbs`, with an s.
 
 ## The files
 
-| File                    | What is in it                                                                                     |
-| ----------------------- | ------------------------------------------------------------------------------------------------- |
-| `questions.json`        | The questions themselves, their order, their help text, their examples, and when each one appears |
-| `vocabulary.json`       | Dropdown option lists shared between questions                                                    |
-| `validation.json`       | Filler words to reject, word lists to look for, and how strict to be                              |
-| `scoring.json`          | How much each of the six deficiency categories counts toward the completeness meter               |
-| `output-templates.json` | How each answer becomes a sentence, and the character budget                                      |
-| `allowlist.json`        | Words the PII guard should not flag, and the text clean-up rules                                  |
+| File                    | What is in it                                                                                  |
+| ----------------------- | ---------------------------------------------------------------------------------------------- |
+| `questions.json`        | The screens, the questions on each, their help text, their examples, and when each one appears |
+| `vocabulary.json`       | Dropdown option lists shared between questions                                                 |
+| `validation.json`       | Filler words to reject, word lists to look for, and how strict to be                           |
+| `scoring.json`          | How much each of the six deficiency categories counts toward the completeness meter            |
+| `output-templates.json` | How each answer becomes a sentence, and the character budget                                   |
+| `allowlist.json`        | Words the PII guard should not flag, and the text clean-up rules                               |
+
+---
+
+## The two ideas that shape the content
+
+**1. Questions are grouped onto screens.** A screen is a cluster asked together.
+One question per screen produced roughly 35 screens for a single case, and answer
+quality falls off long before a reporter reaches the end of that. Every question
+carries a `screen` id; questions sharing an id appear together.
+
+```json
+{ "id": "cond_time_into_shift", "screen": "cond_timing", ... }
+{ "id": "cond_overtime",        "screen": "cond_timing", ... }
+```
+
+Screens are declared at the top of `questions.json` with a title and optional
+intro, and ordered by where their first question appears in the list. A screen
+whose questions are all hidden by branching drops out of the flow entirely.
+
+**2. Prefer a pick over a typed answer.** Typing is the expensive part, and a
+band picked in a second is usually just as useful to a reviewer as a sentence.
+Roughly two thirds of questions are now `select`, `multiselect`, `boolean` or
+`posture`. Reserve free text for the things a picker genuinely cannot hold: the
+task, the sequence, the deviation, and why it happened.
+
+If you find yourself writing a free-text question, ask whether six options would
+capture the same investigative value. Usually they would.
 
 ---
 

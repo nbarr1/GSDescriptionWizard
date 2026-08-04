@@ -201,47 +201,63 @@ body {
   margin: 0 auto;
 }
 
-.screen__stage-intro {
-  background: var(--surface);
-  border-left: 4px solid var(--accent);
-  border-radius: 0 var(--radius) var(--radius) 0;
-  padding: 0.85rem 1rem;
-  margin: 0 0 1.5rem;
-  color: var(--text-muted);
-  font-size: 0.9375rem;
-}
-
-.question__prompt {
-  font-size: 1.375rem;
-  line-height: 1.3;
+.screen__title {
+  font-size: 1.5rem;
+  line-height: 1.25;
   font-weight: 700;
   margin: 0 0 0.5rem;
 }
 
-.question__help {
+.screen__intro {
   color: var(--text-muted);
-  margin: 0 0 1rem;
+  margin: 0 0 1.75rem;
+  font-size: 0.9375rem;
 }
 
-.question__why {
-  margin: 0 0 1.25rem;
+/* One question inside a screen. The rule between blocks is what keeps a
+   six-question screen from reading as an undifferentiated wall. */
+.q {
+  padding: 1.25rem 0;
+  border-top: 1px solid var(--border);
 }
 
-.question__why summary {
+.q:first-of-type {
+  border-top: 0;
+  padding-top: 0;
+}
+
+.q__prompt {
+  font-size: 1.0625rem;
+  font-weight: 700;
+  line-height: 1.35;
+  margin: 0 0 0.35rem;
+}
+
+.q__help {
+  color: var(--text-muted);
+  font-size: 0.9375rem;
+  margin: 0 0 0.75rem;
+}
+
+.q__why {
+  margin: 0 0 0.75rem;
+}
+
+.q__why summary {
   cursor: pointer;
   color: var(--accent);
   font-weight: 600;
-  padding: 0.5rem 0;
-  min-height: var(--tap);
+  font-size: 0.875rem;
+  min-height: 44px;
   display: flex;
   align-items: center;
 }
 
-.question__why-body {
+.q__why-body {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: 0.85rem 1rem;
+  padding: 0.75rem 0.85rem;
   color: var(--text-muted);
   font-size: 0.9375rem;
 }
@@ -301,6 +317,24 @@ body {
   font-weight: 600;
 }
 
+.options--compact {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.options--compact .option {
+  margin-bottom: 0;
+  width: auto;
+  flex: 0 1 auto;
+  padding: 0.6rem 0.85rem;
+}
+
+.options--compact .option input {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
 .option {
   display: flex;
   gap: 0.75rem;
@@ -335,12 +369,131 @@ body {
   font-weight: 600;
 }
 
+.option__text {
+  display: block;
+}
+
 .option__note {
   display: block;
   font-weight: 400;
   color: var(--text-muted);
   font-size: 0.9375rem;
   margin-top: 0.2rem;
+}
+
+/* --- Posture picker -----------------------------------------------------
+   Describing your own body position in words is slow and most people do it
+   badly. A figure is one tap and composes into precise prose. */
+
+.postures {
+  border: 0;
+  margin: 0 0 1rem;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(92px, 1fr));
+  gap: 0.5rem;
+}
+
+.posture {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.6rem 0.4rem;
+  min-height: 118px;
+  background: var(--surface);
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  cursor: pointer;
+  text-align: center;
+}
+
+.posture:hover {
+  border-color: var(--accent);
+}
+
+.posture:has(input:checked) {
+  border-color: var(--accent);
+  background: var(--surface-raised);
+}
+
+/* The radio covers the whole tile at zero opacity rather than being clipped to
+   a point. That makes the entire figure the tap target - which matters with
+   gloves - and keeps it hit-testable rather than only reachable by label. */
+.posture__input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.posture:has(input:focus-visible) {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.posture__figure {
+  width: 100%;
+  max-width: 62px;
+  height: 66px;
+  display: block;
+}
+
+.posture__body {
+  fill: none;
+  stroke: var(--text);
+  stroke-width: 5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.posture__prop {
+  fill: none;
+  stroke: var(--text-muted);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0.75;
+}
+
+.posture:has(input:checked) .posture__body {
+  stroke: var(--accent);
+}
+
+.posture__label {
+  font-size: 0.75rem;
+  line-height: 1.2;
+  color: var(--text-muted);
+}
+
+.posture:has(input:checked) .posture__label {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.notice__text {
+  margin: 0 0 0.5rem;
+}
+
+.hatches {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-top: 0.75rem;
+}
+
+.btn--quiet {
+  background: transparent;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.checklist__actions {
+  margin-bottom: 1rem;
 }
 
 /* --- Examples ------------------------------------------------------------ */
@@ -799,9 +952,6 @@ body {
 @media (max-width: 30rem) {
   body {
     font-size: 1rem;
-  }
-  .question__prompt {
-    font-size: 1.1875rem;
   }
   .app__main {
     padding: 1rem 0.75rem 5rem;

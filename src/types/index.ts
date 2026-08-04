@@ -87,18 +87,43 @@ export interface QuestionValidation {
 // ---------------------------------------------------------------------------
 // Questions
 // ---------------------------------------------------------------------------
-export type QuestionKind = 'text' | 'textarea' | 'select' | 'multiselect' | 'boolean' | 'checklist';
+export type QuestionKind =
+  | 'text'
+  | 'textarea'
+  | 'select'
+  | 'multiselect'
+  | 'boolean'
+  | 'checklist'
+  /**
+   * A single-select rendered as labelled figures rather than text options.
+   * Body position is far faster to pick from a picture than to describe, and
+   * the picked value composes into precise prose the reporter would not write.
+   */
+  | 'posture';
 
 export interface QuestionOption {
   value: string;
   label: string;
   /** Optional hint shown under the option. */
   note?: string;
+  /**
+   * Wording used when this option reaches the composed description. Labels are
+   * kept short so they scan on a tablet ("Coworker hit e-stop"); the output
+   * wants a clause ("a coworker hit the emergency stop"). Falls back to the
+   * lowercased label when absent.
+   */
+  outputText?: string;
 }
 
 export interface Question {
   id: string;
   stage: string;
+  /**
+   * Questions sharing a screen id are asked together on one screen. This is the
+   * main lever on how long the wizard feels: one question per screen produced
+   * roughly 35 screens for a single case, which is where people give up.
+   */
+  screen: string;
   kind: QuestionKind;
   /** The question itself, as the user reads it. */
   prompt: string;
@@ -127,6 +152,14 @@ export interface Question {
   mirrorsFormField?: boolean;
 }
 
+export interface Screen {
+  id: string;
+  /** Heading for the screen. Individual questions keep their own prompts. */
+  title: string;
+  /** Short framing sentence under the heading. */
+  intro?: string;
+}
+
 export interface Stage {
   id: string;
   title: string;
@@ -146,6 +179,7 @@ export interface FormChecklistItem {
 
 export interface QuestionsConfig {
   stages: Stage[];
+  screens: Screen[];
   questions: Question[];
   formChecklist: FormChecklistItem[];
 }

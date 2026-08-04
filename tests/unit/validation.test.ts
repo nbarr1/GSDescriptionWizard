@@ -118,16 +118,15 @@ describe('responsiveness signals', () => {
     expect(validateAnswer(requireQuestion('sequence_moment'), session).tier).toBeNull();
   });
 
-  it('requires a number and a unit for a weight question', () => {
-    const withoutNumber = sessionWith({ object_handled: true, object_weight: text('quite heavy') });
-    const result = validateAnswer(requireQuestion('object_weight'), withoutNumber);
+  it('challenges a task answer that names a thing but no action', () => {
+    const noVerb = sessionWith({ task_performed: text('Conveyor jam at station 4 on the line') });
+    const result = validateAnswer(requireQuestion('task_performed'), noVerb);
     expect(result.findings.some((f) => f.rule === 'signal')).toBe(true);
 
-    const withBoth = sessionWith({
-      object_handled: true,
-      object_weight: text('approximately 40 pounds'),
+    const withVerb = sessionWith({
+      task_performed: text('Clearing a jammed carton from the infeed conveyor at station 4'),
     });
-    expect(validateAnswer(requireQuestion('object_weight'), withBoth).tier).toBeNull();
+    expect(validateAnswer(requireQuestion('task_performed'), withVerb).tier).toBeNull();
   });
 
   it('accepts either an identifier or an explicit no-procedure declaration', () => {
@@ -220,7 +219,7 @@ describe('response tiers', () => {
     const empty = createSession();
     expect(validateAnswer(requireQuestion('sequence_moment'), empty).canAdvance).toBe(false);
     // Advisory questions never stop the user.
-    expect(validateAnswer(requireQuestion('object_dimensions'), empty).canAdvance).toBe(true);
+    expect(validateAnswer(requireQuestion('object_size'), empty).canAdvance).toBe(true);
   });
 
   it('downgrades a challenge to advisory after the configured escalation limit', () => {

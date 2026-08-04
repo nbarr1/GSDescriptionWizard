@@ -246,17 +246,34 @@ describe('navigation under changing answers', () => {
     expect(Object.keys(session.answers).length).toBeGreaterThan(20);
   });
 
-  it('lands somewhere sensible when the current step stops being visible', () => {
+  it('drops a screen entirely once all of its questions are hidden', () => {
     let session = sessionWith({
       onset_pattern: choice('acute'),
-      accident_type: choice('fall_elevation'),
+      accident_type: choice('fall_same_level'),
       employee_role: choice('operator'),
+      equipment_involved: true,
+      object_handled: true,
     });
-    // Standing on a question that is about to disappear.
-    const current = 'mech_fall_height';
+    expect(visibleSteps(session)).toContain('task_equipment');
+
+    // With neither equipment nor a handled object, that screen has nothing to ask.
+    session = setAnswer(session, 'equipment_involved', { kind: 'boolean', value: false });
+    session = setAnswer(session, 'object_handled', { kind: 'boolean', value: false });
+    expect(visibleSteps(session)).not.toContain('task_equipment');
+  });
+
+  it('lands on a real screen when the current one stops being visible', () => {
+    let session = sessionWith({
+      onset_pattern: choice('acute'),
+      accident_type: choice('fall_same_level'),
+      employee_role: choice('operator'),
+      equipment_involved: true,
+      object_handled: false,
+    });
+    const current = 'task_equipment';
     expect(visibleSteps(session)).toContain(current);
 
-    session = setAnswer(session, 'accident_type', { kind: 'choice', value: 'overexertion' });
+    session = setAnswer(session, 'equipment_involved', { kind: 'boolean', value: false });
     expect(visibleSteps(session)).not.toContain(current);
 
     const target = nextStep(current, session);
@@ -325,15 +342,16 @@ describe('empty and partial sessions', () => {
     expect(scoreSession(createSession()).label).toBe('Insufficient');
   });
 
-  it('keeps every visible question reachable from the first step', () => {
+  it('puts every visible question on a reachable screen', () => {
     for (const scenario of scenarios) {
       const session = buildSession(scenario);
       const steps = new Set(visibleSteps(session));
-      const visibleQuestions = questionsConfig.questions
-        .filter((q) => isVisible(q, session))
-        .map((q) => q.id);
-      for (const id of visibleQuestions) {
-        expect(steps.has(id), `${scenario.id}: ${id} is visible but unreachable`).toBe(true);
+      for (const question of questionsConfig.questions) {
+        if (!isVisible(question, session)) continue;
+        expect(
+          steps.has(question.screen),
+          `${scenario.id}: ${question.id} is visible but its screen ${question.screen} is unreachable`,
+        ).toBe(true);
       }
     }
   });

@@ -1,20 +1,17 @@
-import { dirname, join } from 'node:path';
-import { fileURLToPath, pathToFileURL } from 'node:url';
 import { expect, test, type Page } from '@playwright/test';
+import { APP_URL, answerScreen, chooseCase, continueOn, screenTitle } from './helpers';
 
 /**
  * Accessibility and shop-floor ergonomics. These are not nice-to-haves here:
  * the tool is used on a tablet, under plant lighting, often with gloves on, and
  * sometimes entirely by keyboard.
  */
-const HERE = dirname(fileURLToPath(import.meta.url));
-const APP_URL = pathToFileURL(join(HERE, '..', '..', 'dist', 'ii-description-wizard.html')).href;
 
 const MIN_TAP = 44;
 
 async function firstQuestion(page: Page) {
   await page.goto(APP_URL);
-  await expect(page.locator('.question__prompt')).toBeVisible();
+  await expect(page.locator('.screen__title')).toBeVisible();
 }
 
 test('every interactive control meets the 44px minimum tap target', async ({ page }) => {
@@ -45,26 +42,28 @@ test('is fully operable by keyboard alone', async ({ page }) => {
   // Tab to the first radio and select it without ever using the mouse.
   for (let i = 0; i < 25; i += 1) {
     await page.keyboard.press('Tab');
-    const role = await page.evaluate(() => document.activeElement?.getAttribute('type'));
-    if (role === 'radio') break;
+    const type = await page.evaluate(() => document.activeElement?.getAttribute('type'));
+    if (type === 'radio') break;
   }
   await page.keyboard.press('Space');
   await expect(page.getByRole('radio').first()).toBeChecked();
 
-  // Tab on to Continue and activate it.
-  for (let i = 0; i < 25; i += 1) {
+  // The remaining questions on this screen are answered the same way.
+  await answerScreen(page);
+
+  for (let i = 0; i < 60; i += 1) {
     await page.keyboard.press('Tab');
     const text = await page.evaluate(() => document.activeElement?.textContent?.trim());
     if (text === 'Continue' || text === 'Answer to continue') break;
   }
   await page.keyboard.press('Enter');
-  await expect(page.locator('.question__prompt')).not.toContainText('Which pattern best describes');
+  await expect(page.locator('.screen__title')).not.toContainText('What kind of case is this');
 });
 
 test('moves focus to the new screen on every transition', async ({ page }) => {
   await firstQuestion(page);
-  await page.getByRole('radio').first().check();
-  await page.getByRole('button', { name: /Continue/ }).click();
+  await answerScreen(page);
+  await continueOn(page);
 
   const focused = await page.evaluate(() => ({
     tag: document.activeElement?.tagName,
@@ -96,8 +95,11 @@ test('labels every input and announces validation through a live region', async 
 
 test('uses a fieldset and legend for grouped options', async ({ page }) => {
   await firstQuestion(page);
-  await expect(page.locator('fieldset.options')).toBeVisible();
-  await expect(page.locator('fieldset.options legend')).toBeAttached();
+  await expect(page.locator('fieldset.options').first()).toBeVisible();
+  await expect(page.locator('fieldset.options legend').first()).toBeAttached();
+  // Every option group is labelled, not just the first.
+  const groups = await page.locator('fieldset.options').count();
+  expect(await page.locator('fieldset.options legend').count()).toBe(groups);
 });
 
 test('has exactly one h1 and a coherent heading order', async ({ page }) => {
@@ -121,18 +123,34 @@ test('does not scroll horizontally at 360px', async ({ page }) => {
 });
 
 test('a blocking message is exposed as an alert', async ({ page }) => {
-  await firstQuestion(page);
-  await page.getByRole('radio', { name: /Acute single event/ }).check();
-  await page.getByRole('button', { name: /Continue/ }).click();
+  await page.goto(APP_URL);
+  await chooseCase(page, { onset: /Acute single event/ });
+  await answerScreen(page);
+  await continueOn(page);
 
-  for (let i = 0; i < 12; i += 1) {
-    const heading = await page.locator('.question__prompt').first().textContent();
-    if (heading?.includes('What specific task was being performed')) break;
-    const radios = page.getByRole('radio');
-    if (await radios.count()) await radios.first().check();
-    await page.getByRole('button', { name: /Continue|Answer to continue/ }).click();
+  await expect(page.locator('.screen__title')).toContainText('What was being done');
+  await continueOn(page);
+  await expect(page.locator('[role="alert"]').first()).toBeVisible();
+});
+
+test('every posture tile is a full-size tap target', async ({ page }) => {
+  await page.goto(APP_URL);
+  await chooseCase(page, { onset: /Acute single event/ });
+  for (let i = 0; i < 10; i += 1) {
+    if ((await screenTitle(page)).includes('sequence of events')) break;
+    await answerScreen(page);
+    await continueOn(page);
+    if (await page.locator('.feedback--challenge, .feedback--block').count())
+      await continueOn(page);
   }
 
-  await page.getByRole('button', { name: /Continue|Answer to continue/ }).click();
-  await expect(page.locator('[role="alert"]')).toBeVisible();
+  const tiles = page.locator('.postures .posture');
+  const count = await tiles.count();
+  expect(count).toBeGreaterThan(8);
+  for (let i = 0; i < count; i += 1) {
+    const box = await tiles.nth(i).boundingBox();
+    expect(box, 'posture tile has no box').not.toBeNull();
+    expect(box!.height).toBeGreaterThanOrEqual(44);
+    expect(box!.width).toBeGreaterThanOrEqual(44);
+  }
 });

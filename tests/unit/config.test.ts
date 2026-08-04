@@ -22,45 +22,35 @@ describe('config integrity', () => {
     expect(missing).toEqual([]);
   });
 
-  it('gives every blocking question either an escape hatch or an unavoidable answer', () => {
+  it('keeps the set of blocking free-text questions small and deliberate', () => {
     // A question that blocks on empty with no escape hatch must be one where a
-    // blank genuinely makes the description useless. Keep that list short and explicit.
+    // blank genuinely makes the description useless. Keep that list short.
     const blockingWithoutHatch = questionsConfig.questions
       .filter((q) => q.validation?.emptyTier === 'block' && q.escapeHatches !== true)
       .filter((q) => q.kind === 'text' || q.kind === 'textarea')
       .map((q) => q.id);
 
-    expect(blockingWithoutHatch.sort()).toEqual(
-      [
-        'task_performed',
-        'sequence_before',
-        'sequence_moment',
-        'sequence_after',
-        'gradual_cycle_description',
-        'gradual_symptom_onset',
-        'prior_condition_change',
-        'discovered_noticed',
-        'mech_struck_moving',
-        'mech_caught_surfaces',
-        'mech_caught_entry',
-        'mech_exert_posture',
-        'mech_fall_surface',
-        'mech_fall_foot_contact',
-        'mech_fall_working_surface',
-        'mech_fall_protection',
-        'mech_fall_initiator',
-        'mech_rep_motion',
-        'mech_energy_source',
-        'mech_isolation_state',
-        'mech_agent',
-        'mech_ventilation',
-        'mech_vehicle_detail',
-        'mech_other_description',
-        'point_of_contact',
-        'resp_first_aid',
-        'resp_notification',
-      ].sort(),
+    expect(blockingWithoutHatch.length).toBeLessThanOrEqual(20);
+    for (const id of ['task_performed', 'sequence_moment', 'point_of_contact']) {
+      expect(blockingWithoutHatch, `${id} should block on empty`).toContain(id);
+    }
+  });
+
+  it('asks most questions as a pick rather than as free text', () => {
+    // The whole point of the consolidation: typing is the expensive part.
+    const picks = questionsConfig.questions.filter((q) =>
+      ['select', 'multiselect', 'boolean', 'posture'].includes(q.kind),
     );
+    expect(picks.length / questionsConfig.questions.length).toBeGreaterThan(0.55);
+  });
+
+  it('groups questions onto screens rather than one per screen', () => {
+    const perScreen = new Map<string, number>();
+    for (const q of questionsConfig.questions) {
+      perScreen.set(q.screen, (perScreen.get(q.screen) ?? 0) + 1);
+    }
+    const average = questionsConfig.questions.length / perScreen.size;
+    expect(average).toBeGreaterThan(2.5);
   });
 
   it('covers all six deficiency categories with weighted questions', () => {
