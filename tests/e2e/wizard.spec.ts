@@ -85,6 +85,20 @@ test('shows how many screens are left', async ({ page }) => {
   await expect(page.locator('.progress__label')).toContainText(/screens to go|Last screen/);
 });
 
+test('picking an answer does not scroll the page back to the top', async ({ page }) => {
+  await page.goto(APP_URL);
+  const target = page.getByRole('radio', { name: /^Wrist$/ });
+  await target.scrollIntoViewIfNeeded();
+  const before = await page.evaluate(() => window.scrollY);
+  expect(before).toBeGreaterThan(0);
+
+  await target.check();
+  await expect(target).toBeChecked();
+
+  const after = await page.evaluate(() => window.scrollY);
+  expect(after).toBe(before);
+});
+
 test('branches on onset pattern - a gradual case never asks for the moment of injury', async ({
   page,
 }) => {
