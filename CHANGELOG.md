@@ -5,6 +5,20 @@ All notable changes to this project are documented here.
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 this project uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.1] - 2026-08-05
+
+### Fixed
+
+- **Picking an answer no longer scrolls the page back to the top.** Every
+  render - including an in-place answer commit that only redraws the current
+  screen - rebuilt the whole DOM subtree and then unconditionally moved focus
+  (and the browser's scroll) to the screen heading. That heading-focus jump is
+  correct for a real screen transition, so a screen reader user isn't left on
+  the old screen, but it was firing on every single tap. `render()` now only
+  moves focus to the heading on an actual step change; an in-place commit lets
+  `mount()` restore focus to the same control by id instead, which keeps
+  keyboard focus put without forcing a scroll.
+
 ## [1.2.0] - 2026-08-04
 
 Brand release. Applies the GE Vernova visual identity - color palette,

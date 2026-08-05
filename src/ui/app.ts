@@ -96,18 +96,21 @@ export function mountApp(root: HTMLElement): AppHandles {
 
   // ---- state transitions --------------------------------------------------
 
-  function commit(next: SessionState, options: { resetFeedback?: boolean } = {}): void {
+  function commit(
+    next: SessionState,
+    options: { resetFeedback?: boolean; moveFocus?: boolean } = {},
+  ): void {
     session = next;
     if (options.resetFeedback !== false) showFeedback = false;
     saveDraft(session, step);
-    render();
+    render(options.moveFocus ?? false);
   }
 
   function goTo(target: StepId): void {
     step = target;
     showFeedback = false;
     saveDraft(session, step);
-    render();
+    render(true);
   }
 
   function advance(): void {
@@ -116,7 +119,7 @@ export function mountApp(root: HTMLElement): AppHandles {
     const blocking = firstBlockingQuestion(step, session);
     if (blocking) {
       showFeedback = true;
-      render();
+      render(false);
       focusQuestion(blocking.id);
       announce(
         live,
@@ -136,7 +139,7 @@ export function mountApp(root: HTMLElement): AppHandles {
         }
       }
       saveDraft(session, step);
-      render();
+      render(false);
       focusQuestion(challenged.id);
       announce(live, validateAnswer(challenged, session).findings[0]?.message ?? 'Please review.');
       return;
@@ -220,19 +223,26 @@ export function mountApp(root: HTMLElement): AppHandles {
 
   // ---- rendering ----------------------------------------------------------
 
-  function render(): void {
+  // `moveFocus` jumps to the screen heading, which is what a real screen
+  // transition needs so a screen reader user isn't left where the old screen
+  // used to be - but an in-place answer commit rebuilds the same screen, and
+  // doing that on every tap is what was dragging the page back to the top on
+  // every selection. Those callers pass false and let `mount` restore focus
+  // to the answered control instead.
+  function render(moveFocus = true): void {
     renderHeaderActions();
     renderProgress();
 
     if (step === REVIEW_STEP) {
       const screen = renderReview({
         session,
-        onModeChange: (mode) => commit({ ...session, outputMode: mode }, { resetFeedback: false }),
+        onModeChange: (mode) =>
+          commit({ ...session, outputMode: mode }, { resetFeedback: false, moveFocus: false }),
         onEdit: (questionId) => goTo(screenForQuestion(questionId) ?? step),
         onPersistChange: (persist) => {
           const next = { ...session, persist };
           if (!persist) clearDraft();
-          commit(next, { resetFeedback: false });
+          commit(next, { resetFeedback: false, moveFocus: false });
         },
         onCopy: async (text, textarea) => {
           const result = await copyText(text, textarea);
@@ -244,13 +254,13 @@ export function mountApp(root: HTMLElement): AppHandles {
         onBack: goBack,
       });
       mount(main, screen);
-      focusScreen(screen);
+      if (moveFocus) focusScreen(screen);
       return;
     }
 
     const screen = step === CROSSCHECK_STEP ? renderChecklist() : renderQuestionScreen();
     mount(main, screen);
-    focusScreen(screen);
+    if (moveFocus) focusScreen(screen);
   }
 
   function renderHeaderActions(): void {

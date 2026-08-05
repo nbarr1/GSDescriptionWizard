@@ -46,9 +46,25 @@ export function clear(node: HTMLElement): void {
   while (node.firstChild) node.removeChild(node.firstChild);
 }
 
+/**
+ * Replaces a parent's children wholesale. If the focused element lived inside
+ * `parent`, focus is restored to its replacement by matching `id` - otherwise
+ * an in-place answer commit (which rebuilds the whole screen) would silently
+ * drop focus to <body> on every tap, which some browsers treat as a cue to
+ * scroll to the top of the page.
+ */
 export function mount(parent: HTMLElement, ...children: (Node | null | false)[]): void {
+  const active = document.activeElement;
+  const activeId =
+    active instanceof HTMLElement && active.id && parent.contains(active) ? active.id : null;
+
   clear(parent);
   for (const child of children) if (child) parent.appendChild(child);
+
+  if (activeId) {
+    const restored = parent.querySelector<HTMLElement>(`[id="${activeId}"]`);
+    restored?.focus({ preventScroll: true });
+  }
 }
 
 /**
